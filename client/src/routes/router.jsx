@@ -31,6 +31,10 @@ import Donate from "../pages/donate/Donate";
 import DonationSuccess from "../pages/donate/DonationSuccess";
 import DonationCancel from "../pages/donate/DonationCancel";
 
+// Legal Pages
+import PrivacyPolicy from "../pages/legal/PrivacyPolicy";
+import TermsOfService from "../pages/legal/TermsOfService";
+
 /**
  * @typedef {Object} RouteConfig
  * @property {string} path - The URL path for the route
@@ -53,6 +57,8 @@ import DonationCancel from "../pages/donate/DonationCancel";
  * - /donate/success (Successful Donation)
  * - /donate/cancel (Cancelled Donation)
  * - /contact (Contact Us)
+ * - /privacy (Privacy Policy)
+ * - /terms (Terms of Service)
  * 
  * @type {import('react-router-dom').RouterProvider}
  */
@@ -81,6 +87,10 @@ export const router = createBrowserRouter(
                 <Route path="success" element={<DonationSuccess />} />
                 <Route path="cancel" element={<DonationCancel />} />
             </Route>
+
+            {/* Legal routes */}
+            <Route path="privacy" element={<PrivacyPolicy />} />
+            <Route path="terms" element={<TermsOfService />} />
 
             {/* 404 route */}
             <Route path="*" element={<PageNotFound />} />
