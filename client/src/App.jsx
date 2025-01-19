@@ -1,16 +1,20 @@
-import "./App.css";
-import { Button } from "@heroui/button";
+/**
+ * @fileoverview Root application component.
+ * Provides the router configuration and global providers.
+ */
 
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/router";
+
+/**
+ * Root App component that sets up routing and global providers.
+ * Uses RouterProvider to enable client-side routing.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered App component
+ */
 function App() {
-  return (
-    <div className="flex flex-col gap-4 items-center justify-center h-screen">
-      <h1 class="text-6xl font-bold">Right Housing</h1>
-      <Button color="primary" size="lg">
-        Right Housing
-      </Button>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
-//
