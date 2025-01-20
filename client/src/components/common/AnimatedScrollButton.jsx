@@ -1,17 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import PropTypes from "prop-types";
+import { Tooltip } from "@heroui/tooltip";
 
-const Button = () => {
+const AnimatedScrollButton = ({ onClick }) => {
   return (
     <StyledWrapper>
-      <div className="scrolldown" style={{ "--color": "green" }}>
-        <div className="chevrons">
-          <div className="chevrondown" />
-          <div className="chevrondown" />
-        </div>
-      </div>
+      <Tooltip content="SCROLL DOWN" placement="top">
+        <motion.button
+          onClick={onClick}
+          className="scrolldown"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          style={{ "--color": "green" }}
+        >
+          <div className="chevrons">
+            <div className="chevrondown" />
+            <div className="chevrondown" />
+          </div>
+        </motion.button>
+      </Tooltip>
     </StyledWrapper>
   );
+};
+
+AnimatedScrollButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
 };
 
 const StyledWrapper = styled.div`
@@ -22,7 +37,7 @@ const StyledWrapper = styled.div`
     position: relative;
     width: var(--sizeX);
     height: var(--sizeY);
-    margin-left: var(sizeX / 2);
+    margin-left: var(--sizeX / 2);
     border: calc(var(--sizeX) / 10) solid var(--color);
     border-radius: 50px;
     box-sizing: border-box;
@@ -108,4 +123,4 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default Button;
+export default AnimatedScrollButton;

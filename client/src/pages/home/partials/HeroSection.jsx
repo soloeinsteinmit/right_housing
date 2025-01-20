@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowUpRight, Heart } from "lucide-react";
 import AnimatedScrollButton from "../../../components/common/AnimatedScrollButton";
+import { motion } from "framer-motion";
 
 // Import images
 import helpingHand2 from "../../../assets/homeless1.jpg";
@@ -20,7 +21,8 @@ function HeroSection() {
       description:
         // "17 Thousand People Died, Thousands Injured, Houses and Buildings Destroyed. Turkey-Syria Grieves",
         "17 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.",
-      btnText: "Lorem...",
+      // btnText: "Lorem...",
+      btnText: "Donate now",
       className: "bg-success-900 w-[260px] h-[380px] text-white",
     },
     {
@@ -75,45 +77,283 @@ function HeroSection() {
       className: "bg-emerald-700 text-white w-[260px] h-[300px]",
     },
   ];
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const cardContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.6,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const scrollToNextSection = () => {
+    const heroSection = document.getElementById("hero-section");
+    const nextSection = heroSection.nextElementSibling;
+
+    if (nextSection) {
+      nextSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
-    <div className="max-w-[1600px] mx-auto px-4 py-10">
+    <div
+      id="hero-section"
+      className="max-w-[1600px] mx-auto px-4 py-10 relative overflow-hidden"
+    >
+      {/* Animated Background Pattern */}
+      <div className="absolute inset-0 -z-1 opacity-50">
+        <svg
+          className="w-full h-full"
+          viewBox="0 0 1200 800"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Left Side Pattern */}
+          <g className="left-pattern">
+            <motion.path
+              d="M50,100 L250,100 A150,150 0 0,1 400,250 L400,600 L50,600 Z"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1"
+              className="text-success-600"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{
+                duration: 3,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 2,
+              }}
+            />
+            <motion.path
+              d="M80,130 L230,130 A120,120 0 0,1 370,250 L370,570 L80,570 Z"
+              fill="currentColor"
+              className="text-success-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 3,
+              }}
+            />
+          </g>
+
+          {/* Right Side Pattern */}
+          <g className="right-pattern">
+            <motion.path
+              d="M800,100 L1000,100 L1000,600 L650,600 A150,150 0 0,1 800,450 Z"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1"
+              className="text-warning-500"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{
+                duration: 3,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 2,
+              }}
+            />
+            <motion.path
+              d="M830,130 L970,130 L970,570 L680,570 A120,120 0 0,1 830,420 Z"
+              fill="currentColor"
+              className="text-warning-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 3,
+              }}
+            />
+          </g>
+
+          {/* Architectural Lines */}
+          <g className="architectural-details">
+            {[...Array(8)].map((_, i) => (
+              <motion.line
+                key={i}
+                x1={200 + i * 100}
+                y1="0"
+                x2={200 + i * 100}
+                y2="800"
+                stroke="currentColor"
+                strokeWidth="0.5"
+                className="text-success-200"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{
+                  duration: 2,
+                  delay: i * 0.1,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatDelay: 4,
+                }}
+              />
+            ))}
+            {[...Array(6)].map((_, i) => (
+              <motion.line
+                key={i}
+                x1="0"
+                y1={150 + i * 100}
+                x2="1200"
+                y2={150 + i * 100}
+                stroke="currentColor"
+                strokeWidth="0.5"
+                className="text-success-200"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{
+                  duration: 2,
+                  delay: i * 0.1,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatDelay: 4,
+                }}
+              />
+            ))}
+          </g>
+
+          {/* Subtle Accent Shapes */}
+          <g className="accent-shapes">
+            <motion.circle
+              cx="600"
+              cy="400"
+              r="200"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.5"
+              className="text-success-300"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 0.2 }}
+              transition={{
+                duration: 3,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 2,
+              }}
+            />
+            <motion.circle
+              cx="600"
+              cy="400"
+              r="150"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.5"
+              className="text-warning-300"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 0.2 }}
+              transition={{
+                duration: 3,
+                delay: 0.5,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 2,
+              }}
+            />
+          </g>
+        </svg>
+      </div>
+
       {/* Hero Text */}
-      <div className="relative text-center max-w-3xl mx-auto mb-12 z-10">
+      <motion.div
+        className="relative text-center max-w-3xl mx-auto mb-12 z-50 pt-20"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* radial circle */}
         <div className="absolute left-[-100px] top-[-800px] h-[1000px] w-[1000px] bg-gradient-to-r from-success-100 to-success-200 rounded-full blur-2xl opacity-50 -z-10"></div>
 
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 z-[1]">
-          {/* Great futures are built with a small charity */}
+        <motion.h1
+          className="text-5xl md:text-6xl font-bold mb-6 z-[1]"
+          variants={itemVariants}
+        >
           Lorem ipsum dolor sit amet conse adipisicing.
-        </h1>
-        <p className="text-xl text-default-600 mb-8">
-          {/* The world's largest social fundraising platform, optimized for your
-      charity in a more easy way */}
+        </motion.h1>
+        <motion.p
+          className="text-xl text-default-600 mb-8"
+          variants={itemVariants}
+        >
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem ad error
           dignissimos aliquid porro nesciunt neque earum laborum rerum nihil.
-        </p>
-        <div className="flex flex-wrap gap-4 justify-center">
+        </motion.p>
+        <motion.div
+          className="flex flex-wrap gap-4 justify-center"
+          variants={itemVariants}
+        >
           <Button
             className="bg-default-900 text-white px-8 py-3 rounded-full transition-all"
             size="lg"
           >
-            {/* Donate now */}
-            Lorem, ipsum.
+            Donate now
+            {/* Watch Video. */}
           </Button>
           <Button
             className="bg-default-200 hover:bg-default-300 text-default-900 px-8 py-3 rounded-full flex items-center gap-2 transition-all"
             size="lg"
           >
-            {/* ▶ Watch Video */}▶ Lorem, ipsum.
+            ▶ Watch Video
+            {/* ▶ Lorem, ipsum. */}
           </Button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Bento Grid */}
-      <div className="flex justify-center mt-18 ">
+      <motion.div
+        className="flex justify-center mt-18"
+        variants={cardContainerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3 place-items-start">
           {/* First Column */}
-          <div className="space-y-3">
+          <motion.div className="space-y-3 z-40" variants={cardVariants}>
             {/* Stat Card */}
             <div
               className={`rounded-[32px] overflow-hidden ${cards[0].className}`}
@@ -149,10 +389,13 @@ function HeroSection() {
                 <span className="text-3xl font-semibold">{cards[5].title}</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Second Column */}
-          <div className="space-y-3 flex flex-col items-end justify-end h-full">
+          <motion.div
+            className="space-y-3 flex flex-col items-end justify-end h-full"
+            variants={cardVariants}
+          >
             {/* Health Card */}
             <div
               className={`rounded-[32px] overflow-hidden relative ${cards[1].className}`}
@@ -170,13 +413,16 @@ function HeroSection() {
                 <p className="text-white text-2xl">{cards[1].description}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Middle Column */}
-          <div className="space-y-3 flex flex-col items-end justify-end h-full">
+          <motion.div
+            className="space-y-3 flex flex-col items-end justify-end h-full"
+            variants={cardVariants}
+          >
             {/* Join Card */}
             <div className="mb-6 w-full  flex items-center justify-center">
-              <AnimatedScrollButton />
+              <AnimatedScrollButton onClick={scrollToNextSection} />
             </div>
             <div
               className={`rounded-[32px] overflow-hidden ${cards[2].className}`}
@@ -206,10 +452,13 @@ function HeroSection() {
                 </Button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Fourth Column */}
-          <div className="space-y-3 flex flex-col items-end justify-end h-full">
+          <motion.div
+            className="space-y-3 flex flex-col items-end justify-end h-full"
+            variants={cardVariants}
+          >
             {/* Education Card */}
             <div
               className={`rounded-[32px] overflow-hidden relative ${cards[3].className}`}
@@ -227,10 +476,10 @@ function HeroSection() {
                 <p className="text-white text-2xl">{cards[3].description}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Fifth Column */}
-          <div className="space-y-3">
+          <motion.div className="space-y-3" variants={cardVariants}>
             {/* hands Card */}
             <div
               className={`rounded-[32px] overflow-hidden ${cards[0].className}`}
@@ -269,9 +518,9 @@ function HeroSection() {
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
       {/* <div className="mt-6 w-full  flex items-center justify-center">
     <AnimatedScrollButton />
   </div> */}

@@ -6,6 +6,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/navigation/Navbar";
 import Footer from "../components/navigation/Footer";
+import ScrollControls from "../components/common/ScrollControls";
 
 /**
  * ParentLayout component that provides the main application structure.
@@ -28,6 +29,8 @@ const ParentLayout = () => {
 
       {/* Footer */}
       <Footer />
+
+      <ScrollControls />
     </div>
   );
 };

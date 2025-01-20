@@ -11,6 +11,7 @@ import ProgramsSection from "./partials/ProgramsSection";
 import TestimonialsSection from "./partials/TestimonialsSection";
 import PartnerSection from "./partials/PartnerSection";
 import CallToActionSection from "./partials/CallToActionSection";
+import ScrollControls from "../../components/common/ScrollControls";
 
 /**
  * Home component with hero section and main content.
@@ -21,7 +22,7 @@ import CallToActionSection from "./partials/CallToActionSection";
  */
 const Home = () => {
   return (
-    <div className="min-h-screen bg-default-50 pt-20">
+    <div className="relative ">
       {/* Hero Section */}
       <HeroSection />
 
@@ -49,6 +50,7 @@ const Home = () => {
       <section className="py-20 bg-success-900 text-white">
         <CallToActionSection />
       </section>
+      {/* <ScrollControls /> */}
     </div>
   );
 };
