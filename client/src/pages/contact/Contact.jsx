@@ -4,36 +4,60 @@ import MapSection from "./partials/MapSection";
 import OfficeHoursSection from "./partials/OfficeHoursSection";
 import FAQSection from "./partials/FAQSection";
 import CallToActionSection from "../home/partials/CallToActionSection";
+import { useState } from "react";
+import { Mail, Phone, MessageSquare, Calendar, Send } from "lucide-react";
+import ContactForm from "./partials/ContactForm";
 
 /**
  * Contact page component with animated backgrounds and HeroUI components.
  * Features a modern design with smooth animations and interactive elements.
  */
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+    preferredContact: "email",
+    bestTime: "morning",
+  });
+
+  const [activeStep, setActiveStep] = useState(1);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission
+    console.log("Form submitted:", formData);
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const formSteps = [
+    { number: 1, title: "Personal Info" },
+    { number: 2, title: "Contact Details" },
+    { number: 3, title: "Message" },
+  ];
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="bg-white"
-    >
-      {/* Hero Section with Contact Form */}
+    <div className="min-h-screen bg-white">
       <ContactHero />
 
-      {/* Map Section */}
-      <MapSection />
-
-      {/* Office Hours & Support Section */}
+      <ContactForm />
       <OfficeHoursSection />
 
-      {/* FAQ Section */}
+      <MapSection />
       <FAQSection />
-
-      {/* Call to Action Section */}
       <section className="py-20 bg-success-900 text-white">
         <CallToActionSection />
       </section>
-    </motion.div>
+    </div>
   );
 };
 

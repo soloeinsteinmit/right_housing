@@ -7,7 +7,7 @@ import { Tooltip } from "@heroui/tooltip";
 const AnimatedScrollButton = ({ onClick }) => {
   return (
     <StyledWrapper>
-      <Tooltip content="SCROLL DOWN" placement="top">
+      <Tooltip content="SCROLL TO EXPLORE MORE" placement="top">
         <motion.button
           onClick={onClick}
           className="scrolldown"

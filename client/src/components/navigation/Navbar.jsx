@@ -6,6 +6,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@heroui/button";
+import logo from "../../assets/rhousing-logo.png";
+import { HandCoins } from "lucide-react";
 
 /**
  * Enhanced Navbar component with advanced styling and animations.
@@ -55,50 +57,60 @@ const Navbar = () => {
       }`}
     >
       {/* Blur effect background */}
-      <div className="absolute inset-0  backdrop-blur-md shadow-md"></div>
+      <div className="absolute inset-0 bg-white/60  backdrop-blur-md shadow-md"></div>
 
       <div className="container mx-auto px-4 relative">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-green-700">
-              Right Housing
+          <Link to="/" className="flex items-center gap-2">
+            <img
+              src={logo}
+              alt="RIGHT Housing Inc Logo"
+              className="h-10 w-10 rounded-md scale-85"
+            />
+            <span className="text-xl font-bold text-success-900">
+              RIGHT Housing Inc.
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {/* Nav Links */}
-            <div className="flex space-x-8">
-              {navItems.map((item) => (
-                <Link key={item.path} to={item.path} className="relative group">
-                  <span
-                    className={`text-sm font-medium transition-colors duration-200 ${
-                      isActive(item.path)
-                        ? "text-success-700"
-                        : "text-gray-600 group-hover:text-success-700"
-                    }`}
-                  >
-                    {item.name}
-                  </span>
-                  {/* Active link underline with shadow */}
-                  <span
-                    className={`absolute -bottom-1 left-0 w-full h-0.5 transform origin-left transition-transform duration-200 ${
-                      isActive(item.path)
-                        ? "scale-x-100 bg-success-700 shadow-sm"
-                        : "scale-x-0 bg-success-700 group-hover:scale-x-100"
-                    }`}
-                  ></span>
-                </Link>
+            {/* Navigation Links */}
+            <nav className="hidden md:flex items-center">
+              {navItems.map((item, index) => (
+                <div key={item.path} className="flex items-center">
+                  <Link to={item.path} className="relative group">
+                    <span
+                      className={`text-base font-medium transition-colors duration-200 ${
+                        isActive(item.path)
+                          ? "text-success-700"
+                          : "text-gray-600 group-hover:text-success-700"
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                    {/* Active link underline with shadow */}
+                    <span
+                      className={`absolute -bottom-1 left-0 w-full h-0.5 transform origin-left transition-transform duration-200 ${
+                        isActive(item.path)
+                          ? "scale-x-100 bg-success-700 shadow-sm"
+                          : "scale-x-0 bg-success-700 group-hover:scale-x-100"
+                      }`}
+                    ></span>
+                  </Link>
+                  {index < navItems.length - 1 && (
+                    <div className="w-1 h-1 rotate-45 bg-success-500 mx-4" />
+                  )}
+                </div>
               ))}
-            </div>
+            </nav>
 
             {/* Action Buttons */}
             <div className="flex items-center space-x-4">
               <Link to="/apply">
                 <Button
                   className="bg-success-700 hover:bg-success-800 text-white shadow-sm"
-                  size="sm"
+                  // size="sm"
                 >
                   Apply Now
                 </Button>
@@ -106,9 +118,10 @@ const Navbar = () => {
               <Link to="/donate">
                 <Button
                   className="bg-warning-500 hover:bg-warning-600 text-white shadow-sm"
-                  size="sm"
+                  // size="sm"
+                  startContent={<HandCoins className="w-4 h-4" />}
                 >
-                  Donate
+                  Donate Now
                 </Button>
               </Link>
             </div>

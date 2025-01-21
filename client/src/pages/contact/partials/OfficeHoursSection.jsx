@@ -1,4 +1,13 @@
 import { motion } from "framer-motion";
+import {
+  Clock,
+  Phone,
+  HeartPulse,
+  Users,
+  Brain,
+  Home,
+  BatteryPlus,
+} from "lucide-react";
 
 const OfficeHoursSection = () => {
   const cardVariants = {
@@ -12,6 +21,50 @@ const OfficeHoursSection = () => {
     },
   };
 
+  const supportHours = [
+    {
+      day: "Monday - Friday",
+      hours: "8:00 AM - 8:00 PM",
+      type: "Full Services",
+    },
+    { day: "Saturday", hours: "9:00 AM - 5:00 PM", type: "Limited Services" },
+    { day: "Sunday", hours: "10:00 AM - 4:00 PM", type: "Limited Services" },
+    {
+      day: "24/7 Crisis Support",
+      hours: "Always Available",
+      type: "Emergency Services",
+    },
+  ];
+
+  const supportServices = [
+    {
+      icon: <BatteryPlus className="w-6 h-6" />,
+      title: "Recovery Support",
+      description:
+        "Comprehensive addiction recovery programs and mental health services",
+      availability: "24/7 Crisis Support",
+    },
+    {
+      icon: <Home className="w-6 h-6" />,
+      title: "Housing Assistance",
+      description:
+        "Emergency shelter and transitional housing placement services",
+      availability: "Regular Hours + Emergency",
+    },
+    {
+      icon: <Brain className="w-6 h-6" />,
+      title: "Counseling Services",
+      description: "Individual and group therapy sessions for recovery support",
+      availability: "By Appointment",
+    },
+    // {
+    //   icon: <Users className="w-6 h-6" />,
+    //   title: "Community Programs",
+    //   description: "Support groups and life skills development workshops",
+    //   availability: "Weekly Schedule",
+    // },
+  ];
+
   return (
     <section className="bg-gray-50 py-16 relative overflow-hidden">
       {/* Background Elements */}
@@ -21,58 +74,86 @@ const OfficeHoursSection = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Office Hours Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Support Hours & Services
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Our doors are always open for those seeking help. With 24/7 crisis
+            support and comprehensive recovery services, we're here when you
+            need us most.
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          {/* Hours of Operation Card */}
           <motion.div
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden"
+            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow "
           >
-            {/* Decorative Element */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-success-50 rounded-full -translate-x-16 -translate-y-16" />
-            
-            <div className="relative">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-10 h-10 bg-success-100 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </span>
-                Office Hours
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-12 h-12 bg-success-100 rounded-xl flex items-center justify-center">
+                <Clock className="w-6 h-6 text-success-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">
+                Hours of Operation
               </h3>
-              
-              <div className="space-y-4">
-                {[
-                  { day: "Monday - Friday", hours: "9:00 AM - 5:00 PM" },
-                  { day: "Saturday", hours: "10:00 AM - 2:00 PM" },
-                  { day: "Sunday", hours: "Closed" },
-                ].map((schedule, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0"
-                  >
-                    <span className="text-gray-600">{schedule.day}</span>
-                    <span className="font-semibold text-gray-900">{schedule.hours}</span>
-                  </motion.div>
-                ))}
-                
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <div className="bg-success-50 rounded-xl p-4">
-                    <p className="text-gray-600 mb-2">
-                      Emergency housing support available 24/7
-                    </p>
-                    <p className="font-semibold text-success-600 flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                      Emergency: (555) 999-9999
-                    </p>
+            </div>
+
+            <div className="space-y-6">
+              {supportHours.map((schedule, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-gray-100 last:border-0"
+                >
+                  <div>
+                    <span className="text-gray-900 font-medium">
+                      {schedule.day}
+                    </span>
+                    <span className="text-sm text-success-600 block sm:inline sm:ml-2">
+                      ({schedule.type})
+                    </span>
                   </div>
+                  <span className="font-semibold text-gray-700">
+                    {schedule.hours}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Emergency Contact */}
+            <div className="mt-8 bg-success-50 rounded-xl p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-success-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-6 h-6 text-success-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">
+                    24/7 Crisis Support
+                  </h4>
+                  <p className="text-gray-600 mb-3">
+                    Immediate assistance available for housing and recovery
+                    emergencies
+                  </p>
+                  <a
+                    href="tel:1-800-RIGHT-HOUSE"
+                    className="text-lg font-bold text-success-600 hover:text-success-700 transition-colors"
+                  >
+                    1-800-RIGHT-HOUSE
+                  </a>
                 </div>
               </div>
             </div>
@@ -84,66 +165,56 @@ const OfficeHoursSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden"
+            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
           >
-            {/* Decorative Element */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-warning-50 rounded-full -translate-x-16 -translate-y-16" />
-            
-            <div className="relative">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-10 h-10 bg-warning-100 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </span>
-                Support Services
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-12 h-12 bg-warning-100 rounded-xl flex items-center justify-center">
+                <HeartPulse className="w-6 h-6 text-warning-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">
+                Recovery Services
               </h3>
-              
-              <div className="space-y-6">
-                {[
-                  {
-                    icon: (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    ),
-                    title: "Housing Assistance",
-                    description: "Emergency shelter, transitional housing, and permanent housing solutions",
-                  },
-                  {
-                    icon: (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    ),
-                    title: "Case Management",
-                    description: "Personalized support and guidance through your housing journey",
-                  },
-                  {
-                    icon: (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    ),
-                    title: "Community Support",
-                    description: "Connect with resources and support groups in your area",
-                  },
-                ].map((service, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-4 group"
-                  >
-                    <div className="bg-warning-50 p-3 rounded-xl group-hover:bg-warning-100 transition-colors">
-                      <svg className="w-6 h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {service.icon}
-                      </svg>
+            </div>
+
+            <div className="space-y-6">
+              {supportServices.map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group"
+                >
+                  <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-warning-50 transition-colors">
+                    <div className="w-12 h-12 bg-warning-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      {service.icon}
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-1 group-hover:text-warning-600 transition-colors">
-                        {service.title}
-                      </h4>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-bold text-gray-900">
+                          {service.title}
+                        </h4>
+                        <span className="text-xs px-2 py-1 bg-warning-100 text-warning-700 rounded-full">
+                          {service.availability}
+                        </span>
+                      </div>
                       <p className="text-gray-600">{service.description}</p>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="mt-8 p-6 bg-warning-50 rounded-xl">
+              <h4 className="font-bold text-gray-900 mb-2">
+                Need Immediate Help?
+              </h4>
+              <p className="text-gray-600">
+                Don't hesitate to reach out. Our recovery support team is here
+                to assist you 24/7, providing guidance and support when you need
+                it most.
+              </p>
             </div>
           </motion.div>
         </div>

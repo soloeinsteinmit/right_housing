@@ -51,11 +51,10 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-warning-400">
-              Right Housing
+              Right Housing Inc.
             </h2>
             <p className="text-success-100 max-w-xs">
-              Empowering communities through accessible housing solutions and
-              sustainable development.
+              Dedicated to transforming lives through recovery support and stable housing solutions. Building stronger communities, one person at a time.
             </p>
             <div className="flex space-x-4">
               <a
