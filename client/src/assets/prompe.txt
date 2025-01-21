@@ -1,6 +1,84 @@
-great now let work extensive on the herosection.
-but first add this to the nav bar links
-1. i want you to add bullets or dots btn the links to make is for aesthecally nice
-2. the main this is now the hero section should take the whole screen with a scroll animated button @AnimatedScrollButton.jsx . anaylise the hero.jpg image and see see how the it was arranged and let do the same think. i want it to look like the hero.jpg image. images for the cards are available in the @client/src/assets folder.  feel free to let us do this step by step.
+const NetworkAnimation = () => {
+    const points = [];
+    const numPoints = 30;
+    const radius = 4;
 
-first anaylsie the hero.jpg image in the @client/src/assets and tell me what you see
+    // Generate connection points in a grid pattern
+    for (let i = 0; i < numPoints; i++) {
+      points.push({
+        x: (i % 6) * 20 + Math.random() * 5,
+        y: Math.floor(i / 6) * 20 + Math.random() * 5,
+      });
+    }
+
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <svg className="w-full h-full opacity-[0.2]">
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#22c55e" stopOpacity="0.2" />
+              <stop offset="50%" stopColor="#22c55e" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#22c55e" stopOpacity="0.2" />
+            </linearGradient>
+          </defs>
+          <pattern
+            id="points"
+            x="0"
+            y="0"
+            width="100"
+            height="100"
+            patternUnits="userSpaceOnUse"
+          >
+            {points.map((point, i) => (
+              <g key={i}>
+                <motion.circle
+                  cx={point.x}
+                  cy={point.y}
+                  r={radius}
+                  fill="#22c55e"
+                  initial={{ opacity: 0.1 }}
+                  animate={{
+                    opacity: [0.1, 0.3, 0.1],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 3,
+                    delay: i * 0.1,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+                {points
+                  .slice(i + 1)
+                  .filter(
+                    (p2) =>
+                      Math.abs(p2.x - point.x) < 40 &&
+                      Math.abs(p2.y - point.y) < 40
+                  )
+                  .map((p2, j) => (
+                    <motion.line
+                      key={j}
+                      x1={point.x}
+                      y1={point.y}
+                      x2={p2.x}
+                      y2={p2.y}
+                      stroke="url(#lineGradient)"
+                      strokeWidth="0.5"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: [0, 1, 0] }}
+                      transition={{
+                        duration: 4,
+                        delay: (i + j) * 0.1,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  ))}
+              </g>
+            ))}
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#points)" />
+        </svg>
+      </div>
+    );
+  };

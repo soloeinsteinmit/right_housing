@@ -1,34 +1,40 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { MessageCircle, Phone } from "lucide-react";
 
 const FAQSection = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   const faqs = [
     {
-      question: "How do I qualify for housing assistance?",
+      question: "What recovery support services do you offer?",
       answer:
-        "Eligibility is based on various factors including income level, current housing situation, and specific needs. Contact us to schedule an assessment with our housing specialists.",
+        "We provide comprehensive recovery support including addiction recovery programs, mental health services, counseling, and support groups. Our services are designed to support both individual and group recovery journeys, with 24/7 crisis support available.",
     },
     {
-      question: "What documents do I need to apply?",
+      question: "How does the housing transition program work?",
       answer:
-        "Generally, you'll need identification, proof of income, current housing information, and any relevant documentation about your situation. Our team will guide you through the specific requirements.",
+        "Our housing transition program begins with an initial assessment to understand your needs. We then create a personalized plan that includes temporary housing, recovery support, life skills training, and assistance in finding permanent housing. Our team provides continuous support throughout your journey to independence.",
     },
     {
-      question: "How long does the process take?",
+      question: "What should I expect during the intake process?",
       answer:
-        "The timeline varies depending on your specific situation and the type of assistance needed. We strive to process applications as quickly as possible, especially for emergency situations.",
+        "The intake process starts with a confidential assessment of your situation and needs. You'll meet with our support team to discuss your recovery goals, housing needs, and any immediate concerns. We'll then develop a personalized support plan and connect you with appropriate services and resources.",
     },
     {
-      question: "What types of housing assistance do you offer?",
+      question: "Do you offer emergency housing assistance?",
       answer:
-        "We offer a comprehensive range of housing solutions including emergency shelter, transitional housing, permanent supportive housing, and rental assistance programs. Each program is tailored to meet different needs and circumstances.",
+        "Yes, we provide 24/7 emergency housing assistance for individuals in crisis. Our emergency services include immediate shelter placement, crisis intervention, and connection to long-term support services. Contact our crisis line at 1-800-RIGHT-HOUSE for immediate assistance.",
     },
     {
-      question: "Can I get help with my utility bills?",
+      question: "What ongoing support is available after housing placement?",
       answer:
-        "Yes, we offer utility assistance as part of our housing support programs. This can include help with electricity, water, gas, and other essential utilities depending on your eligibility and available resources.",
+        "We provide comprehensive aftercare support including regular check-ins, continued access to recovery services, life skills development, job placement assistance, and community integration support. Our goal is to ensure long-term success in your recovery and housing stability.",
+    },
+    {
+      question: "How do you support mental health alongside recovery?",
+      answer:
+        "Mental health support is integrated into all our programs. We offer individual counseling, group therapy, psychiatric services, and crisis intervention. Our team works collaboratively to address both recovery and mental health needs in a holistic manner.",
     },
   ];
 
@@ -50,11 +56,10 @@ const FAQSection = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Frequently Asked Questions
+            Recovery Support FAQ
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Find quick answers to common questions about our housing support
-            services. Can't find what you're looking for? Don't hesitate to contact us.
+            Find answers about our recovery programs and housing transition support. We're here to help you on your journey to stability and independence.
           </p>
         </motion.div>
 
@@ -122,40 +127,65 @@ const FAQSection = () => {
           ))}
         </div>
 
-        {/* Additional Help Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="text-center mt-12 p-8 bg-success-50 rounded-2xl"
-        >
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">
-            Still Have Questions?
-          </h3>
-          <p className="text-gray-600 mb-6">
-            Our team is here to help you find the answers you need.
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center gap-2 bg-success-600 text-white px-6 py-3 rounded-full hover:bg-success-700 transition-colors"
+        {/* Support Options */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
+          {/* Crisis Support */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="bg-success-50 rounded-2xl p-8"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-success-100 rounded-xl flex items-center justify-center">
+                <Phone className="w-6 h-6 text-success-600" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900">
+                  24/7 Crisis Support
+                </h3>
+                <p className="text-gray-600">
+                  Immediate assistance available
+                </p>
+              </div>
+            </div>
+            <a
+              href="tel:1-800-RIGHT-HOUSE"
+              className="inline-flex items-center gap-2 bg-success-600 text-white px-6 py-3 rounded-full hover:bg-success-700 transition-colors w-full justify-center"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
-            Contact Support
-          </motion.button>
-        </motion.div>
+              Call 1-800-RIGHT-HOUSE
+            </a>
+          </motion.div>
+
+          {/* General Support */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="bg-warning-50 rounded-2xl p-8"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-warning-100 rounded-xl flex items-center justify-center">
+                <MessageCircle className="w-6 h-6 text-warning-600" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900">
+                  General Inquiries
+                </h3>
+                <p className="text-gray-600">
+                  Questions about our programs
+                </p>
+              </div>
+            </div>
+            <button
+              className="inline-flex items-center gap-2 bg-warning-600 text-white px-6 py-3 rounded-full hover:bg-warning-700 transition-colors w-full justify-center"
+            >
+              Contact Support Team
+            </button>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

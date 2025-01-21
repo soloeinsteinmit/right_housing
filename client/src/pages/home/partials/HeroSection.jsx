@@ -2,6 +2,11 @@ import React from "react";
 import { ArrowUpRight, Heart } from "lucide-react";
 import AnimatedScrollButton from "../../../components/common/AnimatedScrollButton";
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
+import { HandCoins } from "lucide-react";
+import usePulseAnimation, {
+  PULSE_COLORS,
+} from "../../../hooks/usePulseAnimation";
 
 // Import images
 import helpingHand2 from "../../../assets/homeless1.jpg";
@@ -14,66 +19,68 @@ import BackgroundPattern from "../../../assets/HandsBackgroundPattern";
 import StatsBackgroundPattern from "../../../assets/StatBackgroundPattern";
 
 function HeroSection() {
+  const navigate = useNavigate();
+  const pulseVariant = usePulseAnimation({
+    color: PULSE_COLORS.WARNING,
+  });
+
   const cards = [
     {
       type: "stat",
-      title: "65%",
+      title: "80%",
       description:
-        // "17 Thousand People Died, Thousands Injured, Houses and Buildings Destroyed. Turkey-Syria Grieves",
-        "17 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.",
-      // btnText: "Lorem...",
-      btnText: "Donate now",
+        "Success rate in transitioning individuals to stable, independent living through our comprehensive support programs.",
+      btnText: "Learn More",
       className: "bg-success-900 w-[260px] h-[380px] text-white",
     },
     {
       type: "health",
-      title: "Lorem",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing. ",
+      title: "Recovery",
+      description:
+        "Supporting individuals in their journey to recovery and reintegration with compassionate care.",
       image: helpingHand2,
       className: "bg-[#14171F] text-white w-[260px] h-[350px]",
     },
     {
       type: "join",
-      //   title: "Join 5000+",
-      title: "Lore 5000+",
-      //   description: "People Donate",
-      description: "Lorem ipsum",
-      btnText: "Join community",
+      title: "Join 1000+",
+      description: "Lives Transformed",
+      btnText: "Support Our Mission",
       className: "bg-success-100 w-[260px] h-[250px]",
     },
     {
       type: "education",
-      title: "Lorem",
-      description: "Ipsum dolor sit amet consectetur adipisicing. ",
+      title: "Guidance",
+      description:
+        "Providing personalized support and goal-setting for sustainable independence.",
       image: homeless1,
       className: "bg-[#14171F] text-white w-[260px] h-[350px]",
     },
     {
       type: "explore",
-      btnText: "Explore more",
+      btnText: "Explore Our Impact",
       className: "bg-[#CDFF6B] hover:bg-[#b8ff42] w-[260px] h-[70px]",
     },
     {
       type: "help",
-      //   title: "Let them be heard",
-      title: "Man dolor hu uoios",
-      //   icon: "😊",
+      title: "Every Door Leads to Opportunity",
       icon: <SmileEmoji className="w-14" />,
       className: "bg-default-900 text-white w-[260px] h-[120px]",
     },
     {
       type: "donate",
-      title: "Make a Change",
+      title: "Transform Lives",
       description:
-        "Join our mission to make a difference. Together we can create lasting impact in our communities.",
-      btnText: "Donate today",
+        "Join our mission to provide comprehensive housing support and essential resources for those in transition.",
+      btnText: "Support Now",
       className: "bg-[#14171F] text-white w-[260px] h-full",
     },
     {
       type: "impact",
-      title: "Our Impact",
-      description: "See how we're changing lives",
-      btnText: "Learn more",
+      title: "Holistic Support",
+      description:
+        "Comprehensive care for mental, physical, and emotional well-being",
+      btnText: "Our Approach",
       className: "bg-emerald-700 text-white w-[260px] h-[300px]",
     },
   ];
@@ -310,38 +317,53 @@ function HeroSection() {
         {/* radial circle */}
         <div className="absolute left-[-100px] top-[-800px] h-[1000px] w-[1000px] bg-gradient-to-r from-success-100 to-success-200 rounded-full blur-2xl opacity-50 -z-10"></div>
 
-        <motion.h1
-          className="text-5xl md:text-6xl font-bold mb-6 z-[1]"
-          variants={itemVariants}
-        >
-          Lorem ipsum dolor sit amet conse adipisicing.
-        </motion.h1>
-        <motion.p
-          className="text-xl text-default-600 mb-8"
-          variants={itemVariants}
-        >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem ad error
-          dignissimos aliquid porro nesciunt neque earum laborum rerum nihil.
-        </motion.p>
-        <motion.div
-          className="flex flex-wrap gap-4 justify-center"
-          variants={itemVariants}
-        >
-          <Button
-            className="bg-default-900 text-white px-8 py-3 rounded-full transition-all"
-            size="lg"
+        <div className="space-y-6 max-w-[1000px]">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-5xl font-bold leading-tight"
+            variants={itemVariants}
           >
-            Donate now
-            {/* Watch Video. */}
-          </Button>
-          <Button
-            className="bg-default-200 hover:bg-default-300 text-default-900 px-8 py-3 rounded-full flex items-center gap-2 transition-all"
-            size="lg"
+            Transforming Lives Through Recovery and Housing Support
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-xl text-gray-600"
+            variants={itemVariants}
           >
-            ▶ Watch Video
-            {/* ▶ Lorem, ipsum. */}
-          </Button>
-        </motion.div>
+            Empowering individuals on their journey to recovery and independence
+            through comprehensive support, stable housing, and compassionate
+            care.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-wrap gap-4 items-center justify-center"
+          >
+            <motion.button
+              // to="/donate"
+              className="inline-flex items-center gap-2 bg-warning text-white px-8 py-4 rounded-full hover:bg-warning-600 transition-colors"
+              variants={pulseVariant}
+              initial="initial"
+              animate="animate"
+              whileTap="tap"
+              onClick={() => navigate("/donate")}
+            >
+              <HandCoins className="w-5 h-5" /> Donate Now
+            </motion.button>
+
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-2 bg-gray-100 text-gray-900 px-8 py-4 rounded-full hover:bg-gray-200 transition-colors"
+            >
+              ▶ Watch Video
+            </Link>
+          </motion.div>
+        </div>
       </motion.div>
 
       {/* Bento Grid */}
@@ -384,9 +406,9 @@ function HeroSection() {
             <div
               className={`rounded-[32px] overflow-hidden ${cards[5].className}`}
             >
-              <div className="p-6 flex items-center justify-center gap-3  h-full">
-                <span className="text-2xl">{cards[5].icon}</span>
-                <span className="text-3xl font-semibold">{cards[5].title}</span>
+              <div className="p-4 flex items-center justify-center gap-2  h-full">
+                <span className="text-xl">{cards[5].icon}</span>
+                <span className="text-xl font-semibold">{cards[5].title}</span>
               </div>
             </div>
           </motion.div>
@@ -410,7 +432,7 @@ function HeroSection() {
                 <p className="text-base text-default-300 font-semibold mb-2">
                   {cards[1].title}
                 </p>
-                <p className="text-white text-2xl">{cards[1].description}</p>
+                <p className="text-white text-xl">{cards[1].description}</p>
               </div>
             </div>
           </motion.div>
@@ -473,7 +495,7 @@ function HeroSection() {
                 <h3 className="text-base text-default-300 font-semibold mb-2">
                   {cards[3].title}
                 </h3>
-                <p className="text-white text-2xl">{cards[3].description}</p>
+                <p className="text-white text-xl">{cards[3].description}</p>
               </div>
             </div>
           </motion.div>
@@ -508,13 +530,13 @@ function HeroSection() {
             <div
               className={`rounded-[32px] overflow-hidden ${cards[5].className}`}
             >
-              <div className="p-5 flex items-center justify-center bg-warning-900 gap-3 h-full">
-                <span className="text-2xl">
+              <div className="p-4 flex items-center justify-center bg-warning-900 gap-3 h-full">
+                <span className="text-xl">
                   {/* {cards[5].icon} */}
                   <HeartEmoji className="w-14" />
                 </span>
-                <span className="text-3xl font-semibold text-warning-500">
-                  {/* {cards[5].title} */}Lorem ism man dolor
+                <span className="text-xl font-semibold text-warning-500">
+                  {/* {cards[5].title} */}Every Helping Hand Makes a Difference
                 </span>
               </div>
             </div>

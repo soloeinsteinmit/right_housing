@@ -3,8 +3,9 @@
  * Displayed after a successful donation payment.
  */
 
+import { motion } from "framer-motion";
+import { CheckCircle, Heart, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "@heroui/button";
 
 /**
  * DonationSuccess component shown after successful donation.
@@ -14,76 +15,101 @@ import { Button } from "@heroui/button";
  * @returns {JSX.Element} The rendered DonationSuccess component
  */
 const DonationSuccess = () => {
-    return (
-        <div className="min-h-screen py-16">
-            <div className="container mx-auto px-4">
-                <div className="max-w-2xl mx-auto text-center">
-                    {/* Success Icon */}
-                    <div className="mb-8">
-                        <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                            <svg
-                                className="w-8 h-8 text-green-600"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M5 13l4 4L19 7"
-                                />
-                            </svg>
-                        </div>
-                    </div>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-success-50 to-success-100 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 text-center relative overflow-hidden"
+      >
+        {/* Success Animation */}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 20,
+          }}
+          className="w-24 h-24 mx-auto mb-6 text-success-500"
+        >
+          <CheckCircle className="w-full h-full" strokeWidth={1.5} />
+        </motion.div>
 
-                    {/* Thank You Message */}
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                        Thank You for Your Donation!
-                    </h1>
-                    <p className="text-xl text-gray-600 mb-8">
-                        Your generous contribution will help us provide housing support
-                        and transform lives.
-                    </p>
-
-                    {/* Donation Details */}
-                    <div className="bg-gray-50 p-6 rounded-lg mb-8">
-                        <h2 className="text-lg font-semibold mb-4">
-                            Donation Details
-                        </h2>
-                        <div className="space-y-2 text-gray-600">
-                            <p>Transaction ID: #123456789</p>
-                            <p>A receipt has been sent to your email</p>
-                        </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="space-x-4">
-                        <Link to="/">
-                            <Button color="primary">
-                                Return Home
-                            </Button>
-                        </Link>
-                        <Link to="/programs">
-                            <Button color="secondary">
-                                View Our Programs
-                            </Button>
-                        </Link>
-                    </div>
-
-                    {/* Social Share */}
-                    <div className="mt-12">
-                        <p className="text-sm text-gray-600 mb-4">
-                            Help spread the word about our mission
-                        </p>
-                        <div className="flex justify-center space-x-4">
-                            {/* Add social share buttons here */}
-                        </div>
-                    </div>
-                </div>
-            </div>
+        {/* Floating Hearts */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-success-200"
+              initial={{
+                x: Math.random() * 400 - 200,
+                y: Math.random() * 400 - 200,
+                scale: 0,
+              }}
+              animate={{
+                y: [-20, 20],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 2 + i,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: i * 0.2,
+              }}
+            >
+              <Heart className="w-8 h-8" />
+            </motion.div>
+          ))}
         </div>
-    );
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl font-bold text-gray-900 mb-4"
+        >
+          Thank You for Your Generosity!
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-gray-600 mb-8"
+        >
+          Your donation has been successfully processed. Together, we're making a
+          difference in providing safe and stable housing for those in need.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-success-50 rounded-xl p-6 mb-8"
+        >
+          <h2 className="text-success-700 font-semibold mb-2">What Happens Next?</h2>
+          <ul className="text-success-600 text-sm text-left space-y-2">
+            <li>• You'll receive a confirmation email shortly</li>
+            <li>• A tax receipt will be sent for your records</li>
+            <li>• Your donation will be put to work immediately</li>
+            <li>• We'll keep you updated on our impact</li>
+          </ul>
+        </motion.div>
+
+        <Link to="/">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-success-600 text-white rounded-xl font-medium hover:bg-success-700 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Return Home
+          </motion.button>
+        </Link>
+      </motion.div>
+    </div>
+  );
 };
 
 export default DonationSuccess;

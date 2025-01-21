@@ -35,6 +35,9 @@ import DonationCancel from "../pages/donate/DonationCancel";
 import PrivacyPolicy from "../pages/legal/PrivacyPolicy";
 import TermsOfService from "../pages/legal/TermsOfService";
 
+// Volunteer Pages
+import Volunteer from "../pages/volunteer/Volunteer";
+
 /**
  * @typedef {Object} RouteConfig
  * @property {string} path - The URL path for the route
@@ -59,6 +62,7 @@ import TermsOfService from "../pages/legal/TermsOfService";
  * - /contact (Contact Us)
  * - /privacy (Privacy Policy)
  * - /terms (Terms of Service)
+ * - /volunteer (Volunteer)
  * 
  * @type {import('react-router-dom').RouterProvider}
  */
@@ -74,6 +78,7 @@ export const router = createBrowserRouter(
             <Route path="about" element={<About />} />
             <Route path="programs" element={<Programs />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="volunteer" element={<Volunteer />} />
 
             {/* Application routes */}
             <Route path="apply">
