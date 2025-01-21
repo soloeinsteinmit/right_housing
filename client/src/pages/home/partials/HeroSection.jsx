@@ -2,8 +2,11 @@ import React from "react";
 import { ArrowUpRight, Heart } from "lucide-react";
 import AnimatedScrollButton from "../../../components/common/AnimatedScrollButton";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HandCoins } from "lucide-react";
+import usePulseAnimation, {
+  PULSE_COLORS,
+} from "../../../hooks/usePulseAnimation";
 
 // Import images
 import helpingHand2 from "../../../assets/homeless1.jpg";
@@ -16,6 +19,11 @@ import BackgroundPattern from "../../../assets/HandsBackgroundPattern";
 import StatsBackgroundPattern from "../../../assets/StatBackgroundPattern";
 
 function HeroSection() {
+  const navigate = useNavigate();
+  const pulseVariant = usePulseAnimation({
+    color: PULSE_COLORS.WARNING,
+  });
+
   const cards = [
     {
       type: "stat",
@@ -336,12 +344,18 @@ function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-wrap gap-4 items-center justify-center"
           >
-            <Link
-              to="/donate"
+            <motion.button
+              // to="/donate"
               className="inline-flex items-center gap-2 bg-warning text-white px-8 py-4 rounded-full hover:bg-warning-600 transition-colors"
+              variants={pulseVariant}
+              initial="initial"
+              animate="animate"
+              whileTap="tap"
+              onClick={() => navigate("/donate")}
             >
               <HandCoins className="w-5 h-5" /> Donate Now
-            </Link>
+            </motion.button>
+
             <Link
               to="/about"
               className="inline-flex items-center gap-2 bg-gray-100 text-gray-900 px-8 py-4 rounded-full hover:bg-gray-200 transition-colors"
@@ -516,13 +530,13 @@ function HeroSection() {
             <div
               className={`rounded-[32px] overflow-hidden ${cards[5].className}`}
             >
-              <div className="p-5 flex items-center justify-center bg-warning-900 gap-3 h-full">
-                <span className="text-2xl">
+              <div className="p-4 flex items-center justify-center bg-warning-900 gap-3 h-full">
+                <span className="text-xl">
                   {/* {cards[5].icon} */}
                   <HeartEmoji className="w-14" />
                 </span>
-                <span className="text-3xl font-semibold text-warning-500">
-                  {/* {cards[5].title} */}Lorem ism man dolor
+                <span className="text-xl font-semibold text-warning-500">
+                  {/* {cards[5].title} */}Every Helping Hand Makes a Difference
                 </span>
               </div>
             </div>

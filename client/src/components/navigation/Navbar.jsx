@@ -4,10 +4,12 @@
  */
 
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@heroui/button";
 import logo from "../../assets/rhousing-logo.png";
 import { HandCoins } from "lucide-react";
+import usePulseAnimation, { PULSE_COLORS } from "../../hooks/usePulseAnimation";
+import { motion } from "framer-motion";
 
 /**
  * Enhanced Navbar component with advanced styling and animations.
@@ -22,6 +24,11 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  const navigate = useNavigate();
+  const pulseVariant = usePulseAnimation({
+    color: PULSE_COLORS.WARNING,
+  });
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -115,15 +122,19 @@ const Navbar = () => {
                   Apply Now
                 </Button>
               </Link>
-              <Link to="/donate">
-                <Button
-                  className="bg-warning-500 hover:bg-warning-600 text-white shadow-sm"
-                  // size="sm"
-                  startContent={<HandCoins className="w-4 h-4" />}
-                >
-                  Donate Now
-                </Button>
-              </Link>
+              {/* <Link to="/donate"> */}
+              <motion.button
+                className="flex items-center justify-center gap-2 bg-warning-500 hover:bg-warning-600 rounded-medium px-4 py-2 text-white shadow-sm"
+                // size="sm"
+                variants={pulseVariant}
+                initial="initial"
+                animate="animate"
+                whileTap="tap"
+                onClick={() => navigate("/donate")}
+              >
+                Donate Now <HandCoins className="w-4 h-4" />
+              </motion.button>
+              {/* </Link> */}
             </div>
           </div>
 

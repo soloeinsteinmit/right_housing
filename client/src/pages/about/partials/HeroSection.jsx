@@ -3,7 +3,7 @@ import community from "../../../assets/12.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gray-50">
+    <section className="relative min-h-screen flex max-md:py-16 items-center overflow-hidden bg-gray-50">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-success-50/50 to-transparent" />

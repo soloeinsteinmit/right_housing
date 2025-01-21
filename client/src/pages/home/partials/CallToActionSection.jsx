@@ -1,8 +1,17 @@
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import usePulseAnimation, {
+  PULSE_COLORS,
+} from "../../../hooks/usePulseAnimation";
+import { motion } from "framer-motion";
 
 const CallToActionSection = () => {
+  const navigate = useNavigate();
+  const pulseVariant = usePulseAnimation({
+    color: PULSE_COLORS.WARNING,
+  });
+
   return (
     <div className="max-w-[1400px] mx-auto px-4">
       <div className="bg-success-800 rounded-3xl p-12 md:p-20 relative overflow-hidden">
@@ -42,13 +51,18 @@ const CallToActionSection = () => {
               services to those in need. Join us in transforming lives.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/donate"
+              <motion.button
+                // to="/donate"
                 className="inline-flex items-center justify-center gap-2 bg-warning-500 hover:bg-warning-600 text-white px-8 py-4 rounded-full transition-colors text-lg font-semibold group"
+                variants={pulseVariant}
+                initial="initial"
+                animate="animate"
+                whileTap="tap"
+                onClick={() => navigate("/donate")}
               >
                 <span>Donate Now</span>
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </Link>
+              </motion.button>
               <Link
                 to="/volunteer"
                 className="inline-flex items-center justify-center gap-2 bg-success-700 hover:bg-success-600 text-white px-8 py-4 rounded-full transition-colors text-lg font-semibold group"
