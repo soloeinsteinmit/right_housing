@@ -1,0 +1,6 @@
+great now let work extensive on the herosection.
+but first add this to the nav bar links
+1. i want you to add bullets or dots btn the links to make is for aesthecally nice
+2. the main this is now the hero section should take the whole screen with a scroll animated button @AnimatedScrollButton.jsx . anaylise the hero.jpg image and see see how the it was arranged and let do the same think. i want it to look like the hero.jpg image. images for the cards are available in the @client/src/assets folder.  feel free to let us do this step by step.
+
+first anaylsie the hero.jpg image in the @client/src/assets and tell me what you see
