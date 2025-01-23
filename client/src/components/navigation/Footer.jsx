@@ -54,7 +54,9 @@ const Footer = () => {
               Right Housing Inc.
             </h2>
             <p className="text-success-100 max-w-xs">
-              Dedicated to transforming lives through recovery support and stable housing solutions. Building stronger communities, one person at a time.
+              Dedicated to transforming lives through recovery support and
+              stable housing solutions. Building stronger communities, one
+              person at a time.
             </p>
             <div className="flex space-x-4">
               <a
@@ -86,14 +88,19 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-warning-400">
+            <h3 className="text-xl text-warning  font-semibold mb-6">
               Quick Links
             </h3>
             <ul className="space-y-4">
               <li>
+                <Link to="/" className="hover:text-warning transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
                 <Link
                   to="/about"
-                  className="text-success-100 hover:text-warning-400 transition-colors"
+                  className="hover:text-warning transition-colors"
                 >
                   About Us
                 </Link>
@@ -101,7 +108,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/programs"
-                  className="text-success-100 hover:text-warning-400 transition-colors"
+                  className="hover:text-warning transition-colors"
                 >
                   Our Programs
                 </Link>
@@ -109,17 +116,89 @@ const Footer = () => {
               <li>
                 <Link
                   to="/impact"
-                  className="text-success-100 hover:text-warning-400 transition-colors"
+                  className="hover:text-warning transition-colors"
                 >
-                  Our Impact
+                  Impact Stories
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/gallery"
+                  className="hover:text-warning transition-colors"
+                >
+                  Gallery
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="hover:text-warning transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Get Involved */}
+          <div>
+            <h3 className="text-xl text-warning font-semibold mb-6">
+              Get Involved
+            </h3>
+            <ul className="space-y-4">
+              <li>
+                <Link
+                  to="/volunteer"
+                  className="hover:text-warning transition-colors"
+                >
+                  Volunteer
                 </Link>
               </li>
               <li>
                 <Link
                   to="/donate"
-                  className="text-success-100 hover:text-warning-400 transition-colors"
+                  className="hover:text-warning transition-colors"
                 >
-                  Support Us
+                  Donate
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/apply"
+                  className="hover:text-warning transition-colors"
+                >
+                  Apply for Housing
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h3 className="text-xl text-warning font-semibold mb-6">Legal</h3>
+            <ul className="space-y-4">
+              <li>
+                <Link
+                  to="/privacy-policy"
+                  className="hover:text-warning transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms-of-service"
+                  className="hover:text-warning transition-colors"
+                >
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/application-status"
+                  className="hover:text-warning transition-colors"
+                >
+                  Application Status
                 </Link>
               </li>
             </ul>
@@ -166,7 +245,46 @@ const Footer = () => {
               </Button>
             </form>
           </div>
+
+          {/* <div className="flex w-[500px] items-center justify-between bg-red-400 gap-5"> */}
+          {/* Impact Counter */}
+          <div className="bg-success-800/30 rounded-lg p-4 h-fit">
+            <h4 className="text-warning font-semibold mb-2">Our Impact</h4>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold text-white">1,000+</p>
+                <p className="text-sm text-success-300">Lives Changed</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">80%</p>
+                <p className="text-sm text-success-300">Success Rate</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">24/7</p>
+                <p className="text-sm text-success-300">Support</p>
+              </div>
+            </div>
+          </div>
+          {/* Social Proof */}
+          <div className="bg-success-800/30 rounded-lg p-4 h-fit">
+            <div className="flex items-center justify-between">
+              <div className="flex -space-x-2">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="w-8 h-8 rounded-full bg-success-600 border-2 border-success-900 flex items-center justify-center text-xs font-bold"
+                  >
+                    {i}
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-success-300">
+                Join <span className="text-warning">250+</span> monthly donors
+              </p>
+            </div>
+          </div>
         </div>
+        {/* </div> */}
 
         {/* Footer Bottom */}
         <div className="mt-16 pt-8 border-t border-success-800">
@@ -176,16 +294,22 @@ const Footer = () => {
             </p>
             <div className="flex items-center space-x-4 text-success-100">
               <Link
-                to="/privacy"
-                className="hover:text-warning-400 transition-colors"
+                to="privacy-policy"
+                className="hover:text-warning transition-colors"
               >
                 Privacy Policy
               </Link>
               <Link
-                to="/terms"
-                className="hover:text-warning-400 transition-colors"
+                to="terms-of-service"
+                className="hover:text-warning transition-colors"
               >
                 Terms of Service
+              </Link>
+              <Link
+                to="/sitemap"
+                className="hover:text-warning transition-colors"
+              >
+                Sitemap
               </Link>
               <div className="flex items-center space-x-1 text-warning-400">
                 <span>Made with</span>

@@ -321,11 +321,94 @@ function HeroSection() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-5xl font-bold leading-tight"
+            transition={{ duration: 0.8 }}
+            className="text-6xl font-bold leading-tight relative"
             variants={itemVariants}
           >
-            Transforming Lives Through Recovery and Housing Support
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="inline-block"
+            >
+              Transitional Housing
+            </motion.span>{" "}
+            <motion.div className="relative inline-block">
+              for{" "}
+              <motion.span
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="inline-block text-success-600"
+              >
+                Men and Women
+              </motion.span>
+              {/* Decorative accent lines */}
+              {/* <motion.svg
+                className="absolute -right-4 -top-4 w-12 h-12 text-success-500"
+                viewBox="0 0 48 48"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
+                <motion.path
+                  d="M 0,24 L 48,24 M 24,0 L 24,48"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1, delay: 1 }}
+                />
+              </motion.svg> */}
+              {/* Glowing orb effect */}
+              <motion.div
+                className="absolute -inset-x-8 -inset-y-4"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: [0, 0.15, 0],
+                  scale: [0.8, 1.2, 0.8],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(16,185,129,0.3) 0%, transparent 70%)",
+                  filter: "blur(8px)",
+                  pointerEvents: "none",
+                }}
+              />
+              {/* Floating particles */}
+              <motion.div
+                className="absolute inset-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1.2 }}
+              >
+                {[...Array(5)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 rounded-full bg-success-400"
+                    style={{
+                      left: `${20 + i * 15}%`,
+                      top: `${30 + (i % 3) * 20}%`,
+                    }}
+                    animate={{
+                      y: [-10, 10, -10],
+                      opacity: [0.5, 0.8, 0.5],
+                    }}
+                    transition={{
+                      duration: 2 + i * 0.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.2,
+                    }}
+                  />
+                ))}
+              </motion.div>
+            </motion.div>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -536,7 +619,7 @@ function HeroSection() {
                   <HeartEmoji className="w-14" />
                 </span>
                 <span className="text-xl font-semibold text-warning-500">
-                  {/* {cards[5].title} */}Every Helping Hand Makes a Difference
+                  Every Helping Hand Makes a Difference
                 </span>
               </div>
             </div>
