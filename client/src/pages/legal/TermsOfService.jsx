@@ -1,105 +1,79 @@
 import React from "react";
-import { FileText, Scale, AlertCircle, Handshake } from "lucide-react";
+import LegalDocumentLayout from "../../components/legal/LegalDocumentLayout";
 
 const TermsOfService = () => {
-  const sections = [
-    {
-      icon: <FileText className="w-6 h-6" />,
-      title: "Agreement to Terms",
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.`,
-    },
-    {
-      icon: <Scale className="w-6 h-6" />,
-      title: "User Responsibilities",
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua:
-
-• Responsibility 1: Ut enim ad minim veniam
-• Responsibility 2: Quis nostrud exercitation ullamco
-• Responsibility 3: Duis aute irure dolor in reprehenderit
-• Responsibility 4: Excepteur sint occaecat cupidatat
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
-    },
-    {
-      icon: <AlertCircle className="w-6 h-6" />,
-      title: "Limitations and Disclaimers",
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.`,
-    },
-    {
-      icon: <Handshake className="w-6 h-6" />,
-      title: "Service Terms",
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-
-1. Term 1: Lorem ipsum dolor sit amet
-2. Term 2: Consectetur adipiscing elit
-3. Term 3: Sed do eiusmod tempor incididunt
-4. Term 4: Ut labore et dolore magna aliqua
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
-      <div className="max-w-[1000px] mx-auto px-4 py-16">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4">Terms of Service</h1>
-          <p className="text-xl text-gray-600">
-            Last updated: January 19, 2025
-          </p>
-        </div>
+    <LegalDocumentLayout
+      title="Terms of Service"
+      lastUpdated="January 23, 2025"
+    >
+      <h2>1. Acceptance of Terms</h2>
+      <p>
+        By accessing and using the Right Housing website and services, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
+      </p>
 
-        {/* Introduction */}
-        <div className="bg-white rounded-3xl p-8 mb-8 shadow-sm">
-          <p className="text-gray-600 leading-relaxed">
-            Welcome to Right Housing. By accessing or using our services, you
-            agree to be bound by these Terms of Service. Please read these terms
-            carefully before using our services.
-          </p>
-        </div>
+      <h2>2. Services Description</h2>
+      <p>
+        Right Housing provides transitional housing services and related support to individuals in need. Our services include:
+      </p>
+      <ul>
+        <li>Temporary housing assistance</li>
+        <li>Support services and counseling</li>
+        <li>Resource connection and referrals</li>
+        <li>Online donation processing</li>
+        <li>Volunteer coordination</li>
+      </ul>
 
-        {/* Terms Sections */}
-        <div className="space-y-8">
-          {sections.map((section, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 bg-success-50 rounded-xl text-success-700">
-                  {section.icon}
-                </div>
-                <h2 className="text-2xl font-semibold">{section.title}</h2>
-              </div>
-              <div className="text-gray-600 leading-relaxed whitespace-pre-line">
-                {section.content}
-              </div>
-            </div>
-          ))}
-        </div>
+      <h2>3. User Responsibilities</h2>
+      <p>When using our services, you agree to:</p>
+      <ul>
+        <li>Provide accurate and complete information</li>
+        <li>Maintain the confidentiality of any account credentials</li>
+        <li>Notify us of any unauthorized use of your account</li>
+        <li>Use our services in compliance with applicable laws</li>
+        <li>Respect the privacy and rights of others</li>
+      </ul>
 
-        {/* Contact Section */}
-        <div className="bg-success-50 rounded-3xl p-8 mt-8">
-          <h2 className="text-2xl font-semibold mb-4">
-            Questions or Concerns?
-          </h2>
-          <p className="text-gray-600 mb-4">
-            If you have any questions about our Terms of Service, please contact
-            our legal team:
-          </p>
-          <ul className="text-gray-600 space-y-2">
-            <li>Email: legal@righthousing.org</li>
-            <li>Phone: (555) 123-4567</li>
-            <li>Address: 123 Legal Ave, City, ST 12345</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+      <h2>4. Donations and Payments</h2>
+      <p>
+        All donations made through our website are processed securely. By making a donation, you:
+      </p>
+      <ul>
+        <li>Authorize us to charge your payment method</li>
+        <li>Confirm that you are the authorized user of the payment method</li>
+        <li>Acknowledge that donations are non-refundable unless required by law</li>
+      </ul>
+
+      <h2>5. Intellectual Property</h2>
+      <p>
+        All content on our website, including text, graphics, logos, and images, is the property of Right Housing and is protected by copyright and other intellectual property laws.
+      </p>
+
+      <h2>6. Limitation of Liability</h2>
+      <p>
+        Right Housing provides its services "as is" and "as available." We make no warranties, expressed or implied, and shall not be liable for any damages arising from your use of our services.
+      </p>
+
+      <h2>7. Termination</h2>
+      <p>
+        We reserve the right to terminate or suspend access to our services, without prior notice or liability, for any reason, including breach of these Terms.
+      </p>
+
+      <h2>8. Changes to Terms</h2>
+      <p>
+        We may modify these Terms at any time. Continued use of our services after any changes indicates your acceptance of the new Terms.
+      </p>
+
+      <h2>9. Governing Law</h2>
+      <p>
+        These Terms shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law provisions.
+      </p>
+
+      <h2>10. Dispute Resolution</h2>
+      <p>
+        Any disputes arising from these Terms or our services shall first be attempted to be resolved through informal negotiation. If informal negotiation fails, the dispute shall be submitted to binding arbitration.
+      </p>
+    </LegalDocumentLayout>
   );
 };
 
