@@ -148,6 +148,7 @@ const Navbar = () => {
                   onMouseEnter={() => setShowOtherPages(true)}
                   onMouseLeave={() => setShowOtherPages(false)}
                 >
+                  <div className="w-1 h-1 rotate-45 bg-success-500 mr-4" />
                   Other Pages
                   <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
                 </button>
