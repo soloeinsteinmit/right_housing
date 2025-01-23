@@ -3,13 +3,14 @@
  * Features auto-hide on scroll down and show on scroll up functionality.
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@heroui/button";
 import logo from "../../assets/rhousing-logo.png";
-import { HandCoins } from "lucide-react";
+import { HandCoins, ChevronDown } from "lucide-react";
 import usePulseAnimation, { PULSE_COLORS } from "../../hooks/usePulseAnimation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import AnimatedHamburger from "./AnimatedHamburger";
 
 /**
  * Enhanced Navbar component with advanced styling and animations.
@@ -23,6 +24,7 @@ const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showOtherPages, setShowOtherPages] = useState(false);
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -37,6 +39,14 @@ const Navbar = () => {
     { name: "Contact", path: "/contact" },
   ];
 
+  const otherPages = [
+    { name: "Impact Stories", path: "/impact" },
+    { name: "Gallery", path: "/gallery" },
+    { name: "Privacy Policy", path: "/privacy-policy" },
+    { name: "Terms of Service", path: "/terms-of-service" },
+    { name: "Sitemap", path: "/sitemap" },
+  ];
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
@@ -49,6 +59,27 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && !event.target.closest(".mobile-menu-container")) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("click", handleClickOutside);
+      // Add blur class to main content
+      document.body.classList.add("blur-background");
+    } else {
+      document.body.classList.remove("blur-background");
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+      document.body.classList.remove("blur-background");
+    };
+  }, [isMenuOpen]);
 
   const isActive = (path) => {
     if (path === "/") {
@@ -91,12 +122,11 @@ const Navbar = () => {
                       className={`text-base font-medium transition-colors duration-200 ${
                         isActive(item.path)
                           ? "text-success-700"
-                          : "text-gray-600 group-hover:text-success-700"
+                          : "text-gray-700 group-hover:text-success-700"
                       }`}
                     >
                       {item.name}
                     </span>
-                    {/* Active link underline with shadow */}
                     <span
                       className={`absolute -bottom-1 left-0 w-full h-0.5 transform origin-left transition-transform duration-200 ${
                         isActive(item.path)
@@ -110,6 +140,41 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
+
+              {/* Other Pages Dropdown */}
+              <div className="relative group ml-4">
+                <button
+                  className="flex items-center gap-1 text-base font-medium text-gray-600 group-hover:text-success-700 transition-colors duration-200"
+                  onMouseEnter={() => setShowOtherPages(true)}
+                  onMouseLeave={() => setShowOtherPages(false)}
+                >
+                  Other Pages
+                  <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
+                </button>
+                <AnimatePresence>
+                  {showOtherPages && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden"
+                      onMouseEnter={() => setShowOtherPages(true)}
+                      onMouseLeave={() => setShowOtherPages(false)}
+                    >
+                      {otherPages.map((page) => (
+                        <Link
+                          key={page.path}
+                          to={page.path}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-success-50 hover:text-success-700 transition-colors duration-200"
+                        >
+                          {page.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </nav>
 
             {/* Action Buttons */}
@@ -139,87 +204,98 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6 text-green-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div
-          className={`md:hidden transition-all duration-300 ${
-            isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          } overflow-hidden`}
-        >
-          <div className="py-4 bg-white/90 backdrop-blur-md rounded-lg shadow-lg">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`block px-4 py-2 text-sm font-medium relative ${
-                  isActive(item.path)
-                    ? "text-green-700 bg-green-50"
-                    : "text-gray-600 hover:text-green-700 hover:bg-green-50"
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-                {isActive(item.path) && (
-                  <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-green-700 rounded-r"></span>
-                )}
-              </Link>
-            ))}
-            <div className="px-4 py-4 space-y-2">
-              <Link
-                to="/apply"
-                className="block"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Button
-                  className="w-full bg-green-700 hover:bg-green-800 text-white shadow-sm"
-                  size="sm"
-                >
-                  Apply Now
-                </Button>
-              </Link>
-              <Link
-                to="/donate"
-                className="block"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Button
-                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white shadow-sm"
-                  size="sm"
-                >
-                  Donate
-                </Button>
-              </Link>
-            </div>
+          <div className="md:hidden z-[1001]">
+            <AnimatedHamburger
+              isOpen={isMenuOpen}
+              toggleMenu={() => setIsMenuOpen(!isMenuOpen)}
+            />
           </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="md:hidden fixed top-[5rem] left-0 right-0 overflow-hidden mobile-menu-container z-[999]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <motion.div
+                  initial={{ x: -20 }}
+                  animate={{ x: 0 }}
+                  className=" bg-white/60 backdrop-blur-lg rounded-b-xl shadow-lg border border-success-100/20 max-w-3xl mx-auto"
+                >
+                  {navItems.map((item) => (
+                    <motion.div
+                      key={item.path}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <Link
+                        to={item.path}
+                        className={`block px-6 py-3 text-base font-medium relative ${
+                          isActive(item.path)
+                            ? "text-success-700 bg-success-50"
+                            : "text-gray-700 hover:text-success-700 hover:bg-success-50/50"
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.name}
+                        {isActive(item.path) && (
+                          <span className="absolute left-0 top-0 bottom-0 w-1 bg-success-700 rounded-r" />
+                        )}
+                      </Link>
+                    </motion.div>
+                  ))}
+
+                  {/* Other Pages Section in Mobile Menu */}
+                  <div className="px-4 py-2 border-t border-success-100/20">
+                    <p className="text-sm font-semibold text-gray-500 mb-2 px-2">
+                      Other Pages
+                    </p>
+                    {otherPages.map((page) => (
+                      <Link
+                        key={page.path}
+                        to={page.path}
+                        className="block px-6 py-2 text-sm text-gray-600 hover:text-success-700 hover:bg-success-50/50 rounded-lg"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {page.name}
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className="p-4 space-y-2 border-t border-success-100/20">
+                    <Link
+                      to="/apply"
+                      className="block w-full"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Button className="w-full bg-success-700 hover:bg-success-800 text-white">
+                        Apply Now
+                      </Button>
+                    </Link>
+                    <motion.button
+                      className="w-full flex items-center justify-center gap-2 bg-warning-500 hover:bg-warning-600 rounded-medium px-4 py-2 text-white"
+                      variants={pulseVariant}
+                      initial="initial"
+                      animate="animate"
+                      whileTap="tap"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        navigate("/donate");
+                      }}
+                    >
+                      Donate Now <HandCoins className="w-4 h-4" />
+                    </motion.button>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </nav>

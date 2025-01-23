@@ -1,7 +1,9 @@
 import { motion, useScroll } from "framer-motion";
 import { Heart, Users, Home, ArrowRight } from "lucide-react";
 import { useRef } from "react";
-import usePulseAnimation, { PULSE_COLORS } from "../../../hooks/usePulseAnimation";
+import usePulseAnimation, {
+  PULSE_COLORS,
+} from "../../../hooks/usePulseAnimation";
 
 const DonateHero = () => {
   const donationRef = useRef(null);
@@ -21,6 +23,7 @@ const DonateHero = () => {
       });
     }
   };
+
   // Professional animated background
   const BackgroundAnimation = () => (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">

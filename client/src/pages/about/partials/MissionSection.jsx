@@ -63,17 +63,30 @@ const MissionSection = () => {
                 </div>
                 <div className="mt-8">
                   <p className="text-gray-600 leading-relaxed">
-                    To empower individuals transitioning from incarceration or
-                    recovering from addiction by providing comprehensive housing
-                    support and essential resources. We focus on recovery,
-                    personal growth, and independence through job training,
-                    financial literacy, emotional support, and life skills
-                    development.
+                    Our mission is to empower individuals transitioning from
+                    incarceration or recovering from addiction by providing
+                    comprehensive housing support and essential resources. We
+                    focus on recovery, personal growth, and independence through
+                    job training, financial literacy, emotional support, and
+                    life skills development. By fostering a safe, supportive
+                    environment and offering holistic services, we guide each
+                    individual toward reintegration, self-sufficiency, and a
+                    transformed future.
+                    {/* Our mission is to empower individuals transitioning from
+                      incarceration or recovering from addiction by providing
+                      comprehensive housing support and essential resources. We
+                      focus on recovery, personal growth, and independence
+                      through job training, financial literacy, emotional support,
+                      and life skills
+                      development. By fostering a safe, supportive environment and 
+                      offering holistic services, we guide each individual toward 
+                      reintegration, self-sufficiency, and a transformed future.
+                    */}
                   </p>
                 </div>
                 {/* Decorative Elements */}
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-success-200 to-success-300 rounded-full opacity-50" />
-                <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-gradient-to-br from-success-100 to-success-200 rounded-full opacity-30" />
+                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-success-200 to-success-300 rounded-full opacity-50" />
+                <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-gradient-to-br from-success-100 to-success-200 rounded-full opacity-30" />
               </div>
             </motion.div>
 
@@ -89,7 +102,7 @@ const MissionSection = () => {
                 <div className="absolute -top-8 left-10 bg-warning-600 text-white px-8 py-4 rounded-2xl shadow-lg">
                   <h3 className="text-2xl font-bold">Our Vision</h3>
                 </div>
-                <div className="mt-8">
+                <div className="mt-8 h-full">
                   <p className="text-gray-600 leading-relaxed">
                     To empower individuals and families impacted by
                     homelessness, domestic violence, addiction, or incarceration
@@ -97,6 +110,13 @@ const MissionSection = () => {
                     pathway from transitional living to independent living. We
                     envision a future where everyone can rebuild their lives and
                     thrive in self-sufficiency and security.
+                    {/* To empower individuals and families impacted by 
+                    homelessness, domestic violence, addiction, or incarceration 
+                    by providing compassionate support, housing solutions, and a 
+                    pathway from transitional living to independent 
+                    living. We envision a future where everyone can rebuild their 
+                    lives and thrive in self-sufficiency and security
+                    */}
                   </p>
                 </div>
                 {/* Decorative Elements */}

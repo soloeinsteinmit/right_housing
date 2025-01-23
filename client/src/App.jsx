@@ -5,6 +5,7 @@
 
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/router";
+import "./styles/blur.css";
 
 /**
  * Root App component that sets up routing and global providers.

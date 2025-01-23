@@ -4,9 +4,9 @@
  */
 
 import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
 } from "react-router-dom";
 
 // Layouts
@@ -38,6 +38,16 @@ import TermsOfService from "../pages/legal/TermsOfService";
 // Volunteer Pages
 import Volunteer from "../pages/volunteer/Volunteer";
 
+// Sitemap Page
+import Sitemap from "../pages/sitemap/Sitemap";
+
+// Gallery Page
+import Gallery from "../pages/gallery/Gallery";
+
+// Impact Pages
+import Impact from "../pages/impact/Impact";
+import ImpactStory from "../pages/impact/ImpactStory";
+
 /**
  * @typedef {Object} RouteConfig
  * @property {string} path - The URL path for the route
@@ -49,7 +59,7 @@ import Volunteer from "../pages/volunteer/Volunteer";
 /**
  * Main router configuration for the application.
  * Uses createBrowserRouter for client-side routing with HTML5 history API.
- * 
+ *
  * Route Structure:
  * - / (Home)
  * - /about (About Us)
@@ -63,44 +73,52 @@ import Volunteer from "../pages/volunteer/Volunteer";
  * - /privacy (Privacy Policy)
  * - /terms (Terms of Service)
  * - /volunteer (Volunteer)
- * 
+ * - /sitemap (Sitemap)
+ * - /gallery (Gallery)
+ * - /impact (Impact)
+ * - /impact/:slug (Impact Story)
+ *
  * @type {import('react-router-dom').RouterProvider}
  */
 export const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route 
-            path="/"
-            element={<ParentLayout />}
-            errorElement={<ErrorBoundary />}
-        >
-            {/* Main routes */}
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="programs" element={<Programs />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="volunteer" element={<Volunteer />} />
+  createRoutesFromElements(
+    <Route path="/" element={<ParentLayout />} errorElement={<ErrorBoundary />}>
+      {/* Main routes */}
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      <Route path="programs" element={<Programs />} />
+      <Route path="contact" element={<Contact />} />
+      <Route path="volunteer" element={<Volunteer />} />
+      <Route path="sitemap" element={<Sitemap />} />
+      <Route path="gallery" element={<Gallery />} />
+      
+      {/* Impact Stories routes */}
+      <Route path="impact">
+        <Route index element={<Impact />} />
+        <Route path=":slug" element={<ImpactStory />} />
+      </Route>
 
-            {/* Application routes */}
-            <Route path="apply">
-                <Route index element={<Apply />} />
-                <Route path="status" element={<ApplicationStatus />} />
-            </Route>
+      {/* Application routes */}
+      <Route path="apply">
+        <Route index element={<Apply />} />
+        <Route path="status" element={<ApplicationStatus />} />
+      </Route>
 
-            {/* Donation routes */}
-            <Route path="donate">
-                <Route index element={<Donate />} />
-                <Route path="success" element={<DonationSuccess />} />
-                <Route path="cancel" element={<DonationCancel />} />
-            </Route>
+      {/* Donation routes */}
+      <Route path="donate">
+        <Route index element={<Donate />} />
+        <Route path="success" element={<DonationSuccess />} />
+        <Route path="cancel" element={<DonationCancel />} />
+      </Route>
 
-            {/* Legal routes */}
-            <Route path="privacy" element={<PrivacyPolicy />} />
-            <Route path="terms" element={<TermsOfService />} />
+      {/* Legal routes */}
+      <Route path="privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="terms-of-service" element={<TermsOfService />} />
 
-            {/* 404 route */}
-            <Route path="*" element={<PageNotFound />} />
-        </Route>
-    )
+      {/* 404 route */}
+      <Route path="*" element={<PageNotFound />} />
+    </Route>
+  )
 );
 
 export default router;
