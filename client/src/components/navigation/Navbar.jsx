@@ -42,6 +42,7 @@ const Navbar = () => {
   const otherPages = [
     { name: "Impact Stories", path: "/impact" },
     { name: "Gallery", path: "/gallery" },
+    { name: "Become a Volunteer", path: "/volunteer" },
     { name: "Privacy Policy", path: "/privacy-policy" },
     { name: "Terms of Service", path: "/terms-of-service" },
     { name: "Sitemap", path: "/sitemap" },

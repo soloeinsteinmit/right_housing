@@ -112,9 +112,7 @@ Foster a strong sense of community where residents can support one another, shar
 
 - **Description**: Partner with community leaders or therapists to host workshops focusing on non-employment-related life skills, such as conflict resolution, communication techniques, and stress management.
 - **Frequency**: Monthly or quarterly.
-- **Outcome**: MAMA ANITA DIDN'T ADD OUTCOME HERE...PROMPT HER.
-
----
+- **Outcome**: Improved interpersonal relationships, increased ability to manage conflict effectively, enhanced communication skills, better stress coping mechanisms, and a more positive outlook on personal and community interactions.
 
 ### 3. Community Building & Peer Support
 
@@ -142,7 +140,7 @@ Foster a strong sense of community where residents can support one another, shar
 
 - **Description**: Weekly or bi-weekly peer-led support groups where residents can come together to discuss their recovery, challenges, successes, and strategies for staying sober. Themed sessions, such as “Coping with Triggers,” are offered to provide a safe space for vulnerability and shared wisdom.
 - **Frequency**: Weekly or bi-weekly.
-- **Benefit**: MAMA ANITA DIDN'T ADD OUTCOME HERE...PROMPT HER.
+- **Benefit**: Provides a sense of belonging, improved self-esteem, accountability and practical advice.
 
 ---
 
@@ -221,3 +219,11 @@ Case managers work closely with residents to provide individualized support and 
 - **Willingness to Follow Rules**: This includes attending house meetings, observing a curfew, and completing household chores.
 - **Financial Ability**: Sober living homes charge fees for room and board, and individuals may need to demonstrate the financial ability to cover these costs or have a stable source of income.
 - **Admission Process**: Admission interviews or intake assessments are common to ensure that the individual is a good fit for the program.
+
+Our case management services are designed to provide comprehensive
+support throughout your recovery journey. We're here to help you
+navigate challenges and celebrate successes along the way.
+
+Our case managers work closely with residents to provide individualized
+support and connect them to various resources, addressing their
+physical, emotional, social, and financial needs.

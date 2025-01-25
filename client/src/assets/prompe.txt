@@ -1,3 +1,106 @@
+const programs = {
+    "mind-body": {
+      title: "Mind-Body Wellness Programs",
+      icon: <Brain className="w-6 h-6" />,
+      color: "success",
+      sections: [
+        {
+          title: "Mindfulness and Meditation Groups",
+          icon: <GrYoga className="w-6 h-6" />,
+          description:
+            "Guided mindfulness meditation or guided journaling sessions to help residents stay present and manage cravings, anxiety, or negative emotions.",
+          frequency: "Daily or several times a week",
+          benefits: "Promotes emotional balance and resilience",
+        },
+        {
+          title: "Holistic Healing Workshops",
+          icon: <Heart className="w-6 h-6" />,
+          description:
+            "A range of workshops exploring yoga, meditation, Tai Chi, and breathwork to help manage stress and enhance emotional regulation.",
+          frequency: "Weekly or bi-weekly sessions",
+          partners:
+            "Local wellness centers, certified yoga instructors, mental health professionals",
+        },
+        {
+          title: "Nutritional Support and Cooking Classes",
+          icon: <Utensils className="w-6 h-6" />,
+          description:
+            "Knowledge and skills for healthier food choices and meal preparation, emphasizing nutrition's role in recovery.",
+          frequency: "Monthly workshops or bi-weekly cooking classes",
+          feature:
+            "Community kitchen work reinforcing teamwork and responsibility",
+        },
+      ],
+    },
+    "job-ready": {
+      title: "Job-Ready Programs",
+      icon: <Briefcase className="w-6 h-6" />,
+      color: "warning",
+      sections: [
+        {
+          title: "Paid and Unpaid Apprenticeships",
+          icon: <GraduationCap className="w-6 h-6" />,
+          description:
+            "Work with local businesses and industries to provide apprenticeships in construction, hospitality, retail, and more.",
+          frequency: "Ongoing",
+          outcome:
+            "Real-world experience, income potential, and professional relationships",
+        },
+        {
+          title: "Job Shadowing and Mentorship",
+          icon: <HandshakeIcon className="w-6 h-6" />,
+          description:
+            "Observe professionals in desired fields with mentorship guidance for career growth.",
+          frequency: "Bi-monthly or quarterly",
+          outcome:
+            "Industry exposure, practical job knowledge, and professional networking",
+        },
+        {
+          title: "Life Skills Workshops",
+          icon: <Brain className="w-6 h-6" />,
+          description:
+            "Workshops on conflict resolution, communication, and stress management.",
+          frequency: "Monthly or quarterly",
+          outcome:
+            "Enhanced communication skills and conflict management abilities",
+        },
+      ],
+    },
+    community: {
+      title: "Community Building & Peer Support",
+      icon: <Users className="w-6 h-6" />,
+      color: "success",
+      sections: [
+        {
+          title: "Wellness and Social Connection Events",
+          icon: <Calendar className="w-6 h-6" />,
+          description:
+            "Regular social events and activities plus inspiring guest speakers and recovery panels.",
+          frequency: "Bi-weekly or monthly",
+          benefits:
+            "Strengthens social skills and provides sober recreational opportunities",
+        },
+        {
+          title: "Peer Mentorship Program",
+          icon: <UsersRound className="w-6 h-6" />,
+          description:
+            "Pair residents with peer mentors further along in recovery for guidance and support.",
+          frequency: "Ongoing, weekly check-ins",
+          benefits: "Builds supportive relationships and fosters leadership",
+        },
+        {
+          title: "Support Group Circles",
+          icon: <MessageCircle className="w-6 h-6" />,
+          description:
+            "Peer-led support groups discussing recovery, challenges, and strategies.",
+          frequency: "Weekly or bi-weekly",
+          benefits: "Provides belonging, accountability, and practical advice",
+        },
+      ],
+    },
+  };
+
+
 const NetworkAnimation = () => {
     const points = [];
     const numPoints = 30;
@@ -82,3 +185,349 @@ const NetworkAnimation = () => {
       </div>
     );
   };
+
+
+
+  import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Home,
+  Heart,
+  Briefcase,
+  Users,
+  ClipboardList,
+  Search,
+  Clock,
+  Bed,
+  UserCheck,
+  Calendar,
+  Presentation,
+  Brain,
+  Utensils,
+  Stethoscope,
+  GraduationCap,
+  Handshake,
+  UserPlus,
+  ClipboardCheck,
+  Activity,
+  Building,
+} from "lucide-react";
+
+const programs = [
+  {
+    id: "residential",
+    title: "Residential Services",
+    icon: <Home className="w-6 h-6" />,
+    description:
+      "Safe, sober housing solutions with 24/7 support and community engagement.",
+    services: [
+      {
+        name: "Safe, Sober Housing",
+        icon: <Bed />,
+        desc: "Includes private and shared rooms, living spaces, and amenities.",
+      },
+      {
+        name: "24/7 Support",
+        icon: <Clock />,
+        desc: "Around-the-clock care and guidance from staff to ensure a safe, supportive atmosphere.",
+      },
+      {
+        name: "Substance-Free Environment",
+        icon: <UserCheck />,
+        desc: "A drug- and alcohol-free home to support recovery.",
+      },
+      {
+        name: "Weekly House Meetings",
+        icon: <Calendar />,
+        desc: "Regular meetings for residents to check in, share progress, and support each other.",
+      },
+      {
+        name: "Sober Social Events",
+        icon: <Users />,
+        desc: "Regular events like movie nights, game nights, or group outings to foster a sense of community.",
+      },
+      {
+        name: "Workshops and Guest Speakers",
+        icon: <Presentation />,
+        desc: "Hosting guest speakers from various fields, including recovery experts and local employers.",
+      },
+    ],
+  },
+  {
+    id: "recovery",
+    title: "Recovery and Wellness Programs",
+    icon: <Heart className="w-6 h-6" />,
+    description:
+      "Holistic wellness practices promoting emotional, mental, and physical health.",
+    services: [
+      {
+        name: "Mind-Body Wellness",
+        icon: <Brain />,
+        desc: "Offerings like yoga, meditation, and other holistic wellness practices.",
+      },
+      {
+        name: "Nutritional Support",
+        icon: <Utensils />,
+        desc: "Healthy meal options and nutritional counseling to support residents' well-being.",
+      },
+      {
+        name: "Therapeutic Support",
+        icon: <Stethoscope />,
+        desc: "Access to on-site or partnered mental health services.",
+      },
+      {
+        name: "Mindfulness Classes",
+        icon: <Brain />,
+        desc: "Programs designed to help residents manage stress, anxiety, and triggers.",
+      },
+      {
+        name: "Physical Fitness",
+        icon: <Activity />,
+        desc: "Access to fitness routines and group exercise classes.",
+      },
+    ],
+  },
+  {
+    id: "job-ready",
+    title: "Job-Ready Programs",
+    icon: <Briefcase className="w-6 h-6" />,
+    description: "Comprehensive career development and job placement support.",
+    services: [
+      {
+        name: "Apprenticeships",
+        icon: <GraduationCap />,
+        desc: "Connections with local businesses offering hands-on experience.",
+      },
+      {
+        name: "Job Skill Workshops",
+        icon: <Presentation />,
+        desc: "Training in key job skills and professional development.",
+      },
+      {
+        name: "Employer Partnerships",
+        icon: <Handshake />,
+        desc: "Direct connections to local employers willing to hire individuals in recovery.",
+      },
+      {
+        name: "Job Placement",
+        icon: <Briefcase />,
+        desc: "Personalized job search support and interview coaching.",
+      },
+      {
+        name: "Career Counseling",
+        icon: <ClipboardCheck />,
+        desc: "One-on-one coaching sessions for long-term professional success.",
+      },
+    ],
+  },
+  {
+    id: "peer-support",
+    title: "Peer Support Programs",
+    icon: <Users className="w-6 h-6" />,
+    description: "Building community through mentorship and mutual support.",
+    services: [
+      {
+        name: "Peer Mentorship",
+        icon: <UserPlus />,
+        desc: "Pairing residents with experienced mentors for guidance and support.",
+      },
+      {
+        name: "Support Circles",
+        icon: <Users />,
+        desc: "Regular peer-led support group meetings for shared experiences.",
+      },
+      {
+        name: "Community Service",
+        icon: <Heart />,
+        desc: "Opportunities to give back and foster a sense of purpose.",
+      },
+      {
+        name: "Alumni Network",
+        icon: <Users />,
+        desc: "Ongoing community support for past residents.",
+      },
+    ],
+  },
+  {
+    id: "case-management",
+    title: "Case Management",
+    icon: <ClipboardList className="w-6 h-6" />,
+    description:
+      "Individualized support and resource coordination for comprehensive care.",
+    services: [
+      {
+        name: "Needs Assessment",
+        icon: <ClipboardCheck />,
+        desc: "Comprehensive evaluation of resident needs and goals.",
+      },
+      {
+        name: "Recovery Support",
+        icon: <Heart />,
+        desc: "Ongoing guidance and relapse prevention planning.",
+      },
+      {
+        name: "Mental Health Services",
+        icon: <Brain />,
+        desc: "Coordinated care for mental health and substance use support.",
+      },
+      {
+        name: "Healthcare Access",
+        icon: <Stethoscope />,
+        desc: "Assistance with healthcare services and wellness planning.",
+      },
+      {
+        name: "Housing Support",
+        icon: <Building />,
+        desc: "Help transitioning to independent living.",
+      },
+    ],
+  },
+];
+
+const ProgramsServices = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeProgram, setActiveProgram] = useState(null);
+  const [hoveredService, setHoveredService] = useState(null);
+  const containerRef = useRef(null);
+
+  const filteredPrograms = programs.filter((program) => {
+    const matchTitle = program.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchServices = program.services.some(
+      (service) =>
+        service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        service.desc.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return matchTitle || matchServices;
+  });
+
+  const handleProgramClick = (programId) => {
+    setActiveProgram(activeProgram === programId ? null : programId);
+  };
+
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Our Programs & Services
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            We offer comprehensive housing solutions and support services to
+            help people get back on their feet, specializing in addiction
+            recovery and reentry support.
+          </p>
+
+          {/* Search Bar */}
+          <div className="max-w-md mx-auto relative">
+            <input
+              type="text"
+              placeholder="Search programs and services..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-6 py-4 rounded-full bg-white shadow-lg
+                pl-14 pr-6 focus:outline-none focus:ring-2 focus:ring-success-500
+                transition-shadow duration-300"
+            />
+            <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          </div>
+        </motion.div>
+
+        {/* Programs Grid */}
+        <div ref={containerRef} className="grid gap-6">
+          {filteredPrograms.map((program) => (
+            <motion.div
+              key={program.id}
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="relative"
+            >
+              {/* Program Header */}
+              <motion.button
+                onClick={() => handleProgramClick(program.id)}
+                className={`w-full flex items-center gap-6 p-6 rounded-2xl bg-white
+                  shadow-lg hover:shadow-xl transition-all duration-300
+                  ${activeProgram === program.id ? "bg-success-50" : ""}`}
+              >
+                <div
+                  className={`w-16 h-16 rounded-xl bg-success-100 flex items-center 
+                  justify-center text-success-600 ${
+                    activeProgram === program.id ? "scale-110" : ""
+                  } transition-transform duration-300`}
+                >
+                  {program.icon}
+                </div>
+                <div className="flex-1 text-left">
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                    {program.title}
+                  </h3>
+                  <p className="text-gray-600">{program.description}</p>
+                </div>
+              </motion.button>
+
+              {/* Services List */}
+              <AnimatePresence>
+                {activeProgram === program.id && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-hidden"
+                  >
+                    {program.services.map((service, idx) => (
+                      <motion.div
+                        key={service.name}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        transition={{ delay: idx * 0.1 }}
+                        onHoverStart={() => setHoveredService(service.name)}
+                        onHoverEnd={() => setHoveredService(null)}
+                        className={`relative p-6 rounded-xl bg-white shadow-md
+                          transform transition-all duration-300
+                          ${
+                            hoveredService === service.name ? "scale-105" : ""
+                          }`}
+                      >
+                        <div
+                          className="absolute inset-0 bg-gradient-to-br from-success-50/50 to-transparent 
+                          rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        />
+                        <div className="relative z-10">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div
+                              className="w-10 h-10 rounded-lg bg-success-100 
+                              flex items-center justify-center text-success-600"
+                            >
+                              {service.icon}
+                            </div>
+                            <h4 className="text-lg font-semibold text-gray-900">
+                              {service.name}
+                            </h4>
+                          </div>
+                          <p className="text-gray-600">{service.desc}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ProgramsServices;
