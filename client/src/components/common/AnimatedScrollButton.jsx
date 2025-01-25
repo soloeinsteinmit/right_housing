@@ -4,10 +4,29 @@ import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { Tooltip } from "@heroui/tooltip";
 
-const AnimatedScrollButton = ({ onClick }) => {
+const AnimatedScrollButton = ({
+  onClick,
+  tooltipText = "SCROLL TO EXPLORE MORE",
+  hasTooltip = true,
+}) => {
   return (
     <StyledWrapper>
-      <Tooltip content="SCROLL TO EXPLORE MORE" placement="top">
+      {hasTooltip ? (
+        <Tooltip content={tooltipText} placement="top">
+          <motion.button
+            onClick={onClick}
+            className="scrolldown"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            style={{ "--color": "green" }}
+          >
+            <div className="chevrons">
+              <div className="chevrondown" />
+              <div className="chevrondown" />
+            </div>
+          </motion.button>
+        </Tooltip>
+      ) : (
         <motion.button
           onClick={onClick}
           className="scrolldown"
@@ -20,13 +39,15 @@ const AnimatedScrollButton = ({ onClick }) => {
             <div className="chevrondown" />
           </div>
         </motion.button>
-      </Tooltip>
+      )}
     </StyledWrapper>
   );
 };
 
 AnimatedScrollButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  tooltipText: PropTypes.string,
+  hasTooltip: PropTypes.bool,
 };
 
 const StyledWrapper = styled.div`

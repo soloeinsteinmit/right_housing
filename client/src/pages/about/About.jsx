@@ -5,6 +5,9 @@ import TeamSection from "./partials/TeamSection";
 import ImpactSection from "./partials/ImpactSection";
 import CallToActionSection from "../home/partials/CallToActionSection";
 import AboutContactForm from "./partials/AboutContactForm";
+import React from "react";
+import FounderStory from "./partials/FounderStory";
+import AnitaStory from "./partials/AnitaStory";
 
 /**
  * About page component that showcases our organization's story, mission, team, and impact.
@@ -26,6 +29,10 @@ const About = () => {
 
       {/* Mission & Values Section */}
       <MissionSection />
+
+      {/* Founder's Stories */}
+      {/* <FounderStory /> */}
+      <AnitaStory />
 
       {/* Impact Timeline Section */}
       <ImpactSection />

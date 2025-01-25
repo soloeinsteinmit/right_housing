@@ -8,10 +8,7 @@ import {
   ChartBar,
   Handshake,
 } from "lucide-react";
-import com_impact from "../../../assets/com-impact2.jpg";
-import milestone from "../../../assets/milestone.jpg";
-import housing from "../../../assets/housing.jpg";
-import growth from "../../../assets/team.jpg";
+import com_impact from "../../../assets/team.jpg";
 // import timeline1 from "../../../assets/timeline1.jpg";
 // import timeline2 from "../../../assets/timeline2.jpg";
 // import timeline3 from "../../../assets/timeline3.jpg";
@@ -67,21 +64,24 @@ const ImpactSection = () => {
       title: "Expanding Support Services",
       description:
         "Introduced holistic support programs including mental health services, job training, and financial literacy. Partnered with local organizations to strengthen our support network.",
-      image: housing,
+      image:
+        "https://images.unsplash.com/photo-1516321497487-e288fb19713f?fit=crop&w=800&h=600",
     },
     {
       year: "2023",
       title: "Community Growth",
       description:
         "Expanded our reach to serve more individuals in transition. Implemented personalized goal-setting programs and enhanced our recovery support services.",
-      image: growth,
+      image:
+        "https://images.unsplash.com/photo-1517649763962-0c623066013b?fit=crop&w=800&h=600",
     },
     {
       year: "2024",
       title: "Transformative Impact",
       description:
         "Achieved an 80% success rate in transitioning individuals to independent living. Established comprehensive aftercare programs to ensure sustained success.",
-      image: milestone,
+      image:
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?fit=crop&w=800&h=600",
     },
   ];
 
