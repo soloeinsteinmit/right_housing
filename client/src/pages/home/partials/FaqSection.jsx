@@ -21,12 +21,7 @@ const FaqSection = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [expandedId, setExpandedId] = useState(null);
-
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
+  const [displayedFaqs, setDisplayedFaqs] = useState([]);
 
   const categories = [
     { id: "all", label: "All Questions" },
@@ -82,14 +77,36 @@ const FaqSection = () => {
     },
   ];
 
-  const filteredFaqs = faqs.filter((faq) => {
-    const matchesSearch =
-      faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || faq.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  // Initialize displayed FAQs
+  useEffect(() => {
+    setDisplayedFaqs(faqs);
+  }, []);
+
+  // Handle search and category filtering
+  useEffect(() => {
+    const filterFaqs = () => {
+      return faqs.filter((faq) => {
+        const matchesSearch =
+          searchTerm === "" ||
+          faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesCategory =
+          selectedCategory === "all" || faq.category === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+      });
+    };
+
+    const filteredResults = filterFaqs();
+    setDisplayedFaqs(filteredResults);
+  }, [searchTerm, selectedCategory]);
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView, controls]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -130,11 +147,6 @@ const FaqSection = () => {
 
   return (
     <div ref={ref} className="relative overflow-hidden bg-white">
-      {/* Background Pattern */}
-      {/* <div className="absolute inset-0">
-        <FaqBackgroundPattern className="w-full h-full text-success-600" />
-      </div> */}
-
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -200,45 +212,89 @@ const FaqSection = () => {
         </motion.div>
 
         {/* FAQ List */}
-        <motion.div variants={containerVariants} className="max-w-3xl mx-auto">
-          {filteredFaqs.map((faq) => (
-            <motion.div key={faq.id} variants={itemVariants} className="mb-4">
-              <motion.button
-                onClick={() =>
-                  setExpandedId(expandedId === faq.id ? null : faq.id)
-                }
-                className="w-full flex items-center justify-between p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
+        <motion.div
+          variants={containerVariants}
+          className="max-w-3xl mx-auto space-y-4"
+        >
+          {displayedFaqs.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-12"
+            >
+              <div className="mb-4">
+                <HelpCircle className="w-16 h-16 mx-auto text-gray-300" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                No matching questions found
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Try adjusting your search terms or selecting a different
+                category
+              </p>
+              <button
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedCategory("all");
+                }}
+                className="inline-flex items-center px-4 py-2 rounded-full bg-success-50 text-success-600 hover:bg-success-100 transition-colors duration-300"
               >
-                <span className="text-lg font-medium text-gray-900 text-left">
-                  {faq.question}
-                </span>
-                <motion.div
-                  animate={{ rotate: expandedId === faq.id ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ChevronDown className="w-5 h-5 text-success-600" />
-                </motion.div>
-              </motion.button>
-
-              <AnimatePresence>
-                {expandedId === faq.id && (
-                  <motion.div
-                    variants={answerVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    className="overflow-hidden"
-                  >
-                    <div className="p-6 bg-success-50 rounded-2xl mt-2">
-                      <p className="text-gray-700 leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                <ArrowUpRight className="w-4 h-4 mr-2" />
+                View all questions
+              </button>
             </motion.div>
-          ))}
+          ) : (
+            <AnimatePresence mode="wait">
+              {displayedFaqs.map((faq) => (
+                <motion.div
+                  key={faq.id}
+                  initial={{ opacity: 0.4, y: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="rounded-2xl bg-white shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <div className="w-full">
+                    <button
+                      onClick={() =>
+                        setExpandedId(expandedId === faq.id ? null : faq.id)
+                      }
+                      className="w-full flex items-center justify-between p-6"
+                    >
+                      <h3 className="text-lg font-medium text-gray-900 text-left pr-4">
+                        {faq.question}
+                      </h3>
+                      <motion.div
+                        animate={{ rotate: expandedId === faq.id ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ChevronDown className="w-5 h-5 text-success-600 flex-shrink-0" />
+                      </motion.div>
+                    </button>
+
+                    <AnimatePresence>
+                      {expandedId === faq.id && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-6 pb-6 pt-2">
+                            <div className="bg-success-50 p-6 rounded-xl">
+                              <p className="text-gray-700 leading-relaxed">
+                                {faq.answer}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          )}
         </motion.div>
 
         {/* Bottom CTA */}
