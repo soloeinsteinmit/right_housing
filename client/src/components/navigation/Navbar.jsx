@@ -181,14 +181,20 @@ const Navbar = () => {
 
             {/* Action Buttons */}
             <div className="flex items-center space-x-4">
-              <Link to="/apply">
-                <Button
-                  className="bg-success-700 hover:bg-success-800 text-white shadow-sm"
-                  // size="sm"
-                >
-                  Apply Now
-                </Button>
-              </Link>
+              {/* <Link
+                to="/apply"
+                className=" transition-all duration-100 bg-success-700 hover:bg-success-800 text-white shadow-sm"
+              > */}
+              <Button
+                className="text-white"
+                variant="shadow"
+                color="success"
+                // size="sm"
+                onClick={() => navigate("/apply")}
+              >
+                Apply Now
+              </Button>
+              {/* </Link> */}
               {/* <Link to="/donate"> */}
               <motion.button
                 className="flex items-center justify-center gap-2 bg-warning-500 hover:bg-warning-600 rounded-medium px-4 py-2 text-white shadow-sm"
@@ -273,10 +279,16 @@ const Navbar = () => {
                   <div className="p-4 space-y-2 border-t border-success-100/20">
                     <Link
                       to="/apply"
-                      className="block w-full"
+                      className="block w-full bg-success-700 transition-colors hover:bg-success-800 text-white"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <Button className="w-full bg-success-700 hover:bg-success-800 text-white">
+                      <Button
+                        className="w-full bg-success-700 transition-colors hover:bg-success-800 text-white"
+                        onPress={() => {
+                          setIsMenuOpen(false);
+                          navigate("/apply");
+                        }}
+                      >
                         Apply Now
                       </Button>
                     </Link>

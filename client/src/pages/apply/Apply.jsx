@@ -3,7 +3,16 @@
  * Handles housing application submissions and document uploads.
  */
 
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/button";
+import { ArrowLeft, ArrowRight, Send } from "lucide-react";
+
+import ApplicationHeader from "./partials/ApplicationHeader";
+import ApplicationProgress from "./partials/ApplicationProgress";
+import PersonalInfoForm from "./partials/PersonalInfoForm";
+import DocumentUpload from "./partials/DocumentUpload";
+import ReviewSubmit from "./partials/ReviewSubmit";
 
 /**
  * Apply page component with multi-step application form.
@@ -13,117 +22,121 @@ import { Button } from "@heroui/button";
  * @returns {JSX.Element} The rendered Apply page component
  */
 const Apply = () => {
-  /**
-   * Handles application form submission.
-   * @param {Event} e - Form submission event
-   */
-  const handleSubmit = (e) => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    dateOfBirth: "",
+    documents: [],
+  });
+
+  const steps = {
+    1: PersonalInfoForm,
+    2: DocumentUpload,
+    3: ReviewSubmit,
+  };
+
+  const CurrentStepComponent = steps[currentStep];
+
+  const handleNext = () => {
+    if (currentStep < 3) {
+      setCurrentStep((prev) => prev + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentStep > 1) {
+      setCurrentStep((prev) => prev - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Add form submission logic here
+    console.log("Form submitted:", formData);
   };
 
   return (
-    <div className="min-h-screen py-16">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-16">
         {/* Header */}
-        <section className="max-w-4xl mx-auto mb-16 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">
-            Lorem Application
-          </h1>
-          <p className="text-xl text-gray-600">
-            Complete the form below to apply for lorem assistance
-          </p>
-        </section>
+        <ApplicationHeader />
 
-        {/* Application Form */}
-        <div className="max-w-3xl mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Personal Information */}
-            <section className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-2xl font-bold mb-6">Personal Information</h2>
-              <div className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-2 border rounded-md"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-2 border rounded-md"
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-2 border rounded-md"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    className="w-full px-4 py-2 border rounded-md"
-                    required
-                  />
-                </div>
-              </div>
-            </section>
+        {/* Progress Bar */}
+        <ApplicationProgress currentStep={currentStep} />
 
-            {/* Document Upload */}
-            <section className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-2xl font-bold mb-6">Required Documents</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    ID Verification
-                  </label>
-                  <input
-                    type="file"
-                    className="w-full"
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Background Check Authorization
-                  </label>
-                  <input
-                    type="file"
-                    className="w-full"
-                    accept=".pdf"
-                    required
-                  />
-                </div>
-              </div>
-            </section>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+          <AnimatePresence mode="wait">
+            <CurrentStepComponent
+              formData={formData}
+              setFormData={setFormData}
+            />
+          </AnimatePresence>
 
-            {/* Submit Button */}
-            <div className="flex justify-center">
-              <Button type="submit" color="primary" size="lg">
-                Submit Application
+          {/* Navigation Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex justify-between mt-8"
+          >
+            {currentStep > 1 && (
+              <Button
+                type="button"
+                variant="bordered"
+                color="success"
+                startContent={<ArrowLeft className="w-4 h-4" />}
+                onClick={handlePrevious}
+              >
+                Previous
               </Button>
+            )}
+
+            <div className="ml-auto">
+              {currentStep < 3 ? (
+                <Button
+                  type="button"
+                  color="success"
+                  variant="shadow"
+                  className="text-white"
+                  endContent={<ArrowRight className="w-4 h-4" />}
+                  onClick={handleNext}
+                >
+                  Next Step
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  color="success"
+                  variant="shadow"
+                  className="text-white"
+                  endContent={<Send className="w-4 h-4" />}
+                >
+                  Submit Application
+                </Button>
+              )}
             </div>
-          </form>
-        </div>
+          </motion.div>
+        </form>
+
+        {/* Help Text */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-center text-gray-500 text-sm mt-8"
+        >
+          Need help with your application?{" "}
+          <a href="#" className="text-success-600 hover:text-success-700">
+            Contact our support team
+          </a>
+        </motion.p>
       </div>
     </div>
   );
