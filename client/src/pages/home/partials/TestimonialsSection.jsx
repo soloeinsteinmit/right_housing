@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { Quote, Star, ChevronRight, ChevronLeft } from "lucide-react";
 import TestimonialBackgroundPattern from "../../../assets/TestimonialBackgroundPattern";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@heroui/button";
 
 const TestimonialsSection = () => {
   const controls = useAnimation();
@@ -251,12 +252,24 @@ const TestimonialsSection = () => {
           </div>
 
           <div className="text-center mt-8">
-            <Link
+            <Button
+              onPress={() => {
+                navigate("/impact");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              size="lg"
+              color="success"
+              variant="shadow"
+              className="text-white"
+            >
+              View all Impact Stories
+            </Button>
+            {/* <Link
               to={"/impact"}
               className="text-success-200 text-center text-lg relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-success-200 after:transition-all after:duration-300 hover:after:w-full"
             >
               View all Impact Stories
-            </Link>
+            </Link> */}
           </div>
         </div>
       </motion.div>

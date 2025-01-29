@@ -17,19 +17,19 @@ const FounderStoryModal = ({ isOpen, onClose }) => {
 
   const overlayVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
       transition: {
         duration: 0.2,
-      }
+      },
     },
-    exit: { 
+    exit: {
       opacity: 0,
       transition: {
         duration: 0.2,
-        delay: 0.1
-      }
-    }
+        delay: 0.1,
+      },
+    },
   };
 
   const modalVariants = {
@@ -88,7 +88,7 @@ const FounderStoryModal = ({ isOpen, onClose }) => {
     <AnimatePresence mode="wait">
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 overflow-hidden"
+          className="fixed inset-0 z-[9999] overflow-hidden"
           variants={overlayVariants}
           initial="hidden"
           animate="visible"

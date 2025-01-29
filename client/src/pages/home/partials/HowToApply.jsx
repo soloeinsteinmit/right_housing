@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@heroui/button";
 import houseImage from "../../../assets/housing.jpg"; // You'll need to add this image
 
 const HowToApply = () => {
   const [activeStep, setActiveStep] = useState(1);
+  const navigate = useNavigate();
 
   const steps = [
     {
@@ -273,25 +275,33 @@ const HowToApply = () => {
                   This helps us understand your needs and match you with the
                   right housing options.
                 </p>
-                <Link
-                  to="/apply"
-                  className="inline-flex items-center px-6 py-3 bg-success-500 text-white rounded-lg font-medium hover:bg-success-600 transition-colors duration-200"
+                <Button
+                  onPress={() => {
+                    navigate("/apply");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  className="text-white"
+                  size="lg"
+                  radius="sm"
+                  color="success"
+                  endContent={
+                    <svg
+                      className="w-5 h-5 ml-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  }
                 >
                   Complete Interest Form
-                  <svg
-                    className="w-5 h-5 ml-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </Link>
+                </Button>
               </motion.div>
             )}
           </div>
@@ -318,7 +328,7 @@ const HowToApply = () => {
                 />
 
                 {/* Content overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 hover:-translate-y-0 transition-transform duration-300">
+                <div className="absolute bottom-0 left-0 right-0 p-8 z-10">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -333,17 +343,24 @@ const HowToApply = () => {
                       Complete the interest form below to begin your path
                       towards recovery-supportive housing.
                     </p>
-                    <Link
-                      // to="/houses"
-                      to="/apply"
-                      className="inline-flex items-center px-6 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-all duration-200 group"
+                    <Button
+                      onPress={() => {
+                        navigate("/apply");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      size="lg"
+                      radius="sm"
+                      // color="success"
+                      className=" transition-all duration-200 group"
+                      endContent={
+                        <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
+                          →
+                        </span>
+                      }
                     >
                       {/* View Available Houses */}
                       Complete Interest Form
-                      <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
-                        →
-                      </span>
-                    </Link>
+                    </Button>
                   </motion.div>
                 </div>
               </div>

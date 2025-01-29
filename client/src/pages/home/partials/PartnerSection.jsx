@@ -150,10 +150,13 @@ const PartnerSection = () => {
         variants={containerVariants}
         initial="hidden"
         animate={controls}
-        className="relative max-w-[1400px] mx-auto px-4 py-24"
+        className="relative px-4 pb-24"
       >
         {/* Header Section */}
-        <motion.div variants={itemVariants} className="text-center mb-20">
+        <motion.div
+          variants={itemVariants}
+          className="text-center mb-10 max-w-[1400px] mx-auto"
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -176,7 +179,7 @@ const PartnerSection = () => {
         </motion.div>
 
         {/* Stats Grid */}
-        <motion.div
+        {/* <motion.div
           variants={containerVariants}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20"
         >
@@ -203,7 +206,7 @@ const PartnerSection = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
 
         {/* Marquee Partners Section */}
         <div className="relative">
@@ -227,9 +230,9 @@ const PartnerSection = () => {
               {doubledPartners.map((partner, index) => (
                 <div
                   key={`${partner.name}-${index}`}
-                  className="flex-shrink-0 mx-8 w-[200px]"
+                  className="flex-shrink-0 mx-5 w-fit max-w-[350px]"
                 >
-                  <div className="bg-white rounded-lg p-6">
+                  <div className="p-6">
                     <img
                       src={partner.logo}
                       alt={partner.name}
@@ -251,7 +254,18 @@ const PartnerSection = () => {
         </div>
 
         {/* CTA Section */}
-        <motion.div variants={itemVariants} className="text-center mt-5">
+        <motion.div
+          variants={itemVariants}
+          className="text-center mt-10 max-w-[1400px] mx-auto space-x-4"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center space-x-2 bg-warning-500 hover:bg-warning-600 text-white font-semibold px-8 py-4 rounded-full transition-colors duration-300"
+          >
+            <span>See all Partners</span>
+            <ArrowUpRight className="w-5 h-5" />
+          </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

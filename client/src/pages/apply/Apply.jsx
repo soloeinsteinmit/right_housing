@@ -3,7 +3,7 @@
  * Handles housing application submissions and document uploads.
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/button";
 import { ArrowLeft, ArrowRight, Send } from "lucide-react";
@@ -11,6 +11,7 @@ import { ArrowLeft, ArrowRight, Send } from "lucide-react";
 import ApplicationHeader from "./partials/ApplicationHeader";
 import ApplicationProgress from "./partials/ApplicationProgress";
 import PersonalInfoForm from "./partials/PersonalInfoForm";
+import BackgroundInfo from "./partials/BackgroundInfo";
 import DocumentUpload from "./partials/DocumentUpload";
 import ReviewSubmit from "./partials/ReviewSubmit";
 
@@ -35,23 +36,24 @@ const Apply = () => {
 
   const steps = {
     1: PersonalInfoForm,
-    2: DocumentUpload,
-    3: ReviewSubmit,
+    2: BackgroundInfo,
+    3: DocumentUpload,
+    4: ReviewSubmit,
   };
 
   const CurrentStepComponent = steps[currentStep];
 
   const handleNext = () => {
-    if (currentStep < 3) {
+    if (currentStep < 4) {
       setCurrentStep((prev) => prev + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const handlePrevious = () => {
     if (currentStep > 1) {
       setCurrentStep((prev) => prev - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -99,7 +101,7 @@ const Apply = () => {
             )}
 
             <div className="ml-auto">
-              {currentStep < 3 ? (
+              {currentStep < 4 ? (
                 <Button
                   type="button"
                   color="success"

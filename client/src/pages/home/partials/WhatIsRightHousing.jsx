@@ -1,8 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@heroui/button";
 
 const WhatIsRightHousing = () => {
+  const navigate = useNavigate();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -126,12 +129,18 @@ const WhatIsRightHousing = () => {
             variants={itemVariants}
             className="text-center md:text-left"
           >
-            <Link
-              to="/about"
-              className="inline-block mt-4 bg-success-600 text-white px-8 py-3 rounded-md hover:bg-success-500 transition-colors duration-200 border border-amber-500/30"
+            <Button
+              onPress={() => {
+                navigate("/about");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              color="success"
+              className="text-white"
+              radius="sm"
+              size="lg"
             >
               Learn More About Us
-            </Link>
+            </Button>
           </motion.div>
         </div>
 

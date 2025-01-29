@@ -43,6 +43,7 @@ const Navbar = () => {
     { name: "Impact Stories", path: "/impact" },
     { name: "Gallery", path: "/gallery" },
     { name: "Become a Volunteer", path: "/volunteer" },
+    { name: "FAQ", path: "/faq" },
     { name: "Privacy Policy", path: "/privacy-policy" },
     { name: "Terms of Service", path: "/terms-of-service" },
     { name: "Sitemap", path: "/sitemap" },
@@ -118,7 +119,13 @@ const Navbar = () => {
             <nav className="hidden md:flex items-center">
               {navItems.map((item, index) => (
                 <div key={item.path} className="flex items-center">
-                  <Link to={item.path} className="relative group">
+                  <Link
+                    to={item.path}
+                    className="relative group"
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                  >
                     <span
                       className={`text-base font-medium transition-colors duration-200 ${
                         isActive(item.path)
@@ -169,6 +176,9 @@ const Navbar = () => {
                           key={page.path}
                           to={page.path}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-success-50 hover:text-success-700 transition-colors duration-200"
+                          onClick={() =>
+                            window.scrollTo({ top: 0, behavior: "smooth" })
+                          }
                         >
                           {page.name}
                         </Link>
@@ -190,7 +200,10 @@ const Navbar = () => {
                 variant="shadow"
                 color="success"
                 // size="sm"
-                onClick={() => navigate("/apply")}
+                onPress={() => {
+                  navigate("/apply");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
               >
                 Apply Now
               </Button>
@@ -203,7 +216,10 @@ const Navbar = () => {
                 initial="initial"
                 animate="animate"
                 whileTap="tap"
-                onClick={() => navigate("/donate")}
+                onClick={() => {
+                  navigate("/donate");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
               >
                 Donate Now <HandCoins className="w-4 h-4" />
               </motion.button>
@@ -249,7 +265,10 @@ const Navbar = () => {
                             ? "text-success-700 bg-success-50"
                             : "text-gray-700 hover:text-success-700 hover:bg-success-50/50"
                         }`}
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
                       >
                         {item.name}
                         {isActive(item.path) && (
@@ -269,7 +288,10 @@ const Navbar = () => {
                         key={page.path}
                         to={page.path}
                         className="block px-6 py-2 text-sm text-gray-600 hover:text-success-700 hover:bg-success-50/50 rounded-lg"
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
                       >
                         {page.name}
                       </Link>
@@ -277,21 +299,22 @@ const Navbar = () => {
                   </div>
 
                   <div className="p-4 space-y-2 border-t border-success-100/20">
-                    <Link
+                    {/* <Link
                       to="/apply"
                       className="block w-full bg-success-700 transition-colors hover:bg-success-800 text-white"
                       onClick={() => setIsMenuOpen(false)}
+                    > */}
+                    <Button
+                      className="w-full bg-success-700 transition-colors hover:bg-success-800 text-white"
+                      onPress={() => {
+                        setIsMenuOpen(false);
+                        navigate("/apply");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
                     >
-                      <Button
-                        className="w-full bg-success-700 transition-colors hover:bg-success-800 text-white"
-                        onPress={() => {
-                          setIsMenuOpen(false);
-                          navigate("/apply");
-                        }}
-                      >
-                        Apply Now
-                      </Button>
-                    </Link>
+                      Apply Now
+                    </Button>
+                    {/* </Link> */}
                     <motion.button
                       className="w-full flex items-center justify-center gap-2 bg-warning-500 hover:bg-warning-600 rounded-medium px-4 py-2 text-white"
                       variants={pulseVariant}
@@ -301,6 +324,7 @@ const Navbar = () => {
                       onClick={() => {
                         setIsMenuOpen(false);
                         navigate("/donate");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
                     >
                       Donate Now <HandCoins className="w-4 h-4" />
