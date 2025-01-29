@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@heroui/button";
 
 const ThreePillars = () => {
+  const navigate = useNavigate();
   const sections = [
     {
       id: "origins",
@@ -346,15 +348,23 @@ const ThreePillars = () => {
             communities where recovery, reintegration, and mental wellness
             flourish.
           </p>
-          <Link
-            to="/apply"
-            className="inline-flex items-center px-8 py-4 bg-success-500 text-white rounded-lg font-medium hover:bg-success-600 transition-colors group"
+          <Button
+            onPress={() => {
+              navigate("/apply");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            color="success"
+            size="lg"
+            radius="sm"
+            className="text-white group"
+            endContent={
+              <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
+                →
+              </span>
+            }
           >
             Begin Your Journey Today
-            <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
-              →
-            </span>
-          </Link>
+          </Button>
         </motion.div>
       </div>
     </div>

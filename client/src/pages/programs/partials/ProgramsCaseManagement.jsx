@@ -378,7 +378,9 @@ const ProgramsCaseManagement = () => {
             className="inline-flex items-center gap-2 bg-success-50 text-success-700 px-4 py-2 rounded-full mb-6"
           >
             <ClipboardList className="w-5 h-5" />
-            <span className="font-medium">Case Management</span>
+            <span className="font-medium">
+              Our Programs & Services - Case Management
+            </span>
           </motion.div>
 
           <motion.h2

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowUpRight,
   Calendar,
@@ -147,6 +147,7 @@ const NoResultsAnimation = () => {
 const ImpactGrid = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const navigate = useNavigate();
 
   const stories = [
     {
@@ -334,7 +335,11 @@ const ImpactGrid = () => {
               variants={itemVariants}
               className="group"
             >
-              <Link to={`/impact/${story.slug}`} className="block relative">
+              <Link
+                to={`/impact/${story.slug}`}
+                className="block relative"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              >
                 <div
                   className={`grid md:grid-cols-2 gap-6 md:gap-12 items-center ${
                     index % 2 === 0 ? "" : "md:flex-row-reverse"

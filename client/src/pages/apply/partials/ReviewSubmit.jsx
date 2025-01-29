@@ -54,6 +54,31 @@ const ReviewSubmit = ({ formData }) => {
           </div>
         </div>
 
+        {/* Background Information Review */}
+        <div>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Background & Current Situation</h3>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm text-gray-500">Recovery Journey</p>
+              <p className="text-base text-gray-900">
+                {formData?.recoveryJourney}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Current Living Situation</p>
+              <p className="text-base text-gray-900">{formData?.livingSituation}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Employment Status</p>
+              <p className="text-base text-gray-900">{formData?.employmentStatus}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Support System</p>
+              <p className="text-base text-gray-900">{formData?.supportSystem}</p>
+            </div>
+          </div>
+        </div>
+
         {/* Documents Review */}
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">Uploaded Documents</h3>

@@ -5,7 +5,7 @@ import TeamSection from "./partials/TeamSection";
 import ImpactSection from "./partials/ImpactSection";
 import CallToActionSection from "../home/partials/CallToActionSection";
 import AboutContactForm from "./partials/AboutContactForm";
-import React from "react";
+import React, { useEffect } from "react";
 import FounderStory from "./partials/FounderStory";
 import AnitaStory from "./partials/AnitaStory";
 

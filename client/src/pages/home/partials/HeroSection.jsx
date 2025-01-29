@@ -436,7 +436,10 @@ function HeroSection() {
               initial="initial"
               animate="animate"
               whileTap="tap"
-              onClick={() => navigate("/donate")}
+              onClick={() => {
+                navigate("/donate");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             >
               <HandCoins className="w-5 h-5" /> Donate Now
             </motion.button>

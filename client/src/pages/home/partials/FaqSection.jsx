@@ -12,11 +12,13 @@ import {
   Tag,
   ArrowUpRight,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@heroui/button";
 import FaqBackgroundPattern from "../../../assets/FaqBackgroundPattern";
 
 const FaqSection = () => {
   const controls = useAnimation();
+  const navigate = useNavigate();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [searchTerm, setSearchTerm] = useState("");
@@ -306,21 +308,32 @@ const FaqSection = () => {
           <p className="text-gray-600 mb-6">
             Still have questions? We're here to help!
           </p>
-          <Link
-            to="/faq"
-            className="inline-flex items-center space-x-2 bg-success-600 hover:bg-success-700 text-white font-semibold px-8 py-4 rounded-full transition-colors duration-300"
+          <Button
+            onPress={() => {
+              navigate("/faq");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            color="warning"
+            size="lg"
+            radius="full"
+            className="text-white"
+            endContent={<ArrowUpRight className="w-5 h-5" />}
           >
-            <span>See all FAQs</span>
-            <ArrowUpRight className="w-5 h-5" />
-          </Link>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center space-x-2 bg-success-600 hover:bg-success-700 text-white font-semibold px-8 py-4 rounded-full transition-colors duration-300"
+            See all FAQs
+          </Button>
+          <Button
+            onPress={() => {
+              navigate("/contact");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            color="success"
+            size="lg"
+            radius="full"
+            className="text-white"
+            endContent={<ArrowUpRight className="w-5 h-5" />}
           >
             <span>Contact Our Support Team</span>
-            <ArrowUpRight className="w-5 h-5" />
-          </motion.button>
+          </Button>
         </motion.div>
       </motion.div>
     </div>

@@ -59,8 +59,6 @@ const Home = () => {
         <FaqSection />
       </section>
 
-      <PartnerSection />
-
       {/* Call to Action Section */}
       <section className="py-20 bg-success-900 text-white">
         <CallToActionSection />

@@ -8,7 +8,7 @@ const BackgroundInfo = ({ onNext, onPrev }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-2xl mx-auto"
+      className="bg-white p-8 rounded-2xl shadow-sm"
     >
       <div className="space-y-8">
         <div>
@@ -16,7 +16,8 @@ const BackgroundInfo = ({ onNext, onPrev }) => {
             Background & Current Situation
           </h2>
           <p className="text-gray-600">
-            Help us understand your journey and current circumstances so we can better assist you.
+            Help us understand your journey and current circumstances so we can
+            better assist you.
           </p>
         </div>
 
@@ -74,24 +75,6 @@ const BackgroundInfo = ({ onNext, onPrev }) => {
               placeholder="Describe your current support system (family, friends, counselors, etc.)"
             />
           </div>
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="flex justify-between pt-8">
-          <button
-            onClick={onPrev}
-            className="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-500"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Previous
-          </button>
-          <button
-            onClick={onNext}
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-success-600 hover:bg-success-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-500"
-          >
-            Next
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </button>
         </div>
       </div>
     </motion.div>
