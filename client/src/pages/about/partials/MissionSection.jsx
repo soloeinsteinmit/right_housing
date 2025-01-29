@@ -7,30 +7,35 @@ const MissionSection = () => {
       title: "Recovery & Reintegration",
       description:
         "Supporting individuals in their journey of recovery and reintegration, providing essential tools, resources, and compassionate services.",
+      text: "R",
     },
     {
       icon: "M13 10V3L4 14h7v7l9-11h-7z",
       title: "Independence & Empowerment",
       description:
         "Empowering individuals through education, job training, emotional support, and skill-building for self-sufficiency.",
+      text: "I",
     },
     {
       icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
       title: "Guidance & Goal Setting",
       description:
         "Providing personalized guidance and goal-setting with clear, achievable paths for stable housing, employment, and family reunification.",
+      text: "G",
     },
     {
       icon: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9",
       title: "Holistic Support",
       description:
         "Taking a comprehensive, person-centered approach to support mental, physical, emotional, and legal needs for long-term success.",
+      text: "H",
     },
     {
       icon: "M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4",
       title: "Transition & Transformation",
       description:
         "Facilitating seamless transitions from temporary to permanent housing with continued support for building better futures.",
+      text: "T",
     },
   ];
 
@@ -104,12 +109,12 @@ const MissionSection = () => {
                 </div>
                 <div className="mt-8 h-full">
                   <p className="text-gray-600 leading-relaxed">
-                    To empower individuals and families impacted by
-                    homelessness, domestic violence, addiction, or incarceration
-                    by providing compassionate support, housing solutions, and a
-                    pathway from transitional living to independent living. We
-                    envision a future where everyone can rebuild their lives and
-                    thrive in self-sufficiency and security.
+                    To empower individuals and families impacted by addiction,
+                    incarceration, and mental health by providing housing
+                    solutions and comprehensive support, and a pathway from
+                    transitional living to independent living. We envision a
+                    future where everyone can rebuild their lives and thrive in
+                    self-sufficiency and security.
                     {/* To empower individuals and families impacted by 
                     homelessness, domestic violence, addiction, or incarceration 
                     by providing compassionate support, housing solutions, and a 
@@ -185,7 +190,7 @@ const MissionSection = () => {
 
                   {/* Icon */}
                   <div className="w-16 h-16 bg-success-100 rounded-2xl flex items-center justify-center mb-6 transform -rotate-6 group-hover:rotate-0 transition-transform">
-                    <svg
+                    {/* <svg
                       className="w-8 h-8 text-success-600"
                       fill="none"
                       stroke="currentColor"
@@ -197,7 +202,10 @@ const MissionSection = () => {
                         strokeWidth="2"
                         d={value.icon}
                       />
-                    </svg>
+                    </svg> */}
+                    <span className="font-bold text-4xl text-success-700">
+                      {value.text}
+                    </span>
                   </div>
 
                   {/* Content */}

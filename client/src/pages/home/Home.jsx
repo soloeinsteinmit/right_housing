@@ -13,6 +13,9 @@ import CallToActionSection from "./partials/CallToActionSection";
 import ScrollControls from "../../components/common/ScrollControls";
 import TestimonialsSection from "./partials/TestimonialsSection";
 import FaqSection from "./partials/FaqSection";
+import WhatIsRightHousing from "./partials/WhatIsRightHousing";
+import HowToApply from "./partials/HowToApply";
+import ThreePillars from "./partials/ThreePillars";
 
 /**
  * Home component with hero section and main content.
@@ -26,27 +29,28 @@ const Home = () => {
     <div className="relative ">
       {/* Hero Section */}
       <HeroSection />
-      {/* Story Section */}
-      <section className="py-20 bg-white">
-        <StorySection />
+
+      {/* What is RIGHT Housing Section */}
+      <section className="bg-gray-50">
+        <WhatIsRightHousing />
       </section>
-      {/* Approach Section */}
-      <section className="mb-20 bg-success-50">
-        <ApproachSection />
-      </section>
+
+      {/* Three Pillars Section */}
+      <ThreePillars />
+
+      {/* How to Apply Section */}
+      <HowToApply />
+
       {/* Testimonials Section */}
       <section className="py-20 bg-success-900">
         <TestimonialsSection />
       </section>
-      {/* Partners Section */}
-      <section className=" bg-white">
-        <PartnerSection />
-      </section>
+
       {/* FAQs Section */}
-      {/* // TODO: ISSUES HERE. DISPPERATING CARDS AFTER FILTERING */}
       <section className="bg-success-50">
         <FaqSection />
       </section>
+
       {/* Call to Action Section */}
       <section className="py-20 bg-success-900 text-white">
         <CallToActionSection />

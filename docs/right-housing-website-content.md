@@ -36,7 +36,7 @@ Our mission is to empower individuals transitioning from incarceration or recove
 
 ## Our Vision
 
-To empower individuals and families impacted by homelessness, domestic violence, addiction, or incarceration by providing compassionate support, housing solutions, and a pathway from transitional living to independent living. We envision a future where everyone can rebuild their lives and thrive in self-sufficiency and security.
+To empower individuals and families impacted by addiction, incarceration, and mental health by providing housing solutions and comprehensive support, and a pathway from transitional living to independent living. We envision a future where everyone can rebuild their lives and thrive in self-sufficiency and security
 
 ## Meet Anita - Founder
 
