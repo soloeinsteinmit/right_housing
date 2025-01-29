@@ -115,7 +115,10 @@ const ThreePillars = () => {
             >
               Transforming Lives Through
               <span className="relative">
-                <span className="relative z-10"> Community</span>
+                <span className="relative z-10">
+                  {" "}
+                  Recovery, Reentry, & Mental Health
+                </span>
                 <motion.svg
                   className="absolute -bottom-2 left-0 w-full"
                   viewBox="0 0 100 10"
@@ -222,11 +225,33 @@ const ThreePillars = () => {
                   {/* Decorative Pattern Overlay */}
                   <div className="absolute inset-0 z-20 mix-blend-soft-light opacity-30">
                     <div className="absolute inset-0 bg-gradient-to-br from-success-500/20 to-amber-500/20" />
-                    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                      <pattern id="pattern-circles" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                        <circle cx="10" cy="10" r="1.5" fill="currentColor" className="text-success-200" />
+                    <svg
+                      className="absolute inset-0 w-full h-full"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <pattern
+                        id="pattern-circles"
+                        x="0"
+                        y="0"
+                        width="20"
+                        height="20"
+                        patternUnits="userSpaceOnUse"
+                      >
+                        <circle
+                          cx="10"
+                          cy="10"
+                          r="1.5"
+                          fill="currentColor"
+                          className="text-success-200"
+                        />
                       </pattern>
-                      <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-circles)" />
+                      <rect
+                        x="0"
+                        y="0"
+                        width="100%"
+                        height="100%"
+                        fill="url(#pattern-circles)"
+                      />
                     </svg>
                   </div>
 
@@ -251,7 +276,7 @@ const ThreePillars = () => {
                       alt={section.title}
                       className="w-full h-[500px] object-cover"
                     />
-                    
+
                     {/* Gradient Overlays */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
@@ -278,7 +303,11 @@ const ThreePillars = () => {
 
                 {/* Decorative Lines */}
                 <div className="absolute -inset-px z-20">
-                  <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <svg
+                    className="absolute top-0 left-0 w-full h-full"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="none"
+                  >
                     <path
                       d="M0,0 L100,100"
                       stroke="currentColor"
