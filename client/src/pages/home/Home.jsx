@@ -16,6 +16,7 @@ import FaqSection from "./partials/FaqSection";
 import WhatIsRightHousing from "./partials/WhatIsRightHousing";
 import HowToApply from "./partials/HowToApply";
 import ThreePillars from "./partials/ThreePillars";
+import FindWhatYouNeed from "./partials/FindWhatYouNeed";
 
 /**
  * Home component with hero section and main content.
@@ -31,7 +32,7 @@ const Home = () => {
       <HeroSection />
 
       {/* What is RIGHT Housing Section */}
-      <section className="bg-gray-50">
+      <section className="bg-gray-50 pt-32">
         <WhatIsRightHousing />
       </section>
 
@@ -40,6 +41,9 @@ const Home = () => {
 
       {/* How to Apply Section */}
       <HowToApply />
+
+      {/* Find What You Need Section */}
+      <FindWhatYouNeed />
 
       {/* Testimonials Section */}
       <section className="py-20 bg-success-900">
