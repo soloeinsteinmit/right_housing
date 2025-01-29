@@ -48,6 +48,9 @@ import Gallery from "../pages/gallery/Gallery";
 import Impact from "../pages/impact/Impact";
 import ImpactStory from "../pages/impact/ImpactStory";
 
+// FAQ Page
+import Faq from "../pages/faq/Faq";
+
 /**
  * @typedef {Object} RouteConfig
  * @property {string} path - The URL path for the route
@@ -77,6 +80,7 @@ import ImpactStory from "../pages/impact/ImpactStory";
  * - /gallery (Gallery)
  * - /impact (Impact)
  * - /impact/:slug (Impact Story)
+ * - /faq (FAQ)
  *
  * @type {import('react-router-dom').RouterProvider}
  */
@@ -91,6 +95,7 @@ export const router = createBrowserRouter(
       <Route path="volunteer" element={<Volunteer />} />
       <Route path="sitemap" element={<Sitemap />} />
       <Route path="gallery" element={<Gallery />} />
+      <Route path="faq" element={<Faq />} />
       
       {/* Impact Stories routes */}
       <Route path="impact">

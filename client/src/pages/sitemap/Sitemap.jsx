@@ -88,6 +88,16 @@ const Sitemap = () => {
         },
       ],
     },
+    {
+      title: "Support & Resources",
+      links: [
+        {
+          name: "FAQs",
+          path: "/faq",
+          icon: <Info className="w-5 h-5" />,
+        },
+      ],
+    },
   ];
 
   return (

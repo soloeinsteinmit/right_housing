@@ -12,6 +12,7 @@ import {
   Tag,
   ArrowUpRight,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import FaqBackgroundPattern from "../../../assets/FaqBackgroundPattern";
 
 const FaqSection = () => {
@@ -298,10 +299,20 @@ const FaqSection = () => {
         </motion.div>
 
         {/* Bottom CTA */}
-        <motion.div variants={itemVariants} className="text-center mt-16">
+        <motion.div
+          variants={itemVariants}
+          className="text-center mt-16 space-x-5"
+        >
           <p className="text-gray-600 mb-6">
             Still have questions? We're here to help!
           </p>
+          <Link
+            to="/faq"
+            className="inline-flex items-center space-x-2 bg-success-600 hover:bg-success-700 text-white font-semibold px-8 py-4 rounded-full transition-colors duration-300"
+          >
+            <span>See all FAQs</span>
+            <ArrowUpRight className="w-5 h-5" />
+          </Link>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

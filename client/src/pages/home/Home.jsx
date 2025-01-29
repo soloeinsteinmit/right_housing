@@ -17,6 +17,7 @@ import WhatIsRightHousing from "./partials/WhatIsRightHousing";
 import HowToApply from "./partials/HowToApply";
 import ThreePillars from "./partials/ThreePillars";
 import FindWhatYouNeed from "./partials/FindWhatYouNeed";
+import CommunityImpact from "./partials/CommunityImpact";
 
 /**
  * Home component with hero section and main content.
@@ -27,7 +28,7 @@ import FindWhatYouNeed from "./partials/FindWhatYouNeed";
  */
 const Home = () => {
   return (
-    <div className="relative ">
+    <main>
       {/* Hero Section */}
       <HeroSection />
 
@@ -45,6 +46,9 @@ const Home = () => {
       {/* Find What You Need Section */}
       <FindWhatYouNeed />
 
+      {/* Community Impact Section */}
+      {/* <CommunityImpact /> */}
+
       {/* Testimonials Section */}
       <section className="py-20 bg-success-900">
         <TestimonialsSection />
@@ -55,12 +59,14 @@ const Home = () => {
         <FaqSection />
       </section>
 
+      <PartnerSection />
+
       {/* Call to Action Section */}
       <section className="py-20 bg-success-900 text-white">
         <CallToActionSection />
       </section>
       <ScrollControls />
-    </div>
+    </main>
   );
 };
 
