@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { Quote, Star, ChevronRight, ChevronLeft } from "lucide-react";
 import TestimonialBackgroundPattern from "../../../assets/TestimonialBackgroundPattern";
+import { Link } from "react-router-dom";
 
 const TestimonialsSection = () => {
   const controls = useAnimation();
@@ -247,6 +248,15 @@ const TestimonialsSection = () => {
                 whileTap={{ scale: 0.8 }}
               />
             ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link
+              to={"/impact"}
+              className="text-success-200 text-center text-lg relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-success-200 after:transition-all after:duration-300 hover:after:w-full"
+            >
+              View all Impact Stories
+            </Link>
           </div>
         </div>
       </motion.div>

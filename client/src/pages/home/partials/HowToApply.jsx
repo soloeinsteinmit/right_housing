@@ -153,7 +153,7 @@ const HowToApply = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-success-500 text-lg font-medium mb-2"
+            className="text-success-600 text-lg font-medium mb-2"
           >
             FIND A RIGHT HOUSE TODAY
           </motion.h2>

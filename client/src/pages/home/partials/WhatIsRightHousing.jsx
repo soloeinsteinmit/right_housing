@@ -26,7 +26,7 @@ const WhatIsRightHousing = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
       <motion.div
         className="grid md:grid-cols-2 gap-16 items-center justify-items-center"
         variants={containerVariants}
@@ -41,7 +41,7 @@ const WhatIsRightHousing = () => {
             variants={itemVariants}
             className="text-center md:text-left"
           >
-            <h3 className="text-success-500 text-lg font-medium mb-2">
+            <h3 className="text-success-600 text-lg font-medium mb-2">
               RIGHT Housing, Inc.
             </h3>
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
@@ -128,9 +128,9 @@ const WhatIsRightHousing = () => {
           >
             <Link
               to="/about"
-              className="inline-block mt-4 bg-gray-900 text-white px-8 py-3 rounded-md hover:bg-gray-800 transition-colors duration-200 border border-amber-500/30"
+              className="inline-block mt-4 bg-success-600 text-white px-8 py-3 rounded-md hover:bg-success-500 transition-colors duration-200 border border-amber-500/30"
             >
-              About Us
+              Learn More About Us
             </Link>
           </motion.div>
         </div>
