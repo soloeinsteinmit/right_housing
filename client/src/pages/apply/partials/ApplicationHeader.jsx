@@ -4,7 +4,7 @@ import { HouseIcon } from "lucide-react";
 
 const ApplicationHeader = () => {
   return (
-    <section className="max-w-4xl mx-auto mb-16 text-center mt-20">
+    <section className="max-w-4xl mx-auto mb-16 text-center pt-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -21,7 +21,7 @@ const ApplicationHeader = () => {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="text-5xl font-bold mb-6 bg-gradient-to-r from-success-600 to-success-800 bg-clip-text text-transparent"
       >
-        Start Your Journey to Stable Housing
+        Start Your Journey to RIGHT Housing
       </motion.h1>
 
       <motion.p
@@ -30,7 +30,7 @@ const ApplicationHeader = () => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
       >
-        Complete the application below to begin your path towards
+        Complete the interest form below to begin your path towards
         recovery-supportive housing. Our team is here to help you every step of
         the way.
       </motion.p>

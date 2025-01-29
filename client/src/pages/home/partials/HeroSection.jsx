@@ -9,7 +9,7 @@ import usePulseAnimation, {
 } from "../../../hooks/usePulseAnimation";
 
 // Import images
-import helpingHand2 from "../../../assets/homeless1.jpg";
+import drug from "../../../assets/drug.jpg";
 import homeless1 from "../../../assets/prison1.jpg";
 import { Button } from "@heroui/button";
 import SmileEmoji from "../../../assets/SmileEmoji";
@@ -27,32 +27,35 @@ function HeroSection() {
   const cards = [
     {
       type: "stat",
-      title: "80%",
+      title: "60%",
+      // title: "80%",
       description:
-        "Success rate in transitioning individuals to stable, independent living through our comprehensive support programs.",
+        // "Success rate in transitioning individuals to stable, independent living through our comprehensive support programs.",
+        "Early support increases the chances of successful reintegration into society.",
       btnText: "Learn More",
       className: "bg-success-900 w-[260px] h-[380px] text-white",
     },
     {
       type: "health",
-      title: "Recovery",
+      title: "Recovery Support",
       description:
-        "Supporting individuals in their journey to recovery and reintegration with compassionate care.",
-      image: helpingHand2,
+        "Supporting individuals in their journey to recovery and reintegration with comprehensive support.",
+      image: drug,
       className: "bg-[#14171F] text-white w-[260px] h-[350px]",
     },
     {
       type: "join",
-      title: "Join 1000+",
+      title: "Join 500+",
       description: "Lives Transformed",
       btnText: "Support Our Mission",
       className: "bg-success-100 w-[260px] h-[250px]",
     },
     {
       type: "education",
-      title: "Guidance",
+      title: "Reentry Assistance",
       description:
-        "Providing personalized support and goal-setting for sustainable independence.",
+        // "Helping individuals recently released from prison transition back into society.",
+        "Helping formerly incarcerated individuals transition back into society.",
       image: homeless1,
       className: "bg-[#14171F] text-white w-[260px] h-[350px]",
     },
@@ -417,9 +420,8 @@ function HeroSection() {
             className="text-xl text-gray-600"
             variants={itemVariants}
           >
-            Empowering individuals on their journey to recovery and independence
-            through comprehensive support, stable housing, and compassionate
-            care.
+            Empowering individuals on their journey to recovery and reentry
+            through stable housing and comprehensive support
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -515,7 +517,7 @@ function HeroSection() {
                 <p className="text-base text-default-300 font-semibold mb-2">
                   {cards[1].title}
                 </p>
-                <p className="text-white text-xl">{cards[1].description}</p>
+                <p className="text-white text-lg">{cards[1].description}</p>
               </div>
             </div>
           </motion.div>
@@ -578,7 +580,7 @@ function HeroSection() {
                 <h3 className="text-base text-default-300 font-semibold mb-2">
                   {cards[3].title}
                 </h3>
-                <p className="text-white text-xl">{cards[3].description}</p>
+                <p className="text-white text-lg">{cards[3].description}</p>
               </div>
             </div>
           </motion.div>

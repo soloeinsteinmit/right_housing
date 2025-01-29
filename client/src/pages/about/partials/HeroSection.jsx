@@ -159,7 +159,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-6xl font-bold mb-6">
+            <h1 className="text-7xl font-bold mb-6">
               <span className="text-gray-900">Transforming</span>
               <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-success-600 to-success-800">
@@ -167,10 +167,11 @@ const HeroSection = () => {
               </span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              At RIGHT Housing, we empower individuals and families impacted by
-              life's challenges through comprehensive support and housing
-              solutions. Our commitment to recovery, reintegration, and
-              transformation creates pathways to independence and renewed hope.
+              At RIGHT Housing, we believe that true healing happens when the
+              mind, body, and spirit are nurtured together. We provide
+              transitional housing for men and women who are navigating
+              recovery, reentry, or mental health challenges, offering more than
+              just a roof over their heads.
             </p>
             <div className="flex flex-wrap gap-6">
               <motion.div

@@ -35,21 +35,21 @@ const AnitaStory = () => {
       icon: <Heart className="w-6 h-6" />,
     },
     {
-      title: "Healthcare Operations",
-      location: "Community Health Center",
+      title: "Health Operations Director",
+      location: "Reset Kidney",
       description: "Creating sustainable solutions for long-term healing",
       icon: <HandHeart className="w-6 h-6" />,
     },
     {
-      title: "Project Management",
+      title: "Project Manager",
       location: "Support Programs",
-      description: "Building pathways for recovery and renewed hope",
+      description: "Building pathways for recovery and reentry",
       icon: <Home className="w-6 h-6" />,
     },
     {
-      title: "Community Builder",
+      title: "Social Impactor",
       location: "RIGHT Housing",
-      description: "Transforming lives through compassion and support",
+      description: "Transforming lives through mind-body wellness",
       icon: <Users className="w-6 h-6" />,
     },
   ];
@@ -179,10 +179,17 @@ const AnitaStory = () => {
 
               <div className="space-y-6 text-lg text-gray-600">
                 <p>
-                  As a Population Health Manager in Camden, I witnessed
+                  {/* As a Population Health Manager in Camden, I witnessed
                   firsthand the delicate balance between hope and despair. Every
                   day brought new stories of resilience, of people facing
-                  unimaginable hardships with quiet dignity.
+                  unimaginable hardships with quiet dignity. */}
+                  In my time as a Population Health Manager in Camden, I
+                  witnessed firsthand how the simplest of mistakes or wrong
+                  choices could spiral into homelessness and life-altering
+                  tragedies for individuals. I saw people I knew by name—real
+                  faces, real stories—struggling with homelessness and
+                  isolation. It became clear that their needs weren’t just
+                  physical; they needed hope, support, and a chance to rebuild.
                 </p>
                 <p>
                   These weren't just patients seeking medical care—they were
@@ -238,30 +245,6 @@ const AnitaStory = () => {
                   {milestone.location}
                 </div>
                 <p className="text-gray-600">{milestone.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Impact Section */}
-        <motion.div variants={containerVariants} className="text-center mb-20">
-          <h3 className="text-3xl font-bold mb-12 text-gray-900">
-            Creating Lasting Impact
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {impactPoints.map((point) => (
-              <motion.div
-                key={point.title}
-                variants={itemVariants}
-                className="bg-success-50 p-8 rounded-2xl"
-              >
-                <div className="w-16 h-16 bg-success-100 rounded-full flex items-center justify-center text-success-600 mx-auto mb-4">
-                  {point.icon}
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 mb-2">
-                  {point.title}
-                </h4>
-                <p className="text-gray-600">{point.description}</p>
               </motion.div>
             ))}
           </div>
