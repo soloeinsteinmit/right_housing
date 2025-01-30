@@ -4,9 +4,11 @@ import { useRef } from "react";
 import usePulseAnimation, {
   PULSE_COLORS,
 } from "../../../hooks/usePulseAnimation";
+import { useNavigate } from "react-router-dom";
 
 const DonateHero = () => {
   const donationRef = useRef(null);
+  const navigate = useNavigate();
   const pulseVariant = usePulseAnimation({
     color: PULSE_COLORS.SUCCESS,
     duration: 2,
@@ -152,14 +154,14 @@ const DonateHero = () => {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-6">
               <motion.button
                 variants={pulseVariant}
                 initial="initial"
                 animate="animate"
                 whileTap="tap"
                 onClick={scrollToNextSection}
-                className="px-8 py-4 bg-success-600 text-white rounded-xl font-semibold flex items-center gap-2 shadow-lg shadow-success-600/20"
+                className="px-8 py-4 bg-success-600 hover:bg-success-500 transition-color duration-300 text-white rounded-xl font-semibold flex items-center gap-2 shadow-lg shadow-success-600/20"
               >
                 Donate Now
                 <Heart className="w-5 h-5" />
@@ -168,8 +170,12 @@ const DonateHero = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-4 bg-white text-gray-800 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
+                onClick={() => {
+                  navigate("/impact");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
               >
-                Learn More
+                Witness Lives Transformed
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
             </div>

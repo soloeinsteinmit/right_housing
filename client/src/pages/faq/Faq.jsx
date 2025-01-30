@@ -8,6 +8,7 @@ import {
   FileQuestion,
 } from "lucide-react";
 import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
 
 const NoResultsFound = () => (
   <motion.div
@@ -126,16 +127,17 @@ const Faq = () => {
           <div className=" lg:col-span-1">
             <div className="sticky top-24">
               {/* Search Bar */}
-              <div className="relative mb-6">
-                <input
-                  type="text"
-                  placeholder="Search FAQs..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-success-500 focus:border-transparent"
-                />
-                <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
-              </div>
+
+              <Input
+                type="text"
+                placeholder="Search FAQs..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full mb-3 focus:ring-2 focus:ring-success-500 focus:border-transparent"
+                variant="bordered"
+                size="lg"
+                startContent={<Search className="w-5 h-5 text-gray-400" />}
+              />
 
               {/* Categories */}
               <nav className="space-y-1">
@@ -193,7 +195,7 @@ const Faq = () => {
                     >
                       <button
                         onClick={() => toggleQuestion(index)}
-                        className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-success-50/50"
+                        className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-success-50/20"
                       >
                         <span className="font-medium text-gray-900">
                           {faq.question}

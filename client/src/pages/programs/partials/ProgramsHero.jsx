@@ -115,8 +115,9 @@ const ProgramsHero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              Experience our innovative approach to recovery and growth,
-              designed to empower your journey towards lasting transformation.
+              Experience our innovative approach to recovery, reentry and mental
+              health, designed to empower your journey towards lasting
+              transformation.
             </motion.p>
 
             {/* Stats */}
@@ -143,7 +144,7 @@ const ProgramsHero = () => {
                   icon: <Clock className="w-6 h-6" />,
                 },
                 {
-                  value: "15+",
+                  value: "4+",
                   label: "Years Experience",
                   icon: <Award className="w-6 h-6" />,
                 },
@@ -168,9 +169,7 @@ const ProgramsHero = () => {
               className="flex justify-center lg:justify-start"
             >
               <div className="text-center">
-                <span className="block text-white/80 mb-4">
-                  Begin Your Journey
-                </span>
+                <span className="block text-white/80 mb-4">Learn more</span>
                 <AnimatedScrollButton
                   onClick={handleScroll}
                   tooltipText=""

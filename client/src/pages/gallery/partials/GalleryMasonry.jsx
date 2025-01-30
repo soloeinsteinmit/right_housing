@@ -12,6 +12,55 @@ import team2 from "../../../assets/team2.jpg";
 import drug from "../../../assets/drug.jpg";
 import h from "../../../assets/h.jpg";
 import h2 from "../../../assets/homeless1.jpg";
+import { Skeleton } from "@heroui/skeleton";
+
+const ImageLoadingSVG = ({ className = "w-12 h-12 text-success-500" }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <motion.path
+      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{
+        duration: 2,
+        ease: "easeInOut",
+        repeat: Infinity,
+      }}
+    />
+    <motion.path
+      d="M9 9h.01M15 9h.01M9.5 13.5s1 1 2.5 1 2.5-1 2.5-1"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        duration: 1,
+        ease: "easeInOut",
+        repeat: Infinity,
+        repeatType: "reverse",
+      }}
+    />
+  </svg>
+);
+
+const ImageSkeleton = ({ height = "h-64", isLoaded }) => (
+  <Skeleton
+    isLoaded={isLoaded}
+    className={`rounded-lg overflow-hidden ${height} w-full`}
+  >
+    <div className="w-full h-full bg-default-300 relative flex items-center justify-center">
+      <ImageLoadingSVG />
+    </div>
+  </Skeleton>
+);
 
 const GalleryMasonry = ({ activeFilter }) => {
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -204,12 +253,6 @@ const GalleryMasonry = ({ activeFilter }) => {
       ? galleryItems
       : galleryItems.filter((item) => item.category === activeFilter);
 
-  const Skeleton = () => (
-    <div className="animate-pulse">
-      <div className="bg-gray-200 rounded-2xl h-[300px] w-full"></div>
-    </div>
-  );
-
   return (
     <div className="container mx-auto px-4 pb-20">
       <div className="max-w-7xl mx-auto">
@@ -238,7 +281,11 @@ const GalleryMasonry = ({ activeFilter }) => {
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.4 }}
                 >
-                  {!loadedImages[item.id] && <Skeleton />}
+                  {!loadedImages[item.id] && (
+                    <Skeleton className="rounded-lg">
+                      <div className="h-24 w-full rounded-lg bg-default-300" />
+                    </Skeleton>
+                  )}
                   <img
                     src={item.image}
                     alt={item.title}

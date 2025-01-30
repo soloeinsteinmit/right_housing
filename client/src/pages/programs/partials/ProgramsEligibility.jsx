@@ -221,12 +221,18 @@ const ProgramsEligibility = () => {
                   >
                     <Link
                       to="/apply"
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                      }
                       className="block w-full px-8 py-4 rounded-xl bg-success-600 text-white font-semibold text-center shadow-lg shadow-success-500/30 hover:shadow-xl hover:shadow-success-500/40 hover:-translate-y-0.5 transition-all duration-300"
                     >
                       Start Your Application
                     </Link>
                     <Link
                       to="/contact"
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                      }
                       className="block w-full px-8 py-4 rounded-xl border-2 border-success-100 text-success-700 font-semibold text-center hover:bg-success-50 transition-colors duration-300"
                     >
                       Contact Our Team

@@ -3,14 +3,17 @@ import man1 from "../../../assets/man1.jpg";
 import man2 from "../../../assets/man2.jpg";
 import woman1 from "../../../assets/woman1.jpg";
 import woman2 from "../../../assets/woman2.jpg";
+import { Button } from "@heroui/button";
+import { useNavigate } from "react-router-dom";
 
 const TeamSection = () => {
+  const navigate = useNavigate();
   const team = [
     {
-      name: "Sarah Johnson",
-      role: "Executive Director",
+      name: "Anita Parker",
+      role: "Founder & Executive Director",
       image: woman1,
-      bio: "With extensive experience in recovery programs and transitional housing, Sarah leads our mission to transform lives through comprehensive support and empowerment.",
+      bio: "With extensive experience in recovery programs and transitional housing, Anita leads our mission to transform lives through comprehensive support and empowerment.",
       expertise: [
         "Program Development",
         "Recovery Support",
@@ -40,16 +43,18 @@ const TeamSection = () => {
       quote: "Supporting transitions that lead to lasting independence.",
     },
     {
-      name: "James Wilson",
-      role: "Community Partnerships Manager",
+      name: "Solomon Eshun",
+      role: "Tech Advocate",
       image: man2,
-      bio: "James builds and maintains vital partnerships with organizations that strengthen our support network and expand opportunities for our residents.",
+      bio: "Solomon ensures a strong digital presence by developing and managing the organization's website, host applications, and online platforms. He leverages cutting-edge technology to enhance user engagement, streamline operations, and safeguard data security.",
       expertise: [
-        "Partnership Development",
-        "Resource Coordination",
-        "Community Integration",
+        "Digital Strategy",
+        "Tech Integration",
+        "Data Security",
+        "AI & Automation",
+        "Platform Managment",
       ],
-      quote: "Strong partnerships create stronger support systems.",
+      quote: "Innovative solutions drive impactful change.",
     },
   ];
 
@@ -197,7 +202,7 @@ const TeamSection = () => {
             </div>
 
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-3xl font-bold text-gray-900 mb-4">
                 Join Our Mission
               </h3>
               <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -205,12 +210,19 @@ const TeamSection = () => {
                 others through recovery and transition support. Join us in
                 making a lasting difference in people's lives.
               </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                className="bg-success-600 text-white px-8 py-3 rounded-full hover:bg-success-700 transition-colors"
+              <Button
+                onPress={() => {
+                  navigate("/volunteer");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                size="lg"
+                color="success"
+                radius="full"
+                variant="shadow"
+                className=" text-white"
               >
                 Explore Opportunities
-              </motion.button>
+              </Button>
             </div>
           </div>
         </motion.div>

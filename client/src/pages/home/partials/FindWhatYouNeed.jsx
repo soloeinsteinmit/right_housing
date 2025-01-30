@@ -143,6 +143,7 @@ const FindWhatYouNeed = () => {
             >
               <Link
                 to={category.link}
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="block h-full hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
               >
                 <div className="p-8">

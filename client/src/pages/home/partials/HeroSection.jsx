@@ -32,7 +32,7 @@ function HeroSection() {
       description:
         // "Success rate in transitioning individuals to stable, independent living through our comprehensive support programs.",
         "Early support increases the chances of successful reintegration into society.",
-      btnText: "Learn More",
+      btnText: "Our Impact Stories",
       className: "bg-success-900 w-[260px] h-[380px] text-white",
     },
     {
@@ -480,6 +480,10 @@ function HeroSection() {
                 <Button
                   className="flex justify-between gap-2 h-[60px] bg-default-50/10 text-white border-1 border-default-50/10 rounded-3xl transition-all m-2 px-3 relative z-10"
                   size="lg"
+                  onPress={() => {
+                    navigate("/impact");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
                   endContent={
                     <div className="bg-warning rounded-full">
                       <ArrowUpRight className="w-6 h-6 m-3 text-success-800" />
@@ -549,6 +553,10 @@ function HeroSection() {
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </button> */}
                 <Button
+                  onPress={() => {
+                    navigate("/donate");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
                   className="flex justify-between gap-2 h-[60px] bg-success-300/40 border-1 border-default-50/10 rounded-3xl m-2 px-3"
                   size="lg"
                   endContent={
@@ -604,13 +612,17 @@ function HeroSection() {
                 <Button
                   className="flex justify-between gap-2 h-[60px] w-full bg-default-900/50 text-white border-1 border-default-50/10 rounded-3xl transition-all my-2 px-3"
                   size="lg"
+                  onPress={() => {
+                    navigate("/gallery");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
                   endContent={
                     <div className="bg-warning-900 rounded-full">
                       <ArrowUpRight className="w-6 h-6 m-3 text-warning" />
                     </div>
                   }
                 >
-                  {cards[0].btnText}
+                  See Hope in Action
                 </Button>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, AlertCircle } from "lucide-react";
+import { Checkbox } from "@heroui/checkbox";
 
 const ReviewSubmit = ({ formData }) => {
   const isComplete = () => {
@@ -27,61 +28,84 @@ const ReviewSubmit = ({ formData }) => {
       <div className="space-y-8">
         {/* Personal Information Review */}
         <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Personal Information</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Personal Information
+          </h3>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-gray-500">Full Name</p>
               <p className="text-base text-gray-900">
-                {formData?.firstName} {formData?.lastName}
+                {formData?.firstName ? formData?.firstName + " " : "N/A"}{" "}
+                {formData?.lastName}
               </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Email</p>
-              <p className="text-base text-gray-900">{formData?.email}</p>
+              <p className="text-base text-gray-900">
+                {formData?.email ? formData?.email : "N/A"}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Phone</p>
-              <p className="text-base text-gray-900">{formData?.phone}</p>
+              <p className="text-base text-gray-900">
+                {formData?.phone ? formData?.phone : "N/A"}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Date of Birth</p>
-              <p className="text-base text-gray-900">{formData?.dateOfBirth}</p>
+              <p className="text-base text-gray-900">
+                {formData?.dateOfBirth ? formData?.dateOfBirth : "N/A"}
+              </p>
             </div>
             <div className="md:col-span-2">
               <p className="text-sm text-gray-500">Current Address</p>
-              <p className="text-base text-gray-900">{formData?.address}</p>
+              <p className="text-base text-gray-900">
+                {formData?.address ? formData?.address : "N/A"}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Background Information Review */}
         <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Background & Current Situation</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Background & Current Situation
+          </h3>
           <div className="space-y-4">
             <div>
               <p className="text-sm text-gray-500">Recovery Journey</p>
               <p className="text-base text-gray-900">
-                {formData?.recoveryJourney}
+                {formData?.recoveryJourney ? formData?.recoveryJourney : "N/A"}
               </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Current Living Situation</p>
-              <p className="text-base text-gray-900">{formData?.livingSituation}</p>
+              <p className="text-base text-gray-900">
+                {formData?.livingSituation ? formData?.livingSituation : "N/A"}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Employment Status</p>
-              <p className="text-base text-gray-900">{formData?.employmentStatus}</p>
+              <p className="text-base text-gray-900">
+                {formData?.employmentStatus
+                  ? formData?.employmentStatus
+                  : "N/A"}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Support System</p>
-              <p className="text-base text-gray-900">{formData?.supportSystem}</p>
+              <p className="text-base text-gray-900">
+                {formData?.supportSystem ? formData?.supportSystem : "N/A"}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Documents Review */}
         <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Uploaded Documents</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Uploaded Documents
+          </h3>
           <div className="space-y-2">
             {formData?.documents?.map((doc, index) => (
               <div
@@ -118,7 +142,19 @@ const ReviewSubmit = ({ formData }) => {
         </div>
 
         {/* Terms and Conditions */}
-        <div className="space-y-4">
+        <Checkbox
+          isRequired
+          color="success"
+          className="flex items-start justify-start"
+          htmlFor="terms"
+        >
+          <span className="text-sm text-gray-700">
+            I confirm that all the information provided is accurate and
+            complete. I understand that providing false information may result
+            in the rejection of my application.
+          </span>
+        </Checkbox>
+        {/* <div className="space-y-4">
           <div className="flex items-start">
             <div className="flex items-center h-5">
               <input
@@ -130,11 +166,13 @@ const ReviewSubmit = ({ formData }) => {
             </div>
             <div className="ml-3">
               <label htmlFor="terms" className="text-sm text-gray-700">
-                I confirm that all the information provided is accurate and complete. I understand that providing false information may result in the rejection of my application.
+                I confirm that all the information provided is accurate and
+                complete. I understand that providing false information may
+                result in the rejection of my application.
               </label>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </motion.section>
   );
