@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Input, Textarea } from "@heroui/input";
+import { Select, SelectSection, SelectItem } from "@heroui/select";
 
 const BackgroundInfo = ({ onNext, onPrev }) => {
   return (
@@ -21,60 +23,56 @@ const BackgroundInfo = ({ onNext, onPrev }) => {
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
           {/* Recovery Journey */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Recovery Journey
-            </label>
-            <textarea
-              rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-success-500 focus:border-transparent"
-              placeholder="Please share your recovery journey (optional)"
-            />
-          </div>
+          <Textarea
+            variant="bordered"
+            size="lg"
+            placeholder="Please share your recovery journey (optional)"
+            label="Recovery Journey"
+            labelPlacement="outside"
+            minRows={4}
+          />
 
           {/* Current Living Situation */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Current Living Situation
-            </label>
-            <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-success-500 focus:border-transparent">
-              <option value="">Select your current living situation</option>
-              <option value="temporary">Temporary Housing</option>
-              <option value="treatment">Treatment Facility</option>
-              <option value="shelter">Shelter</option>
-              <option value="friends">Staying with Friends/Family</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
+          <Select
+            variant="bordered"
+            size="lg"
+            placeholder="Select your current living situation"
+            label="Current Living Situation"
+            labelPlacement="outside"
+          >
+            <SelectItem value="temporary">Temporary Housing</SelectItem>
+            <SelectItem value="treatment">Treatment Facility</SelectItem>
+            <SelectItem value="shelter">Shelter</SelectItem>
+            <SelectItem value="friends">Staying with Friends/Family</SelectItem>
+            <SelectItem value="other">Other</SelectItem>
+          </Select>
 
           {/* Employment Status */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Employment Status
-            </label>
-            <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-success-500 focus:border-transparent">
-              <option value="">Select your employment status</option>
-              <option value="full-time">Full-time</option>
-              <option value="part-time">Part-time</option>
-              <option value="seeking">Actively Job Seeking</option>
-              <option value="unable">Unable to Work</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
+          <Select
+            variant="bordered"
+            size="lg"
+            placeholder="Select your employment status"
+            label="Employment Status"
+            labelPlacement="outside"
+          >
+            <SelectItem value="full-time">Full-time</SelectItem>
+            <SelectItem value="part-time">Part-time</SelectItem>
+            <SelectItem value="seeking">Actively Job Seeking</SelectItem>
+            <SelectItem value="unable">Unable to Work</SelectItem>
+            <SelectItem value="other">Other</SelectItem>
+          </Select>
 
           {/* Support System */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Support System
-            </label>
-            <textarea
-              rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-success-500 focus:border-transparent"
-              placeholder="Describe your current support system (family, friends, counselors, etc.)"
-            />
-          </div>
+          <Textarea
+            variant="bordered"
+            size="lg"
+            placeholder="Describe your current support system (family, friends, counselors, etc.)"
+            label="Support System"
+            labelPlacement="outside"
+            minRows={4}
+          />
         </div>
       </div>
     </motion.div>

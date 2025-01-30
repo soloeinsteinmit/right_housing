@@ -1,13 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import teamLead from "../../../assets/woman1.jpg"; // Using existing team lead image
 import { Input, Textarea } from "@heroui/input";
+import { Button } from "@heroui/button";
 import { Select, SelectSection, SelectItem } from "@heroui/select";
 import { Send } from "lucide-react";
 
 function AboutContactForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -145,14 +147,16 @@ function AboutContactForm() {
                   </div>
 
                   {/* Submit Button */}
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                  <Button
+                    color="success"
                     type="submit"
-                    className="w-full py-4 px-6 bg-success-600 text-white font-medium rounded-xl hover:bg-success-700 transition-colors focus:outline-none focus:ring-2 focus:ring-success-500 focus:ring-offset-2"
+                    className="w-full text-white transition-transform duration-300 hover:scale-105"
+                    size="lg"
+                    variant="shadow"
+                    endContent={<Send className="text-white w-4 h-4" />}
                   >
                     Send Message
-                  </motion.button>
+                  </Button>
                 </form>
               </div>
 
@@ -230,12 +234,17 @@ function AboutContactForm() {
                       </p>
                     </div>
 
-                    <Link
+                    <Button
                       to="/contact"
-                      className="inline-block mt-6 px-6 py-3 bg-white text-success-600 rounded-xl hover:bg-success-50 transition-colors"
+                      onPress={() => navigate("/contact")}
+                      className=""
+                      radius="sm"
+                      variant="faded"
+                      color="success"
+                      size="lg"
                     >
                       Visit Contact Page
-                    </Link>
+                    </Button>
                   </div>
                 </div>
               </div>

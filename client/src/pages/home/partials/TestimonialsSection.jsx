@@ -7,6 +7,7 @@ import { Button } from "@heroui/button";
 
 const TestimonialsSection = () => {
   const controls = useAnimation();
+  const navigate = useNavigate();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeIndex, setActiveIndex] = useState(0);

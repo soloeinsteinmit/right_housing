@@ -58,7 +58,10 @@ const CallToActionSection = () => {
                 initial="initial"
                 animate="animate"
                 whileTap="tap"
-                onClick={() => navigate("/donate")}
+                onClick={() => {
+                  navigate("/donate");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
               >
                 <span>Donate Now</span>
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
