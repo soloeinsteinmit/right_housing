@@ -1,7 +1,141 @@
+import React, { useMemo } from "react";
 import { motion } from "framer-motion";
-import community from "../../../assets/12.jpg";
+import community from "../../../assets/12.webp";
+
+// Animation variants
+const textVariants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: { opacity: 1, x: 0 },
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1 },
+};
+
+// Memoized SVG patterns
+const SvgPatterns = React.memo(() => (
+  <defs>
+    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <motion.path
+        d="M 10 0 L 0 0 0 10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="0.5"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut",
+        }}
+      />
+    </pattern>
+    <pattern id="circles" width="20" height="20" patternUnits="userSpaceOnUse">
+      <motion.circle
+        cx="10"
+        cy="10"
+        r="2"
+        fill="currentColor"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut",
+        }}
+      />
+    </pattern>
+    <pattern id="squares" width="15" height="15" patternUnits="userSpaceOnUse">
+      <motion.rect
+        width="5"
+        height="5"
+        x="5"
+        y="5"
+        fill="currentColor"
+        initial={{ rotate: 0 }}
+        animate={{ rotate: 180 }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut",
+        }}
+      />
+    </pattern>
+  </defs>
+));
+
+// Memoized background layers
+const BackgroundLayers = React.memo(() => (
+  <>
+    <rect
+      width="100%"
+      height="100%"
+      fill="url(#grid)"
+      className="text-success-600"
+    />
+    <rect
+      width="100%"
+      height="100%"
+      fill="url(#circles)"
+      className="text-success-400"
+    />
+    <rect
+      width="100%"
+      height="100%"
+      fill="url(#squares)"
+      className="text-warning-400"
+    />
+    <motion.path
+      d="M 0 50 Q 25 45, 50 50 T 100 50 T 150 50"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="0.2"
+      className="text-success-500"
+      initial={{ x: -50 }}
+      animate={{ x: 0 }}
+      transition={{
+        duration: 10,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "linear",
+      }}
+    />
+  </>
+));
+
+// Memoized animated shape
+const AnimatedShape = React.memo(({ index }) => (
+  <motion.div
+    className="absolute"
+    style={{
+      top: `${20 + index * 15}%`,
+      left: `${10 + index * 20}%`,
+      width: "300px",
+      height: "300px",
+      background: `radial-gradient(circle, rgba(var(--success-200-rgb), 0.1) 0%, rgba(var(--success-500-rgb), 0.05) 100%)`,
+      borderRadius: "50%",
+    }}
+    animate={{
+      scale: [1, 1.2, 1],
+      x: [0, 50, 0],
+      y: [0, 30, 0],
+    }}
+    transition={{
+      duration: 10,
+      repeat: Infinity,
+      delay: index * 0.5,
+    }}
+  />
+));
 
 const HeroSection = () => {
+  // Memoize array for shapes
+  const shapes = useMemo(() => Array(5).fill(null), []);
+
   return (
     <section className="relative min-h-screen flex max-md:py-16 items-center overflow-hidden bg-gray-50">
       {/* Animated Background */}
@@ -15,149 +149,29 @@ const HeroSection = () => {
             viewBox="0 0 100 100"
             preserveAspectRatio="xMidYMid slice"
           >
-            <defs>
-              <pattern
-                id="grid"
-                width="10"
-                height="10"
-                patternUnits="userSpaceOnUse"
-              >
-                <motion.path
-                  d="M 10 0 L 0 0 0 10"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="0.5"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut",
-                  }}
-                />
-              </pattern>
-              <pattern
-                id="circles"
-                width="20"
-                height="20"
-                patternUnits="userSpaceOnUse"
-              >
-                <motion.circle
-                  cx="10"
-                  cy="10"
-                  r="2"
-                  fill="currentColor"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut",
-                  }}
-                />
-              </pattern>
-              <pattern
-                id="squares"
-                width="15"
-                height="15"
-                patternUnits="userSpaceOnUse"
-              >
-                <motion.rect
-                  width="5"
-                  height="5"
-                  x="5"
-                  y="5"
-                  fill="currentColor"
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: 180 }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut",
-                  }}
-                />
-              </pattern>
-            </defs>
-
-            {/* Background Layers */}
-            <rect
-              width="100%"
-              height="100%"
-              fill="url(#grid)"
-              className="text-success-600"
-            />
-            <rect
-              width="100%"
-              height="100%"
-              fill="url(#circles)"
-              className="text-success-400"
-            />
-            <rect
-              width="100%"
-              height="100%"
-              fill="url(#squares)"
-              className="text-warning-400"
-            />
-
-            {/* Animated Wave */}
-            <motion.path
-              d="M 0 50 Q 25 45, 50 50 T 100 50 T 150 50"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="0.2"
-              className="text-success-500"
-              initial={{ x: -50 }}
-              animate={{ x: 0 }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                repeatType: "loop",
-                ease: "linear",
-              }}
-            />
+            <SvgPatterns />
+            <BackgroundLayers />
           </svg>
         </div>
 
         {/* Animated Shapes */}
         <div className="absolute inset-0 overflow-hidden">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              style={{
-                top: `${20 + i * 15}%`,
-                left: `${10 + i * 20}%`,
-                width: "300px",
-                height: "300px",
-                background: `radial-gradient(circle, rgba(var(--success-200-rgb), 0.1) 0%, rgba(var(--success-500-rgb), 0.05) 100%)`,
-                borderRadius: "50%",
-              }}
-              animate={{
-                scale: [1, 1.2, 1],
-                x: [0, 50, 0],
-                y: [0, 30, 0],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                delay: i * 0.5,
-              }}
-            />
+          {shapes.map((_, i) => (
+            <AnimatedShape key={i} index={i} />
           ))}
         </div>
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-20 relative z-10 ">
-        <div className="grid lg:grid-cols-2 gap-16 items-center ">
+      <div className="container mx-auto px-4 py-20 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            variants={textVariants}
+            initial="hidden"
+            animate="visible"
             transition={{ duration: 0.6 }}
+            className="cursor-default"
           >
             <h1 className="text-7xl font-bold mb-6">
               <span className="text-gray-900">Transforming</span>
@@ -173,19 +187,13 @@ const HeroSection = () => {
               recovery, reentry, or mental health challenges, offering more than
               just a roof over their heads.
             </p>
-            <div className="flex flex-wrap gap-6">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="flex items-center gap-3 bg-success-50 text-success-700 px-6 py-3 rounded-full"
-              >
+            <div className="flex flex-wrap gap-6 cursor-default">
+              <motion.div className="flex items-center gap-3 bg-success-50 text-success-700 px-6 py-3 rounded-full">
                 <span className="font-semibold">Holistic Support</span>
                 <span className="w-px h-4 bg-success-200" />
                 <span>Person-Centered Care</span>
               </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="flex items-center gap-3 bg-warning-50 text-warning-700 px-6 py-3 rounded-full"
-              >
+              <motion.div className="flex items-center gap-3 bg-warning-50 text-warning-700 px-6 py-3 rounded-full">
                 <span className="font-semibold">Empowerment</span>
                 <span className="w-px h-4 bg-warning-200" />
                 <span>Life-Changing Impact</span>
@@ -195,16 +203,17 @@ const HeroSection = () => {
 
           {/* Image/Illustration */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            variants={imageVariants}
+            initial="hidden"
+            animate="visible"
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
+            className="relative cursor-default"
           >
             <div className="relative z-10">
               <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src={community}
-                  alt="Community Impact"
+                  alt="RIGHT Housing Community"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -278,4 +287,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default React.memo(HeroSection);

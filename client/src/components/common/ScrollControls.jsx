@@ -83,7 +83,8 @@ const ScrollControls = () => {
         )}
       </AnimatePresence>
 
-      <motion.div
+      {/* TODO: Add AI Assistant */}
+      {/* <motion.div
         className="relative"
         initial={{ scale: 0, rotate: 180 }}
         animate={{
@@ -112,7 +113,7 @@ const ScrollControls = () => {
             </motion.div>
           </button>
         </Tooltip>
-      </motion.div>
+      </motion.div> */}
 
       <AnimatePresence>
         {showAI && (

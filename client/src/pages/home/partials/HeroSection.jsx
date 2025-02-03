@@ -516,13 +516,15 @@ function HeroSection() {
                 alt=""
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              {/* <div className="absolute inset-0 bg-black/60" /> */}
-              {/* <div className="p-4 h-full flex flex-col justify-end relative z-10">
-                <p className="text-base text-default-300 font-semibold mb-2">
+              <div className="absolute inset-0 bg-black/60" />
+              <div className="p-4 h-full flex flex-col justify-end relative z-10 ">
+                <p className="text-base text-default-400 font-semibold mb-2">
                   {cards[1].title}
                 </p>
-                <p className="text-white text-lg">{cards[1].description}</p>
-              </div> */}
+                <p className="text-white font-light text-base">
+                  {cards[1].description}
+                </p>
+              </div>
             </div>
           </motion.div>
 
@@ -580,13 +582,13 @@ function HeroSection() {
                 alt=""
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              {/* <div className="absolute inset-0 bg-black/60" /> */}
-              {/* <div className="p-4 h-full flex flex-col justify-end relative z-10">
-                <h3 className="text-base text-default-300 font-semibold mb-2">
+              <div className="absolute inset-0 bg-black/60" />
+              <div className="p-4 h-full flex flex-col justify-end relative z-10">
+                <h3 className="text-base text-default-400 font-semibold mb-2">
                   {cards[3].title}
                 </h3>
-                <p className="text-white text-lg">{cards[3].description}</p>
-              </div> */}
+                <p className="text-white text-base">{cards[3].description}</p>
+              </div>
             </div>
           </motion.div>
 

@@ -2,9 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Users, Sparkles, Clock, Award } from "lucide-react";
 import AnimatedScrollButton from "../../../components/common/AnimatedScrollButton";
-import programsHero1 from "../../../assets/com_impact.jpg";
-import programsHero2 from "../../../assets/com-impact2.jpg";
-import programsHero3 from "../../../assets/drug.jpg";
+import programsHero1 from "../../../assets/prison1.webp";
+import programsHero2 from "../../../assets/mentalSuppor.webp";
+import programsHero3 from "../../../assets/drug.webp";
 
 const ProgramsHero = () => {
   const handleScroll = () => {

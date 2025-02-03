@@ -1,14 +1,74 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import teamLead from "../../../assets/woman1.jpg"; // Using existing team lead image
+import { useNavigate } from "react-router-dom";
+import teamLead from "../../../assets/woman1.jpg";
 import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
-import { Select, SelectSection, SelectItem } from "@heroui/select";
+import { Select, SelectItem } from "@heroui/select";
 import { Send } from "lucide-react";
 
-function AboutContactForm() {
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+// Memoized components
+const FormInput = React.memo(
+  ({
+    type,
+    placeholder,
+    label,
+    name,
+    value,
+    onChange,
+    isRequired,
+    size = "lg",
+  }) => (
+    <Input
+      type={type}
+      placeholder={placeholder}
+      label={label}
+      labelPlacement="outside"
+      name={name}
+      value={value}
+      onChange={onChange}
+      isRequired={isRequired}
+      size={size}
+    />
+  )
+);
+
+const ContactInfo = React.memo(() => (
+  <div className="space-y-6">
+    <div>
+      <h5 className="text-lg font-semibold mb-2">Contact Information</h5>
+      <p className="text-success-100">
+        Feel free to reach out to us through any of these channels:
+      </p>
+    </div>
+
+    <div>
+      <h6 className="font-medium mb-1">Main Office</h6>
+      <p className="text-success-100">123 Recovery Street, Suite 101</p>
+      <p className="text-success-100">San Francisco, CA 94105</p>
+    </div>
+
+    <div>
+      <h6 className="font-medium mb-1">Contact</h6>
+      <p className="text-success-100">Phone: (555) 123-4567</p>
+      <p className="text-success-100">Email: info@righthousing.org</p>
+    </div>
+
+    <div>
+      <h6 className="font-medium mb-1">Hours</h6>
+      <p className="text-success-100">Monday - Friday: 9:00 AM - 6:00 PM</p>
+      <p className="text-success-100">Weekend: By Appointment</p>
+    </div>
+  </div>
+));
+
+const AboutContactForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -18,24 +78,43 @@ function AboutContactForm() {
     type: "volunteer",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-  };
+  // Memoize form handlers
+  const handleSubmit = useMemo(
+    () => (e) => {
+      e.preventDefault();
+      console.log("Form submitted:", formData);
+    },
+    [formData]
+  );
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = useMemo(
+    () => (e) => {
+      setFormData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    []
+  );
+
+  // Memoize select options
+  const selectOptions = useMemo(
+    () => [
+      { value: "volunteer", label: "Volunteering" },
+      { value: "support", label: "Supporting Our Mission" },
+      { value: "partner", label: "Becoming a Partner" },
+      { value: "other", label: "Other" },
+    ],
+    []
+  );
 
   return (
     <section className="py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
           className="max-w-6xl mx-auto"
@@ -54,58 +133,35 @@ function AboutContactForm() {
                 </p>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                  {/* Name Input */}
-                  <div>
-                    {/* <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name
-                    </label> */}
-                    <Input
-                      type="text"
-                      placeholder="John Doe"
-                      label="Full Name"
-                      labelPlacement="outside"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className=""
-                      isRequired
-                      size="lg"
-                    />
-                  </div>
+                  <FormInput
+                    type="text"
+                    placeholder="John Doe"
+                    label="Full Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    isRequired
+                  />
 
-                  {/* Email Input */}
-                  <div>
-                    <Input
-                      placeholder="jane@example.com"
-                      label="Email Address"
-                      labelPlacement="outside"
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className=""
-                      isRequired
-                      size="lg"
-                    />
-                  </div>
+                  <FormInput
+                    type="email"
+                    placeholder="jane@example.com"
+                    label="Email Address"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    isRequired
+                  />
 
-                  {/* Phone Input */}
-                  <div>
-                    <Input
-                      type="tel"
-                      placeholder="123-456-7890"
-                      label="Phone Number"
-                      labelPlacement="outside"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className=""
-                      size="lg"
-                      //   variant="bordered"
-                    />
-                  </div>
+                  <FormInput
+                    type="tel"
+                    placeholder="123-456-7890"
+                    label="Phone Number"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
 
-                  {/* Interest Type */}
                   <div>
                     <Select
                       name="type"
@@ -114,21 +170,17 @@ function AboutContactForm() {
                       placeholder="Select an option"
                       value={formData.type}
                       onChange={handleChange}
-                      className=""
                       size="lg"
                       isRequired
                     >
-                      <SelectItem value="volunteer">Volunteering</SelectItem>
-                      <SelectItem value="support">
-                        Supporting Our Mission
-                      </SelectItem>
-                      <SelectItem value="partner">
-                        Becoming a Partner
-                      </SelectItem>
+                      {selectOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
                     </Select>
                   </div>
 
-                  {/* Message Input */}
                   <div>
                     <Textarea
                       name="message"
@@ -137,8 +189,6 @@ function AboutContactForm() {
                       placeholder="Enter your message"
                       value={formData.message}
                       onChange={handleChange}
-                      rows={4}
-                      className=""
                       isRequired
                       size="lg"
                       minRows={5}
@@ -146,7 +196,6 @@ function AboutContactForm() {
                     />
                   </div>
 
-                  {/* Submit Button */}
                   <Button
                     color="success"
                     type="submit"
@@ -199,53 +248,7 @@ function AboutContactForm() {
                 </div>
 
                 <div className="relative">
-                  <h4 className="text-2xl font-bold mb-6">
-                    Contact Information
-                  </h4>
-
-                  <div className="space-y-6">
-                    <div>
-                      <p className="font-medium mb-2">Address</p>
-                      <p className="opacity-90">
-                        123 Recovery Street
-                        <br />
-                        San Francisco, CA 94105
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="font-medium mb-2">Phone</p>
-                      <p className="opacity-90">+1 (800) RIGHT-HOUSE</p>
-                    </div>
-
-                    <div>
-                      <p className="font-medium mb-2">Email</p>
-                      <p className="opacity-90">support@righthouseinc.org</p>
-                    </div>
-
-                    <div>
-                      <p className="font-medium mb-2">Hours</p>
-                      <p className="opacity-90">
-                        Monday - Friday: 8am - 8pm
-                        <br />
-                        Saturday: 9am - 5pm
-                        <br />
-                        Sunday: 10am - 4pm
-                      </p>
-                    </div>
-
-                    <Button
-                      to="/contact"
-                      onPress={() => navigate("/contact")}
-                      className=""
-                      radius="sm"
-                      variant="faded"
-                      color="success"
-                      size="lg"
-                    >
-                      Visit Contact Page
-                    </Button>
-                  </div>
+                  <ContactInfo />
                 </div>
               </div>
             </div>
@@ -254,6 +257,6 @@ function AboutContactForm() {
       </div>
     </section>
   );
-}
+};
 
-export default AboutContactForm;
+export default React.memo(AboutContactForm);

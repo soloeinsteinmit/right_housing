@@ -112,7 +112,7 @@ const Footer = () => {
   const getInvolvedLinks = [
     { to: "/volunteer", text: "Volunteer" },
     { to: "/donate", text: "Donate" },
-    { to: "/apply", text: "Apply for Housing" },
+    { to: "/apply", text: "Apply" },
   ];
 
   const legalLinks = [
@@ -219,10 +219,10 @@ const Footer = () => {
           {/* <div className="flex w-[500px] items-center justify-between bg-red-400 gap-5"> */}
           {/* Impact Counter */}
           <div className="bg-success-800/30 rounded-lg p-4 h-fit">
-            <h4 className="text-warning font-semibold mb-2">Our Impact</h4>
+            <h4 className="text-warning font-semibold mb-2">Our Progress</h4>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-bold text-white">1,000+</p>
+                <p className="text-2xl font-bold text-white">500+</p>
                 <p className="text-sm text-success-300">Lives Changed</p>
               </div>
               <div>
@@ -263,18 +263,6 @@ const Footer = () => {
               {currentYear} Right Housing. All rights reserved.
             </p>
             <div className="flex items-center space-x-4 text-success-100">
-              {/* <Link
-                to="privacy-policy"
-                className="hover:text-warning transition-colors"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                to="terms-of-service"
-                className="hover:text-warning transition-colors"
-              >
-                Terms of Service
-              </Link> */}
               <Link
                 to="/sitemap"
                 className="hover:text-warning transition-colors"

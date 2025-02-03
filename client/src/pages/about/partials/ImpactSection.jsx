@@ -9,10 +9,6 @@ import {
   Handshake,
 } from "lucide-react";
 import com_impact from "../../../assets/team.jpg";
-// import timeline1 from "../../../assets/timeline1.jpg";
-// import timeline2 from "../../../assets/timeline2.jpg";
-// import timeline3 from "../../../assets/timeline3.jpg";
-// import timeline4 from "../../../assets/timeline4.jpg";
 
 const ImpactSection = () => {
   const impactCards = [
