@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Upload, X, FileText, CheckCircle } from "lucide-react";
+import { Upload, X, FileText, Info } from "lucide-react";
 
 const DocumentUpload = ({ formData, setFormData }) => {
   const [dragActive, setDragActive] = useState(false);
@@ -19,7 +19,7 @@ const DocumentUpload = ({ formData, setFormData }) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFile(e.dataTransfer.files[0]);
     }
@@ -53,8 +53,16 @@ const DocumentUpload = ({ formData, setFormData }) => {
       transition={{ duration: 0.5 }}
       className="bg-white p-8 rounded-2xl shadow-sm"
     >
-      <h2 className="text-2xl font-bold mb-6 text-gray-900">Required Documents</h2>
-      
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-gray-900">
+          Supporting Documents
+        </h2>
+        <div className="text-sm text-gray-500 flex items-center gap-2">
+          <Info className="w-4 h-4" />
+          Optional
+        </div>
+      </div>
+
       <div className="space-y-6">
         <div
           className={`relative border-2 border-dashed rounded-xl p-8 text-center ${
@@ -74,10 +82,14 @@ const DocumentUpload = ({ formData, setFormData }) => {
             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
-          
+
           <div className="space-y-4">
             <div className="flex justify-center">
-              <Upload className={`h-12 w-12 ${dragActive ? 'text-success-600' : 'text-gray-400'}`} />
+              <Upload
+                className={`h-12 w-12 ${
+                  dragActive ? "text-success-600" : "text-gray-400"
+                }`}
+              />
             </div>
             <div>
               <p className="text-lg font-medium text-gray-700">
@@ -93,20 +105,26 @@ const DocumentUpload = ({ formData, setFormData }) => {
           </div>
         </div>
 
-        {/* Required Documents List */}
+        {/* Suggested Documents List */}
         <div className="space-y-4">
-          <h3 className="text-lg font-medium text-gray-900">Required Documents:</h3>
+          <h3 className="text-lg font-medium text-gray-900">
+            Suggested Documents:
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">
+            While all documents are optional, providing any of the following can
+            help speed up your application process:
+          </p>
           <ul className="space-y-3">
             <li className="flex items-center text-sm text-gray-600">
-              <CheckCircle className="h-5 w-5 text-success-500 mr-2" />
+              <div className="w-2 h-2 bg-success-500 rounded-full mr-3"></div>
               Valid Government-issued ID (Driver's License, Passport, etc.)
             </li>
             <li className="flex items-center text-sm text-gray-600">
-              <CheckCircle className="h-5 w-5 text-success-500 mr-2" />
+              <div className="w-2 h-2 bg-success-500 rounded-full mr-3"></div>
               Proof of Income (Pay stubs, W2, Tax Returns)
             </li>
             <li className="flex items-center text-sm text-gray-600">
-              <CheckCircle className="h-5 w-5 text-success-500 mr-2" />
+              <div className="w-2 h-2 bg-success-500 rounded-full mr-3"></div>
               Background Check Authorization Form
             </li>
           </ul>
@@ -115,7 +133,9 @@ const DocumentUpload = ({ formData, setFormData }) => {
         {/* Uploaded Files List */}
         {formData?.documents && formData.documents.length > 0 && (
           <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900">Uploaded Files:</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Uploaded Files:
+            </h3>
             <div className="space-y-2">
               {formData.documents.map((file, index) => (
                 <div

@@ -95,17 +95,24 @@ const PersonalInfoForm = ({ formData, setFormData }) => {
           startContent={<Home className="h-5 w-5 text-gray-400" />}
         />
 
-        <DatePicker
-          startContent={<Calendar className="h-5 w-5 text-gray-400" />}
-          className="w-full"
-          label="Date of Birth"
-          onChange={handleChange}
-          // value={formData?.dateOfBirth || ""}
-          size="lg"
-          isRequired
-          variant="bordered"
-          labelPlacement="outside"
-        />
+        <div className="flex flex-col gap-1">
+          <span className="text-base font-medium text-gray-700">
+            Date of Birth
+          </span>
+          <DatePicker
+            startContent={<Calendar className="h-5 w-5 text-gray-400" />}
+            className="w-full text-gray-900"
+            // label="Date of Birth"
+            // onChange={handleChange}
+            // value={formData?.dateOfBirth || ""}
+            size="lg"
+            // isRequired
+            variant="bordered"
+            labelPlacement="outside"
+            aria-label="Date of Birth"
+            color="success"
+          />
+        </div>
       </div>
     </motion.section>
   );
