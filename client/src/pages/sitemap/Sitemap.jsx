@@ -19,17 +19,17 @@ import { Link } from "react-router-dom";
 // Animation variants
 const fadeInUpVariant = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 };
 
 const fadeInLeftVariant = {
   hidden: { opacity: 0, x: -20 },
-  visible: { opacity: 1, x: 0 }
+  visible: { opacity: 1, x: 0 },
 };
 
 const chevronVariant = {
   hidden: { x: -10 },
-  visible: { x: 0 }
+  visible: { x: 0 },
 };
 
 // Site structure data
@@ -79,7 +79,7 @@ const siteStructure = [
         icon: <Heart className="w-5 h-5" />,
       },
       {
-        name: "Apply for Housing",
+        name: "Apply",
         path: "/apply",
         icon: <FileText className="w-5 h-5" />,
       },
@@ -97,11 +97,6 @@ const siteStructure = [
         name: "Terms of Service",
         path: "/terms-of-service",
         icon: <FileCheck className="w-5 h-5" />,
-      },
-      {
-        name: "Application Status",
-        path: "/application-status",
-        icon: <Users className="w-5 h-5" />,
       },
     ],
   },
@@ -253,7 +248,11 @@ const Sitemap = () => {
           {/* Content */}
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {siteStructure.map((section, index) => (
-              <SectionCard key={section.title} section={section} index={index} />
+              <SectionCard
+                key={section.title}
+                section={section}
+                index={index}
+              />
             ))}
           </div>
 
