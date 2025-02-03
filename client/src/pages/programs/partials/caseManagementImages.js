@@ -1,8 +1,8 @@
-import img1 from "../../../assets/assessment1.jpg";
-import img2 from "../../../assets/recover4.jpg";
-import img3 from "../../../assets/mentalSuppor.jpg";
-import img4 from "../../../assets/health_wellness.jpg";
-import img5 from "../../../assets/housing_support2.jpg";
+import img1 from "../../../assets/assessment1.webp";
+import img2 from "../../../assets/recover4.webp";
+import img3 from "../../../assets/mentalSuppor.webp";
+import img4 from "../../../assets/health_wellness.webp";
+import img5 from "../../../assets/housing_support2.webp";
 
 export const caseManagementImages = {
   intake: {

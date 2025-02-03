@@ -66,7 +66,7 @@ import Faq from "../pages/faq/Faq";
  * Route Structure:
  * - / (Home)
  * - /about (About Us)
- * - /programs (Our Programs)
+ * - /services (Our Services)
  * - /apply (Application Form)
  * - /apply/status (Application Status)
  * - /donate (Donation Page)
@@ -90,13 +90,13 @@ export const router = createBrowserRouter(
       {/* Main routes */}
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-      <Route path="programs" element={<Programs />} />
+      <Route path="services" element={<Programs />} />
       <Route path="contact" element={<Contact />} />
       <Route path="volunteer" element={<Volunteer />} />
       <Route path="sitemap" element={<Sitemap />} />
       <Route path="gallery" element={<Gallery />} />
       <Route path="faq" element={<Faq />} />
-      
+
       {/* Impact Stories routes */}
       <Route path="impact">
         <Route index element={<Impact />} />

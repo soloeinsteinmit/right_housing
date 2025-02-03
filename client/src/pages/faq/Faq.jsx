@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -10,7 +10,8 @@ import {
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 
-const NoResultsFound = () => (
+// Memoized NoResultsFound component
+const NoResultsFound = React.memo(() => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -39,68 +40,107 @@ const NoResultsFound = () => (
       terms or browse through our categories.
     </p>
   </motion.div>
-);
+));
 
 const Faq = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [openQuestions, setOpenQuestions] = useState([]);
 
-  const categories = [
-    { id: "all", name: "All Questions" },
-    { id: "general", name: "General Information" },
-    { id: "application", name: "Application Process" },
-    { id: "eligibility", name: "Eligibility" },
-    { id: "housing", name: "Housing Options" },
-    { id: "support", name: "Support Services" },
-    { id: "payment", name: "Payment & Financial" },
-  ];
+  // Memoized categories
+  const categories = useMemo(
+    () => [
+      { id: "all", name: "All Questions" },
+      { id: "housing", name: "Housing" },
+      { id: "rules", name: "Rules & Policies" },
+      { id: "services", name: "Support Services" },
+      { id: "program", name: "Program Details" },
+      // new ones to come
+      { id: "application", name: "Application Process(❌)" },
+      { id: "eligibility", name: "Eligibility (❌) " },
+      { id: "support", name: "Support Services(❌)" },
+      { id: "payment", name: "Payment & Financial(❌)" },
+    ],
+    []
+  );
 
-  const faqs = [
-    {
-      category: "general",
-      question: "What is RIGHT Housing?",
-      answer:
-        "RIGHT Housing is a non-profit organization dedicated to providing recovery-supportive housing solutions for individuals in recovery from substance use disorders or transitioning from incarceration.",
-    },
-    {
-      category: "general",
-      question: "How long can I stay at a RIGHT House?",
-      answer:
-        "The length of stay varies based on individual needs and progress. Typically, residents can stay from 6 months to 2 years, with regular progress evaluations to ensure the program continues to meet their needs.",
-    },
-    {
-      category: "application",
-      question: "What is the application process?",
-      answer:
-        "The application process involves: 1) Finding a house with vacancy, 2) Completing the application form, 3) Scheduling an interview with current house members, 4) Background check and verification, 5) Final approval and move-in coordination.",
-    },
-    {
-      category: "application",
-      question: "What are the eligibility requirements?",
-      answer:
-        "Basic eligibility includes: 1) Commitment to recovery, 2) Willingness to follow house rules, 3) Ability to pay rent and fees, 4) No violent criminal history, 5) Participation in house meetings and activities.",
-    },
-    // Add more FAQs
-  ];
+  // Memoized FAQs
+  const faqs = useMemo(
+    () => [
+      {
+        category: "housing",
+        question: "What type of housing do you offer?",
+        answer:
+          "We offer men only and women only homes to ensure comfort and safety for all residents.",
+      },
+      {
+        category: "housing",
+        question: "Is it shared or private housing?",
+        answer:
+          "We offer both private and shared spaces to accommodate different needs and preferences.",
+      },
+      {
+        category: "housing",
+        question: "Is it furnished or unfurnished?",
+        answer:
+          "All our housing units come furnished to help residents focus on their recovery journey.",
+      },
+      {
+        category: "program",
+        question: "What are the length of stay requirements?",
+        answer:
+          "The length of stay may depend on the our house's policies, the resident's needs, and their progress in recovery. Stay can range from 30 days to 12 months.",
+      },
+      {
+        category: "program",
+        question: "How long can I stay in the program?",
+        answer:
+          "The length of stay may depend on the our house's policies, the resident's needs, and their progress in recovery. Stay can range from 30 days to 12 months.",
+      },
+      {
+        category: "services",
+        question: "What kind of support services do you offer?",
+        answer:
+          "We provide comprehensive services including:\n• Recovery support\n• Job readiness programs\n• Life skills development\n• Health & Wellness Services\n• Housing assistance\n• Community & Social Integration\n• Relapse Prevention Planning\n• Case management",
+      },
+      {
+        category: "rules",
+        question: "What are the rules and policies?",
+        answer:
+          "Our key rules include:\n• Zero Tolerance for Drugs & Alcohol – Residents must remain completely sober\n• Random Drug & Alcohol Testing\n• No Possession of Drugs, Alcohol, or Paraphernalia\n• Nightly Curfew Compliance\n• Required Attendance at House Meetings\n• Chores & Household Responsibilities\n• Respect for Housemates & Staff\n• No Overnight Guests\n• Recovery Program Participation\n• Employment & Daily Activity Requirements",
+      },
+      {
+        category: "program",
+        question: "Is the program accredited or licensed?",
+        answer:
+          "Yes, our program is certified to ensure we maintain high standards of care and support.",
+      },
+    ],
+    []
+  );
 
-  const toggleQuestion = (index) => {
+  // Memoized toggle function
+  const toggleQuestion = useCallback((index) => {
     setOpenQuestions((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
-  };
+  }, []);
 
-  const filteredFaqs = faqs.filter((faq) => {
-    const matchesCategory =
-      activeCategory === "all" || faq.category === activeCategory;
-    const matchesSearch =
-      faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Memoized filtered FAQs
+  const filteredFaqs = useMemo(() => {
+    return faqs.filter((faq) => {
+      const matchesCategory =
+        activeCategory === "all" || faq.category === activeCategory;
+      const matchesSearch =
+        searchQuery === "" ||
+        faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [faqs, activeCategory, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-32">
+    <div className="min-h-screen bg-gray-50 py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -118,16 +158,15 @@ const Faq = () => {
             className="text-lg text-gray-600 max-w-2xl mx-auto"
           >
             Find answers to common questions about RIGHT Housing's programs,
-            eligibility requirements, and application process.
+            eligibility requirements, and support services.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 ">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar Navigation - Now Sticky */}
-          <div className=" lg:col-span-1">
-            <div className="sticky top-24">
+          <div className="lg:col-span-1">
+            <div className="sticky top-5">
               {/* Search Bar */}
-
               <Input
                 type="text"
                 placeholder="Search FAQs..."
@@ -178,7 +217,7 @@ const Faq = () => {
 
           {/* FAQ Content */}
           <div className="lg:col-span-3">
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               {filteredFaqs.length > 0 ? (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -201,12 +240,12 @@ const Faq = () => {
                           {faq.question}
                         </span>
                         {openQuestions.includes(index) ? (
-                          <ChevronUp className="w-5 h-5 text-gray-500" />
+                          <ChevronUp className="w-5 h-5 text-success-500" />
                         ) : (
-                          <ChevronDown className="w-5 h-5 text-gray-500" />
+                          <ChevronDown className="w-5 h-5 text-success-500" />
                         )}
                       </button>
-                      <AnimatePresence>
+                      <AnimatePresence mode="wait">
                         {openQuestions.includes(index) && (
                           <motion.div
                             initial={{ height: 0, opacity: 0 }}
@@ -215,7 +254,9 @@ const Faq = () => {
                             transition={{ duration: 0.2 }}
                             className="px-6 pb-4"
                           >
-                            <p className="text-gray-600">{faq.answer}</p>
+                            <p className="text-gray-600 whitespace-pre-line">
+                              {faq.answer}
+                            </p>
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -233,4 +274,4 @@ const Faq = () => {
   );
 };
 
-export default Faq;
+export default React.memo(Faq);

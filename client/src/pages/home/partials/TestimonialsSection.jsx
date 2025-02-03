@@ -1,9 +1,84 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  memo,
+  useCallback,
+} from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { Quote, Star, ChevronRight, ChevronLeft } from "lucide-react";
 import TestimonialBackgroundPattern from "../../../assets/TestimonialBackgroundPattern";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@heroui/button";
+
+// Memoized star rating component
+const StarRating = memo(({ rating }) => (
+  <div className="flex gap-1 mb-4">
+    {[...Array(rating)].map((_, i) => (
+      <Star key={i} className="w-5 h-5 text-success-400 fill-current" />
+    ))}
+  </div>
+));
+
+// Memoized navigation buttons component
+const NavigationButtons = memo(({ onPaginate }) => (
+  <div className="flex justify-center gap-4 mt-8">
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      onClick={() => onPaginate(-1)}
+      className="p-2 rounded-full bg-success-900 hover:bg-success-800 text-success-200"
+    >
+      <ChevronLeft className="w-6 h-6" />
+    </motion.button>
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      onClick={() => onPaginate(1)}
+      className="p-2 rounded-full bg-success-900 hover:bg-success-800 text-success-200"
+    >
+      <ChevronRight className="w-6 h-6" />
+    </motion.button>
+  </div>
+));
+
+// Memoized progress dots component
+const ProgressDots = memo(({ total, activeIndex, onDotClick }) => (
+  <div className="flex justify-center gap-2 mt-4">
+    {[...Array(total)].map((_, index) => (
+      <motion.button
+        key={index}
+        onClick={() => onDotClick(index)}
+        className={`w-2 h-2 rounded-full ${
+          index === activeIndex ? "bg-success-400" : "bg-success-800"
+        }`}
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.8 }}
+      />
+    ))}
+  </div>
+));
+
+// Memoized testimonial content component
+const TestimonialContent = memo(({ testimonial, itemVariants }) => (
+  <motion.div variants={itemVariants} className="mb-6">
+    <StarRating rating={testimonial.rating} />
+    <blockquote className="text-2xl font-medium leading-relaxed mb-6 relative">
+      <span className="text-success-400">"</span>
+      {testimonial.quote}
+      <span className="text-success-400">"</span>
+    </blockquote>
+    <div className="flex items-center gap-4">
+      <div>
+        <div className="font-semibold text-success-200">
+          {testimonial.author}
+        </div>
+        <div className="text-success-400 text-sm">{testimonial.journey}</div>
+      </div>
+    </div>
+  </motion.div>
+));
 
 const TestimonialsSection = () => {
   const controls = useAnimation();
@@ -12,103 +87,125 @@ const TestimonialsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // Memoize testimonials data
+  const testimonials = useMemo(
+    () => [
+      {
+        quote:
+          "RIGHT Housing didn't just give me a place to stay – they gave me back my dignity and hope. Through their support, I've rebuilt my life from the ground up.",
+        author: "Sarah M.",
+        journey: "Recovery Journey | 2 Years",
+        image:
+          "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200&h=200",
+        rating: 5,
+        highlight: "Rebuilt my life",
+      },
+      {
+        quote:
+          "The holistic approach to recovery changed everything. From mental health support to job training, they equipped me with tools for lasting success.",
+        author: "Marcus J.",
+        journey: "Career Development | 18 Months",
+        image:
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200&h=200",
+        rating: 5,
+        highlight: "Lasting success",
+      },
+      {
+        quote:
+          "Being part of this community showed me I'm not alone. The peer support and understanding I found here have been invaluable to my recovery.",
+        author: "Rachel K.",
+        journey: "Community Member | 1 Year",
+        image:
+          "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200&h=200",
+        rating: 5,
+        highlight: "Not alone",
+      },
+    ],
+    []
+  );
+
+  // Memoize animation variants
+  const containerVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.3,
+          delayChildren: 0.2,
+        },
+      },
+    }),
+    []
+  );
+
+  const itemVariants = useMemo(
+    () => ({
+      hidden: { y: 20, opacity: 0 },
+      visible: {
+        y: 0,
+        opacity: 1,
+        transition: {
+          type: "spring",
+          stiffness: 100,
+          damping: 12,
+        },
+      },
+    }),
+    []
+  );
+
+  const slideVariants = useMemo(
+    () => ({
+      enter: (direction) => ({
+        x: direction > 0 ? 1000 : -1000,
+        opacity: 0,
+      }),
+      center: {
+        zIndex: 1,
+        x: 0,
+        opacity: 1,
+      },
+      exit: (direction) => ({
+        zIndex: 0,
+        x: direction < 0 ? 1000 : -1000,
+        opacity: 0,
+      }),
+    }),
+    []
+  );
+
   useEffect(() => {
     if (isInView) {
       controls.start("visible");
     }
   }, [isInView, controls]);
 
-  const testimonials = [
-    {
-      quote:
-        "RIGHT Housing didn't just give me a place to stay – they gave me back my dignity and hope. Through their support, I've rebuilt my life from the ground up.",
-      author: "Sarah M.",
-      journey: "Recovery Journey | 2 Years",
-      image:
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200&h=200",
-      rating: 5,
-      highlight: "Rebuilt my life",
-    },
-    {
-      quote:
-        "The holistic approach to recovery changed everything. From mental health support to job training, they equipped me with tools for lasting success.",
-      author: "Marcus J.",
-      journey: "Career Development | 18 Months",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200&h=200",
-      rating: 5,
-      highlight: "Lasting success",
-    },
-    {
-      quote:
-        "Being part of this community showed me I'm not alone. The peer support and understanding I found here have been invaluable to my recovery.",
-      author: "Rachel K.",
-      journey: "Community Member | 1 Year",
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200&h=200",
-      rating: 5,
-      highlight: "Not alone",
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  };
-
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-  };
-
   const swipeConfidenceThreshold = 10000;
-  const swipePower = (offset, velocity) => {
+  const swipePower = useCallback((offset, velocity) => {
     return Math.abs(offset) * velocity;
-  };
+  }, []);
 
-  const paginate = (newDirection) => {
-    const newIndex =
-      (activeIndex + newDirection + testimonials.length) % testimonials.length;
-    setActiveIndex(newIndex);
-  };
+  const paginate = useCallback(
+    (newDirection) => {
+      const newIndex =
+        (activeIndex + newDirection + testimonials.length) %
+        testimonials.length;
+      setActiveIndex(newIndex);
+    },
+    [activeIndex, testimonials.length]
+  );
+
+  const handleNavigate = useCallback(() => {
+    navigate("/impact");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [navigate]);
 
   return (
     <div
       ref={ref}
       className="relative overflow-hidden bg-success-950 text-white"
     >
-      {/* Background Pattern */}
       <div className="absolute inset-0">
         <TestimonialBackgroundPattern className="w-full h-full text-success-200" />
       </div>
@@ -119,7 +216,6 @@ const TestimonialsSection = () => {
         animate={controls}
         className="relative max-w-[1400px] mx-auto px-4 py-24"
       >
-        {/* Header Section */}
         <motion.div variants={itemVariants} className="text-center mb-20">
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -139,7 +235,6 @@ const TestimonialsSection = () => {
           </p>
         </motion.div>
 
-        {/* Testimonials Slider */}
         <div className="relative cursor-grab">
           <motion.div
             key={activeIndex}
@@ -157,7 +252,6 @@ const TestimonialsSection = () => {
             dragElastic={1}
             onDragEnd={(e, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
-
               if (swipe < -swipeConfidenceThreshold) {
                 paginate(1);
               } else if (swipe > swipeConfidenceThreshold) {
@@ -166,7 +260,6 @@ const TestimonialsSection = () => {
             }}
             className="flex flex-col md:flex-row items-center gap-12 p-8"
           >
-            {/* Image Section */}
             <motion.div
               variants={itemVariants}
               className="relative w-64 h-64 flex-shrink-0"
@@ -176,6 +269,7 @@ const TestimonialsSection = () => {
                 src={testimonials[activeIndex].image}
                 alt={testimonials[activeIndex].author}
                 className="absolute inset-0 w-full h-full object-cover rounded-3xl shadow-xl"
+                loading="lazy"
               />
               <motion.div
                 initial={{ scale: 0 }}
@@ -187,77 +281,24 @@ const TestimonialsSection = () => {
               </motion.div>
             </motion.div>
 
-            {/* Content Section */}
             <div className="flex-1">
-              <motion.div variants={itemVariants} className="mb-6">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonials[activeIndex].rating)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-5 h-5 text-success-400 fill-current"
-                    />
-                  ))}
-                </div>
-                <blockquote className="text-2xl font-medium leading-relaxed mb-6 relative">
-                  <span className="text-success-400">"</span>
-                  {testimonials[activeIndex].quote}
-                  <span className="text-success-400">"</span>
-                </blockquote>
-                <div className="flex items-center gap-4">
-                  <div>
-                    <div className="font-semibold text-success-200">
-                      {testimonials[activeIndex].author}
-                    </div>
-                    <div className="text-success-400 text-sm">
-                      {testimonials[activeIndex].journey}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              <TestimonialContent
+                testimonial={testimonials[activeIndex]}
+                itemVariants={itemVariants}
+              />
             </div>
           </motion.div>
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-center gap-4 mt-8">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => paginate(-1)}
-              className="p-2 rounded-full bg-success-900 hover:bg-success-800 text-success-200"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => paginate(1)}
-              className="p-2 rounded-full bg-success-900 hover:bg-success-800 text-success-200"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </motion.button>
-          </div>
-
-          {/* Progress Dots */}
-          <div className="flex justify-center gap-2 mt-4">
-            {testimonials.map((_, index) => (
-              <motion.button
-                key={index}
-                onClick={() => setActiveIndex(index)}
-                className={`w-2 h-2 rounded-full ${
-                  index === activeIndex ? "bg-success-400" : "bg-success-800"
-                }`}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.8 }}
-              />
-            ))}
-          </div>
+          <NavigationButtons onPaginate={paginate} />
+          <ProgressDots
+            total={testimonials.length}
+            activeIndex={activeIndex}
+            onDotClick={setActiveIndex}
+          />
 
           <div className="text-center mt-8">
             <Button
-              onPress={() => {
-                navigate("/impact");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              onPress={handleNavigate}
               size="lg"
               color="success"
               variant="shadow"
@@ -265,12 +306,6 @@ const TestimonialsSection = () => {
             >
               View all Impact Stories
             </Button>
-            {/* <Link
-              to={"/impact"}
-              className="text-success-200 text-center text-lg relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-success-200 after:transition-all after:duration-300 hover:after:w-full"
-            >
-              View all Impact Stories
-            </Link> */}
           </div>
         </div>
       </motion.div>
@@ -278,4 +313,4 @@ const TestimonialsSection = () => {
   );
 };
 
-export default TestimonialsSection;
+export default memo(TestimonialsSection);

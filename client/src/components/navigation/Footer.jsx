@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import {
   Facebook,
@@ -12,37 +12,119 @@ import {
 } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
-// import { Input } from "@heroui/input";
+
+// Memoized background SVG component
+const BackgroundSVG = memo(() => (
+  <svg
+    className="w-full h-full"
+    viewBox="0 0 1000 1000"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M0,0 L1000,0 L1000,1000 L0,1000 L0,0 Z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    />
+    <g fill="currentColor">
+      <path d="M100,800 L200,700 L300,800 L300,1000 L100,1000 Z" />
+      <path d="M400,750 L500,650 L600,750 L600,1000 L400,1000 Z" />
+      <path d="M700,800 L800,700 L900,800 L900,1000 L700,1000 Z" />
+      <circle cx="200" cy="200" r="50" />
+      <circle cx="500" cy="300" r="70" />
+      <circle cx="800" cy="150" r="40" />
+    </g>
+  </svg>
+));
+
+// Memoized social link component
+const SocialLink = memo(({ href, icon: Icon }) => (
+  <a
+    href={href}
+    className="text-success-100 hover:text-warning-400 transition-colors"
+    target="\_blank"
+    rel="noopener noreferrer"
+  >
+    <Icon className="w-5 h-5" />
+  </a>
+));
+
+// Memoized footer link component
+const FooterLink = memo(({ to, children }) => (
+  <li>
+    <Link
+      to={to}
+      className="hover:text-warning transition-colors"
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+    >
+      {children}
+    </Link>
+  </li>
+));
+
+// Memoized footer section component
+const FooterSection = memo(({ title, children }) => (
+  <div>
+    <h3 className="text-xl text-warning font-semibold mb-6">{title}</h3>
+    <ul className="space-y-4">{children}</ul>
+  </div>
+));
+
+// Memoized newsletter form component
+const NewsletterForm = memo(() => (
+  <div className="mt-8 md:mt-0">
+    <h3 className="text-xl text-warning font-semibold mb-6">Stay Connected</h3>
+    <p className="text-success-100 mb-4">
+      Subscribe to our newsletter for updates and stories of impact.
+    </p>
+    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+      <Input
+        type="email"
+        placeholder="Enter your email"
+        className="w-full bg-success-800 border-success-700 text-white placeholder-success-300"
+      />
+      <Button type="submit" color="warning" className="w-full">
+        Subscribe
+      </Button>
+    </form>
+  </div>
+));
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const socialLinks = [
+    { href: "#", icon: Facebook },
+    { href: "#", icon: Twitter },
+    { href: "#", icon: Instagram },
+    { href: "#", icon: Linkedin },
+  ];
+
+  const quickLinks = [
+    { to: "/", text: "Home" },
+    { to: "/about", text: "About Us" },
+    { to: "/programs", text: "Our Programs" },
+    { to: "/impact", text: "Impact Stories" },
+    { to: "/gallery", text: "Gallery" },
+    { to: "/contact", text: "Contact Us" },
+  ];
+
+  const getInvolvedLinks = [
+    { to: "/volunteer", text: "Volunteer" },
+    { to: "/donate", text: "Donate" },
+    { to: "/apply", text: "Apply for Housing" },
+  ];
+
+  const legalLinks = [
+    { to: "/privacy-policy", text: "Privacy Policy" },
+    { to: "/terms-of-service", text: "Terms of Service" },
+  ];
 
   return (
     <footer className="relative bg-success-900 text-white overflow-hidden">
       {/* Decorative SVG Background */}
       <div className="absolute inset-0 opacity-5">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 1000 1000"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0,0 L1000,0 L1000,1000 L0,1000 L0,0 Z"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          />
-          <g fill="currentColor">
-            {/* Houses Pattern */}
-            <path d="M100,800 L200,700 L300,800 L300,1000 L100,1000 Z" />
-            <path d="M400,750 L500,650 L600,750 L600,1000 L400,1000 Z" />
-            <path d="M700,800 L800,700 L900,800 L900,1000 L700,1000 Z" />
-            {/* Community Circles */}
-            <circle cx="200" cy="200" r="50" />
-            <circle cx="500" cy="300" r="70" />
-            <circle cx="800" cy="150" r="40" />
-          </g>
-        </svg>
+        <BackgroundSVG />
       </div>
 
       <div className="relative max-w-[1400px] mx-auto px-4 py-16">
@@ -54,155 +136,43 @@ const Footer = () => {
               Right Housing Inc.
             </h2>
             <p className="text-success-100 max-w-xs">
-              Dedicated to transforming lives through recovery support and
-              stable housing solutions. Building stronger communities, one
-              person at a time.
+              Dedicated to transforming lives through recovery support, reentry,
+              mental health, and transitional housing solutions. Building
+              stronger communities, one person at a time.
             </p>
             <div className="flex space-x-4">
-              <a
-                href="#"
-                className="text-success-100 hover:text-warning-400 transition-colors"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="text-success-100 hover:text-warning-400 transition-colors"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="text-success-100 hover:text-warning-400 transition-colors"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="text-success-100 hover:text-warning-400 transition-colors"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
+              {socialLinks.map((link, index) => (
+                <SocialLink key={index} {...link} />
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="text-xl text-warning  font-semibold mb-6">
-              Quick Links
-            </h3>
-            <ul className="space-y-4">
-              <li>
-                <Link to="/" className="hover:text-warning transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/about"
-                  className="hover:text-warning transition-colors"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/programs"
-                  className="hover:text-warning transition-colors"
-                >
-                  Our Programs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/impact"
-                  className="hover:text-warning transition-colors"
-                >
-                  Impact Stories
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/gallery"
-                  className="hover:text-warning transition-colors"
-                >
-                  Gallery
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/contact"
-                  className="hover:text-warning transition-colors"
-                >
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <FooterSection title="Quick Links">
+            {quickLinks.map((link) => (
+              <FooterLink key={link.to} to={link.to}>
+                {link.text}
+              </FooterLink>
+            ))}
+          </FooterSection>
 
           {/* Get Involved */}
-          <div>
-            <h3 className="text-xl text-warning font-semibold mb-6">
-              Get Involved
-            </h3>
-            <ul className="space-y-4">
-              <li>
-                <Link
-                  to="/volunteer"
-                  className="hover:text-warning transition-colors"
-                >
-                  Volunteer
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/donate"
-                  className="hover:text-warning transition-colors"
-                >
-                  Donate
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/apply"
-                  className="hover:text-warning transition-colors"
-                >
-                  Apply for Housing
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <FooterSection title="Get Involved">
+            {getInvolvedLinks.map((link) => (
+              <FooterLink key={link.to} to={link.to}>
+                {link.text}
+              </FooterLink>
+            ))}
+          </FooterSection>
 
           {/* Legal */}
-          <div>
-            <h3 className="text-xl text-warning font-semibold mb-6">Legal</h3>
-            <ul className="space-y-4">
-              <li>
-                <Link
-                  to="/privacy-policy"
-                  className="hover:text-warning transition-colors"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/terms-of-service"
-                  className="hover:text-warning transition-colors"
-                >
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/application-status"
-                  className="hover:text-warning transition-colors"
-                >
-                  Application Status
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <FooterSection title="Legal">
+            {legalLinks.map((link) => (
+              <FooterLink key={link.to} to={link.to}>
+                {link.text}
+              </FooterLink>
+            ))}
+          </FooterSection>
 
           {/* Contact Info */}
           <div>
@@ -266,7 +236,7 @@ const Footer = () => {
             </div>
           </div>
           {/* Social Proof */}
-          <div className="bg-success-800/30 rounded-lg p-4 h-fit">
+          {/* <div className="bg-success-800/30 rounded-lg p-4 h-fit">
             <div className="flex items-center justify-between">
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((i) => (
@@ -282,7 +252,7 @@ const Footer = () => {
                 Join <span className="text-warning">250+</span> monthly donors
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
         {/* </div> */}
 
@@ -293,7 +263,7 @@ const Footer = () => {
               {currentYear} Right Housing. All rights reserved.
             </p>
             <div className="flex items-center space-x-4 text-success-100">
-              <Link
+              {/* <Link
                 to="privacy-policy"
                 className="hover:text-warning transition-colors"
               >
@@ -304,7 +274,7 @@ const Footer = () => {
                 className="hover:text-warning transition-colors"
               >
                 Terms of Service
-              </Link>
+              </Link> */}
               <Link
                 to="/sitemap"
                 className="hover:text-warning transition-colors"
@@ -324,4 +294,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

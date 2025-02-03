@@ -43,16 +43,16 @@ const Home = () => {
       {/* How to Apply Section */}
       <HowToApply />
 
+      {/* Testimonials Section */}
+      <section className="py-20 bg-success-900">
+        <TestimonialsSection />
+      </section>
+
       {/* Find What You Need Section */}
       <FindWhatYouNeed />
 
       {/* Community Impact Section */}
       {/* <CommunityImpact /> */}
-
-      {/* Testimonials Section */}
-      <section className="py-20 bg-success-900">
-        <TestimonialsSection />
-      </section>
 
       {/* FAQs Section */}
       <section className="bg-success-50">

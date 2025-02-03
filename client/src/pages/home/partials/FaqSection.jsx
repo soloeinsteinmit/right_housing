@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback, memo } from "react";
 import {
   motion,
   useAnimation,
@@ -12,9 +12,9 @@ import {
   Tag,
   ArrowUpRight,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@heroui/button";
-import FaqBackgroundPattern from "../../../assets/FaqBackgroundPattern";
+import { Input } from "@heroui/input";
 
 const FaqSection = () => {
   const controls = useAnimation();
@@ -26,59 +26,91 @@ const FaqSection = () => {
   const [expandedId, setExpandedId] = useState(null);
   const [displayedFaqs, setDisplayedFaqs] = useState([]);
 
+  // Memoized category data
   const categories = [
     { id: "all", label: "All Questions" },
-    { id: "eligibility", label: "Eligibility" },
-    { id: "programs", label: "Programs" },
-    { id: "support", label: "Support" },
     { id: "housing", label: "Housing" },
+    { id: "rules", label: "Rules" },
+    { id: "services", label: "Services" },
+    { id: "program", label: "Program" },
   ];
 
+  // Memoized FAQ data
   const faqs = [
     {
       id: 1,
-      question:
-        "What are the eligibility requirements for RIGHT Housing programs?",
+      question: "What type of housing do you offer?",
       answer:
-        "Our programs are designed to support individuals in recovery seeking stable housing. Basic requirements include: being 18 or older, commitment to recovery, participation in support programs, and meeting income guidelines. Each program may have specific additional requirements.",
-      category: "eligibility",
+        "We offer men only and women only homes to ensure comfort and safety for all residents.",
+      category: "housing",
     },
     {
       id: 2,
-      question: "How long can residents stay in the housing program?",
+      question: "Is it shared or private housing?",
       answer:
-        "Program duration varies based on individual needs and progress. Typical stays range from 6-24 months, with extensions available based on case management evaluation and continued program participation.",
+        "We offer both private and shared spaces to accommodate different needs and preferences.",
       category: "housing",
     },
     {
       id: 3,
-      question: "What support services are available to residents?",
+      question: "Is it furnished or unfurnished?",
       answer:
-        "We offer comprehensive support including: mental health counseling, addiction recovery support, job training, financial literacy education, life skills workshops, and community building activities. Services are tailored to each resident's needs.",
-      category: "support",
-    },
-    {
-      id: 4,
-      question: "How does the application process work?",
-      answer:
-        "The application process involves: completing an initial application form, attending an information session, participating in screening interviews, and meeting with our case management team. We aim to make decisions within 2-3 weeks of completed applications.",
-      category: "programs",
-    },
-    {
-      id: 5,
-      question: "Are there costs associated with the housing program?",
-      answer:
-        "Residents typically contribute 30% of their income toward housing costs. Additional program services are provided at no cost. Financial assistance and sliding scale options are available based on individual circumstances.",
+        "All our housing units come furnished to help residents focus on their recovery journey.",
       category: "housing",
     },
     {
-      id: 6,
-      question: "What ongoing support is available after program completion?",
+      id: 4,
+      question: "What are the length of stay requirements?",
       answer:
-        "We provide comprehensive aftercare support including: alumni programs, continued access to counseling services, job placement assistance, and community events. Our goal is to ensure lasting success for all program graduates.",
-      category: "support",
+        "The length of stay may depend on the our house's policies, the resident's needs, and their progress in recovery. Stay can range from 30 days to 12 months.",
+      category: "program",
+    },
+    {
+      id: 5,
+      question: "How long can I stay in the program?",
+      answer:
+        "The length of stay may depend on the our house's policies, the resident's needs, and their progress in recovery. Stay can range from 30 days to 12 months.",
+      category: "program",
+    },
+    {
+      id: 6,
+      question: "What kind of support services do you offer?",
+      answer:
+        "We provide comprehensive services including: Recovery support, Job readiness programs, Life skills development, Health & Wellness Services, Housing, Community & Social Integration, Relapse Prevention Planning, and case management.",
+      category: "services",
+    },
+    {
+      id: 7,
+      question: "What are the rules and policies?",
+      answer:
+        "Our key rules include:\n• Zero Tolerance for Drugs & Alcohol – Residents must remain completely sober\n• Random Drug & Alcohol Testing\n• No Possession of Drugs, Alcohol, or Paraphernalia\n• Nightly Curfew Compliance\n• Required Attendance at House Meetings\n• Chores & Household Responsibilities\n• Respect for Housemates & Staff\n• No Overnight Guests\n• Recovery Program Participation\n• Employment & Daily Activity Requirements",
+      category: "rules",
+    },
+    {
+      id: 8,
+      question: "Is the program accredited or licensed?",
+      answer:
+        "Yes, our program is certified to ensure we maintain high standards of care and support.",
+      category: "program",
     },
   ];
+
+  // Memoized category filter button
+  const CategoryButton = memo(({ category, isSelected, onClick }) => (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onClick}
+      className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${
+        isSelected
+          ? "bg-success-600 text-white"
+          : "bg-success-50 text-success-600 hover:bg-success-100"
+      }`}
+    >
+      <Tag className="w-4 h-4 mr-2" />
+      <span>{category.label}</span>
+    </motion.button>
+  ));
 
   // Initialize displayed FAQs
   useEffect(() => {
@@ -182,33 +214,28 @@ const FaqSection = () => {
           <div className="max-w-2xl mx-auto">
             {/* Search Input */}
             <div className="relative mb-6">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
+              <Input
                 type="text"
                 placeholder="Search questions..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:border-success-500 focus:ring-2 focus:ring-success-200 transition-colors duration-300"
+                className=""
+                size="lg"
+                radius="full"
+                startContent={<Search className="w-5 h-5 text-gray-400" />}
+                variant="bordered"
               />
             </div>
 
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-2">
               {categories.map((category) => (
-                <motion.button
+                <CategoryButton
                   key={category.id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  category={category}
+                  isSelected={selectedCategory === category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${
-                    selectedCategory === category.id
-                      ? "bg-success-600 text-white"
-                      : "bg-success-50 text-success-600 hover:bg-success-100"
-                  }`}
-                >
-                  <Tag className="w-4 h-4 mr-2" />
-                  {category.label}
-                </motion.button>
+                />
               ))}
             </div>
           </div>
@@ -247,13 +274,10 @@ const FaqSection = () => {
               </button>
             </motion.div>
           ) : (
-            <AnimatePresence mode="wait">
+            <>
               {displayedFaqs.map((faq) => (
-                <motion.div
+                <div
                   key={faq.id}
-                  initial={{ opacity: 0.4, y: 0 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
                   className="rounded-2xl bg-white shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   <div className="w-full">
@@ -274,7 +298,7 @@ const FaqSection = () => {
                       </motion.div>
                     </button>
 
-                    <AnimatePresence>
+                    <AnimatePresence mode="wait">
                       {expandedId === faq.id && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
@@ -285,7 +309,7 @@ const FaqSection = () => {
                         >
                           <div className="px-6 pb-6 pt-2">
                             <div className="bg-success-50 p-6 rounded-xl">
-                              <p className="text-gray-700 leading-relaxed">
+                              <p className="text-gray-700 leading-relaxed  whitespace-pre-line">
                                 {faq.answer}
                               </p>
                             </div>
@@ -294,9 +318,9 @@ const FaqSection = () => {
                       )}
                     </AnimatePresence>
                   </div>
-                </motion.div>
+                </div>
               ))}
-            </AnimatePresence>
+            </>
           )}
         </motion.div>
 
@@ -340,4 +364,4 @@ const FaqSection = () => {
   );
 };
 
-export default FaqSection;
+export default memo(FaqSection);

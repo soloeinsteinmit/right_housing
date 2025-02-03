@@ -34,42 +34,6 @@ const TestimonialBackgroundPattern = ({ className }) => {
       </defs>
 
       <rect width="100%" height="100%" fill="url(#dots)" />
-
-      {/* Animated elements */}
-      <motion.circle
-        cx="30%"
-        cy="40%"
-        r="100"
-        fill="currentColor"
-        fillOpacity="0.03"
-        animate={{
-          cy: ["40%", "45%", "40%"],
-          opacity: [0.03, 0.05, 0.03],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
-      <motion.circle
-        cx="70%"
-        cy="60%"
-        r="150"
-        fill="currentColor"
-        fillOpacity="0.02"
-        animate={{
-          cy: ["60%", "55%", "60%"],
-          opacity: [0.02, 0.04, 0.02],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1,
-        }}
-      />
     </motion.svg>
   );
 };
