@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ClipboardList,
@@ -7,7 +7,6 @@ import {
   Brain,
   Activity,
   Home,
-  ArrowRight,
 } from "lucide-react";
 import { caseManagementImages } from "./caseManagementImages";
 
@@ -182,7 +181,10 @@ const getAccentColors = (service, isActive) => {
 };
 
 const ServiceButton = ({ service, isActive, onClick }) => {
-  const colors = getAccentColors(service, isActive);
+  const colors = useMemo(
+    () => getAccentColors(service, isActive),
+    [service.id, isActive]
+  );
 
   return (
     <motion.button
@@ -230,8 +232,31 @@ const ServiceButton = ({ service, isActive, onClick }) => {
   );
 };
 
+const ServiceDetail = React.memo(({ detail, index, colors }) => (
+  <motion.div
+    key={detail.title}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: index * 0.1 }}
+    className="relative"
+  >
+    <div className="relative z-10">
+      <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+        {detail.title}
+      </h3>
+      <p className="text-gray-600 leading-relaxed">{detail.content}</p>
+    </div>
+    <div
+      className="absolute top-0 left-0 w-1 h-full rounded-full transform -translate-x-6"
+      style={{
+        background: `linear-gradient(to bottom, ${colors.border}, ${colors.text})`,
+      }}
+    />
+  </motion.div>
+));
+
 const ServiceContent = ({ service }) => {
-  const colors = getAccentColors(service);
+  const colors = useMemo(() => getAccentColors(service), [service.id]);
 
   return (
     <motion.div
@@ -267,28 +292,12 @@ const ServiceContent = ({ service }) => {
             {/* Details Grid */}
             <div className="grid gap-8">
               {service.details.map((detail, idx) => (
-                <motion.div
+                <ServiceDetail
                   key={detail.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="relative"
-                >
-                  <div className="relative z-10">
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                      {detail.title}
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      {detail.content}
-                    </p>
-                  </div>
-                  <div
-                    className="absolute top-0 left-0 w-1 h-full rounded-full transform -translate-x-6"
-                    style={{
-                      background: `linear-gradient(to bottom, ${colors.border}, ${colors.text})`,
-                    }}
-                  />
-                </motion.div>
+                  detail={detail}
+                  index={idx}
+                  colors={colors}
+                />
               ))}
             </div>
           </div>
@@ -327,46 +336,50 @@ const ServiceContent = ({ service }) => {
   );
 };
 
+const BackgroundPattern = React.memo(() => (
+  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-60" />
+    <div className="absolute inset-0">
+      {[...Array(3)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute"
+          style={{
+            top: `${20 + i * 30}%`,
+            left: `${10 + i * 20}%`,
+            width: `${300 + i * 100}px`,
+            height: `${300 + i * 100}px`,
+            background: `linear-gradient(120deg, var(--success-100), var(--success-50))`,
+            borderRadius: "38% 62% 63% 37% / 41% 44% 56% 59%",
+            opacity: 0.1,
+            transform: `rotate(${i * 45}deg)`,
+          }}
+          animate={{
+            borderRadius: [
+              "38% 62% 63% 37% / 41% 44% 56% 59%",
+              "45% 55% 57% 43% / 38% 47% 53% 62%",
+              "38% 62% 63% 37% / 41% 44% 56% 59%",
+            ],
+            rotate: [i * 45, (i + 1) * 45, i * 45],
+          }}
+          transition={{
+            duration: 20 + i * 5,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      ))}
+    </div>
+  </div>
+));
+
 const ProgramsCaseManagement = () => {
   const [activeService, setActiveService] = useState(services[0].id);
 
   return (
     <section className="py-20 bg-gray-50 relative overflow-hidden min-h-screen">
       {/* Background Pattern */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-60" />
-        <div className="absolute inset-0">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              style={{
-                top: `${20 + i * 30}%`,
-                left: `${10 + i * 20}%`,
-                width: `${300 + i * 100}px`,
-                height: `${300 + i * 100}px`,
-                background: `linear-gradient(120deg, var(--success-100), var(--success-50))`,
-                borderRadius: "38% 62% 63% 37% / 41% 44% 56% 59%",
-                opacity: 0.1,
-                transform: `rotate(${i * 45}deg)`,
-              }}
-              animate={{
-                borderRadius: [
-                  "38% 62% 63% 37% / 41% 44% 56% 59%",
-                  "45% 55% 57% 43% / 38% 47% 53% 62%",
-                  "38% 62% 63% 37% / 41% 44% 56% 59%",
-                ],
-                rotate: [i * 45, (i + 1) * 45, i * 45],
-              }}
-              transition={{
-                duration: 20 + i * 5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-          ))}
-        </div>
-      </div>
+      <BackgroundPattern />
 
       {/* Section Header */}
       <div className="container mx-auto px-4 relative">
@@ -439,4 +452,4 @@ const ProgramsCaseManagement = () => {
   );
 };
 
-export default ProgramsCaseManagement;
+export default React.memo(ProgramsCaseManagement);

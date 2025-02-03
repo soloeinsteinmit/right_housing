@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
   Heart,
   Briefcase,
   Users,
-  ClipboardList,
   Clock,
   Bed,
   UserCheck,
@@ -19,8 +18,21 @@ import {
   UserPlus,
   ClipboardCheck,
   Activity,
-  Building,
 } from "lucide-react";
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+};
+
+const sparkleVariants = {
+  animate: {
+    scale: [0.8, 1, 0.8],
+    rotate: [0, 15, 0],
+  },
+};
 
 const programs = [
   {
@@ -157,50 +169,14 @@ const programs = [
       },
     ],
   },
-  /* {
-    id: "case-management",
-    title: "Case Management",
-    icon: <ClipboardList className="w-6 h-6" />,
-    description:
-      "Individualized support and resource coordination for comprehensive care.",
-    services: [
-      {
-        name: "Needs Assessment",
-        icon: <ClipboardCheck />,
-        desc: "Comprehensive evaluation of resident needs and goals.",
-      },
-      {
-        name: "Recovery Support",
-        icon: <Heart />,
-        desc: "Ongoing guidance and relapse prevention planning.",
-      },
-      {
-        name: "Mental Health Services",
-        icon: <Brain />,
-        desc: "Coordinated care for mental health and substance use support.",
-      },
-      {
-        name: "Healthcare Access",
-        icon: <Stethoscope />,
-        desc: "Assistance with healthcare services and wellness planning.",
-      },
-      {
-        name: "Housing Support",
-        icon: <Building />,
-        desc: "Help transitioning to independent living.",
-      },
-    ],
-  }, */
 ];
 
-const SparkleEffect = () => (
+// Memoized components
+const SparkleEffect = React.memo(() => (
   <motion.div
     className="absolute -right-2 -top-2"
     initial={{ scale: 0, rotate: 0 }}
-    animate={{
-      scale: [0.8, 1, 0.8],
-      rotate: [0, 15, 0],
-    }}
+    animate={sparkleVariants.animate}
     transition={{
       duration: 2,
       repeat: Infinity,
@@ -215,42 +191,15 @@ const SparkleEffect = () => (
       />
     </svg>
   </motion.div>
-);
+));
 
-const AnimatedSVGBackground = () => (
+const AnimatedSVGBackground = React.memo(() => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none h-full">
     <svg
       className="absolute w-full h-full opacity-20"
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
     >
-      {/* Hexagonal Grid Pattern */}
-      {/* {[...Array(6)].map((_, row) =>
-        [...Array(8)].map((_, col) => (
-          <motion.path
-            key={`hex-${row}-${col}`}
-            d={`M${col * 15 + (row % 2) * 7.5},${
-              row * 13
-            }l7.5,4.33l0,8.66l-7.5,4.33l-7.5,-4.33l0,-8.66z`}
-            stroke="currentColor"
-            className="text-success-600"
-            strokeWidth="0.1"
-            fill="none"
-            initial={{ opacity: 0.1 }}
-            animate={{
-              opacity: [0.1, 0.3, 0.1],
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 3 + (row + col),
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: (row + col) * 0.2,
-            }}
-          />
-        ))
-      )} */}
-
       {/* Flowing Lines */}
       {[...Array(6)].map((_, i) => (
         <motion.path
@@ -348,17 +297,73 @@ const AnimatedSVGBackground = () => (
       </g>
     </svg>
   </div>
-);
+));
+
+const ProgramButton = React.memo(({ program, isSelected, onClick }) => (
+  <motion.button
+    onClick={onClick}
+    className={`w-full group relative text-left p-6 rounded-xl transition-all duration-300 ${
+      isSelected
+        ? "bg-white shadow-lg shadow-success-100/50 border-success-100 border"
+        : "hover:bg-white/50"
+    }`}
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
+  >
+    <div className="flex items-center gap-4">
+      <div
+        className={`p-3 rounded-lg ${
+          isSelected
+            ? "bg-success-50 text-success-600"
+            : "bg-gray-100 text-gray-600 group-hover:bg-success-50 group-hover:text-success-600"
+        }`}
+      >
+        {program.icon}
+      </div>
+      <div>
+        <h3
+          className={`font-semibold text-lg mb-1 ${
+            isSelected ? "text-success-900" : "text-gray-900"
+          }`}
+        >
+          {program.title}
+        </h3>
+        <p className="text-sm text-gray-600 line-clamp-2 pr-2">
+          {program.description}
+        </p>
+      </div>
+    </div>
+  </motion.button>
+));
+
+const ServiceCard = React.memo(({ service }) => (
+  <motion.div
+    variants={containerVariants}
+    className="p-6 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+  >
+    <div className="flex items-start gap-4">
+      <div className="p-2 rounded-lg bg-success-50 text-success-600">
+        {service.icon}
+      </div>
+      <div>
+        <h3 className="font-semibold text-gray-900 mb-2 text-lg">
+          {service.name}
+        </h3>
+        <p className="text-gray-600 text-base">{service.desc}</p>
+      </div>
+    </div>
+  </motion.div>
+));
 
 const ProgramsServices = () => {
   const [selectedProgram, setSelectedProgram] = useState(programs[0]);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const handleProgramSelect = (program) => {
+  const handleProgramSelect = useCallback((program) => {
     setIsAnimating(true);
     setSelectedProgram(program);
     setTimeout(() => setIsAnimating(false), 500);
-  };
+  }, []);
 
   return (
     <div className="relative overflow-hidden">
@@ -366,11 +371,12 @@ const ProgramsServices = () => {
 
       <div className="relative grid grid-cols-12 min-h-screen gap-0 items-center">
         {/* Left Panel - Program Titles */}
-        <div className="col-span-4 h-full bg-gray-50/50 border-r border-gray-200 px-16 py-16 overflow-y-auto  flex justify-center items-center">
+        <div className="col-span-4 h-full bg-gray-50/50 border-r border-gray-200 px-16 py-16 overflow-y-auto flex justify-center items-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-8 "
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-8"
           >
             <div className="mb-12">
               <div className="relative inline-block max-w-[385px]">
@@ -378,30 +384,8 @@ const ProgramsServices = () => {
                   Our Programs & Services
                 </h2>
                 <SparkleEffect />
-                <motion.div
-                  className="absolute -left-3 bottom-2"
-                  initial={{ scale: 0, rotate: 0 }}
-                  animate={{
-                    scale: [0.8, 1, 0.8],
-                    rotate: [0, -15, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.5,
-                  }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
-                      fill="currentColor"
-                      className="text-success-300"
-                    />
-                  </svg>
-                </motion.div>
               </div>
-              <p className="text-gray-600 ">
+              <p className="text-gray-600">
                 We offer housing solutions and support services to help people
                 get back on their feet. We cater to individuals recovering from
                 addiction or who have recently been released from prison.
@@ -410,43 +394,12 @@ const ProgramsServices = () => {
 
             <div className="space-y-4">
               {programs.map((program) => (
-                <motion.button
+                <ProgramButton
                   key={program.id}
+                  program={program}
+                  isSelected={selectedProgram?.id === program.id}
                   onClick={() => handleProgramSelect(program)}
-                  className={`w-full group relative text-left p-6 rounded-xl transition-all duration-300 ${
-                    selectedProgram?.id === program.id
-                      ? "bg-white shadow-lg shadow-success-100/50 border-success-100 border"
-                      : "hover:bg-white/50"
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="flex items-center gap-4">
-                    <div
-                      className={`p-3 rounded-lg ${
-                        selectedProgram?.id === program.id
-                          ? "bg-success-50 text-success-600"
-                          : "bg-gray-100 text-gray-600 group-hover:bg-success-50 group-hover:text-success-600"
-                      }`}
-                    >
-                      {program.icon}
-                    </div>
-                    <div>
-                      <h3
-                        className={`font-semibold text-lg mb-1 ${
-                          selectedProgram?.id === program.id
-                            ? "text-success-900"
-                            : "text-gray-900"
-                        }`}
-                      >
-                        {program.title}
-                      </h3>
-                      <p className="text-sm text-gray-600 line-clamp-2">
-                        {program.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.button>
+                />
               ))}
             </div>
           </motion.div>
@@ -461,7 +414,7 @@ const ProgramsServices = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="max-w-4xl mx-auto"
+              className="max-w-5xl mx-auto"
             >
               <div className="mb-12">
                 <motion.div
@@ -484,40 +437,11 @@ const ProgramsServices = () => {
               <motion.div
                 initial="hidden"
                 animate="visible"
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.1,
-                    },
-                  },
-                }}
-                className="grid grid-cols-2 gap-6"
+                exit="exit"
+                className="grid md:grid-cols-2 gap-6"
               >
                 {selectedProgram?.services.map((service) => (
-                  <motion.div
-                    key={service.name}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0 },
-                    }}
-                    className="p-6 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="p-2 rounded-lg bg-success-50 text-success-600">
-                        {service.icon}
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-2 text-lg">
-                          {service.name}
-                        </h3>
-                        <p className="text-gray-600 text-base">
-                          {service.desc}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <ServiceCard key={service.name} service={service} />
                 ))}
               </motion.div>
             </motion.div>
@@ -528,4 +452,4 @@ const ProgramsServices = () => {
   );
 };
 
-export default ProgramsServices;
+export default React.memo(ProgramsServices);

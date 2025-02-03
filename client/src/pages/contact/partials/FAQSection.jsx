@@ -59,7 +59,9 @@ const FAQSection = () => {
             Recovery Support FAQ
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Find answers about our recovery programs and housing transition support. We're here to help you on your journey to stability and independence.
+            Find answers about our recovery programs and housing transition
+            support. We're here to help you on your journey to stability and
+            independence.
           </p>
         </motion.div>
 
@@ -79,7 +81,9 @@ const FAQSection = () => {
                     ? "border-success-200 shadow-lg"
                     : "border-gray-200 hover:border-success-200"
                 } transition-all duration-200`}
-                onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
+                onClick={() =>
+                  setExpandedIndex(expandedIndex === index ? null : index)
+                }
               >
                 <div className="flex justify-between items-center">
                   <h4 className="text-lg font-semibold text-gray-900">
@@ -120,7 +124,9 @@ const FAQSection = () => {
                 className="overflow-hidden"
               >
                 <div className="px-6 py-4 bg-gray-50 rounded-b-xl">
-                  <p className="text-gray-600">{faq.answer}</p>
+                  <p className="text-gray-600 whitespace-pre-line">
+                    {faq.answer}
+                  </p>
                 </div>
               </motion.div>
             </motion.div>
@@ -145,9 +151,7 @@ const FAQSection = () => {
                 <h3 className="text-xl font-bold text-gray-900">
                   24/7 Crisis Support
                 </h3>
-                <p className="text-gray-600">
-                  Immediate assistance available
-                </p>
+                <p className="text-gray-600">Immediate assistance available</p>
               </div>
             </div>
             <a
@@ -174,14 +178,10 @@ const FAQSection = () => {
                 <h3 className="text-xl font-bold text-gray-900">
                   General Inquiries
                 </h3>
-                <p className="text-gray-600">
-                  Questions about our programs
-                </p>
+                <p className="text-gray-600">Questions about our programs</p>
               </div>
             </div>
-            <button
-              className="inline-flex items-center gap-2 bg-warning-600 text-white px-6 py-3 rounded-full hover:bg-warning-700 transition-colors w-full justify-center"
-            >
+            <button className="inline-flex items-center gap-2 bg-warning-600 text-white px-6 py-3 rounded-full hover:bg-warning-700 transition-colors w-full justify-center">
               Contact Support Team
             </button>
           </motion.div>
