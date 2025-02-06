@@ -58,7 +58,7 @@ const StoryQuote = React.memo(() => (
     whileInView="visible"
     viewport={{ once: true }}
     transition={{ duration: 0.6, delay: 0.2 }}
-    className="text-2xl font-serif italic text-gray-700 mb-8 relative"
+    className="text-2xl max-[480px]:text-xl font-serif italic text-gray-700 mb-8 relative mx-4"
   >
     <div className="absolute -left-8 -top-8 text-8xl text-success-200">"</div>
     Camden showed me a side of the world few ever truly see—where simple
@@ -236,13 +236,13 @@ const AnitaStory = () => {
             transition={{ duration: 0.5 }}
             className="inline-flex items-center justify-center mb-6"
           >
-            <Quote className="w-12 h-12 text-success-400 transform -scale-x-100" />
+            <Quote className="w-12 h-12 max-[480px]:w-10 max-[480px]:h-10 text-success-400 transform -scale-x-100" />
           </motion.div>
 
-          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-success-600 to-success-800 bg-clip-text text-transparent">
+          <h2 className="text-5xl max-[480px]:text-4xl font-bold mb-6 max-[480px]:mb-4 bg-gradient-to-r from-success-600 to-success-800 bg-clip-text text-transparent">
             Meet Anita - Our Founder's Journey
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             A journey of compassion, transformation, and unwavering dedication
             to healing
           </p>
@@ -251,11 +251,11 @@ const AnitaStory = () => {
         {/* Main Story Section */}
         <motion.div
           variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20"
+          className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 mx-6"
         >
           {/* Image Column */}
-          <motion.div variants={itemVariants} className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-success-400 to-success-600 rounded-3xl transform rotate-3" />
+          <motion.div variants={itemVariants} className="relative h-fit">
+            <div className="absolute inset-0 bg-gradient-to-br from-success-400 to-success-600 h-full rounded-3xl transform rotate-3" />
             <StoryImage />
             <div className="absolute -bottom-4 -right-4 z-10 bg-white px-6 py-3 rounded-full shadow-lg">
               <span className="text-success-600 font-semibold ">
@@ -278,7 +278,7 @@ const AnitaStory = () => {
 
         {/* Journey Timeline */}
         <motion.div variants={containerVariants} className="mb-20">
-          <h3 className="text-3xl font-bold text-center mb-12 text-gray-900">
+          <h3 className="text-3xl  font-bold text-center mb-12 text-gray-900">
             A Journey of Transformation
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -305,7 +305,7 @@ const AnitaStory = () => {
 
         {/* Closing Quote */}
         <motion.div variants={itemVariants} className="text-center pb-20">
-          <blockquote className="text-2xl font-medium text-gray-700 max-w-4xl mx-auto leading-relaxed mb-12">
+          <blockquote className="text-2xl max-[480px]:text-xl font-medium text-gray-700 max-w-4xl mx-auto leading-relaxed mb-12">
             <span className="text-success-500">"</span>
             In Camden, I found my purpose: to help others see that a better
             future isn't just a dream, but a possibility that begins with one

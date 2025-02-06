@@ -117,8 +117,10 @@ const ImpactSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Impact</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4">
+            Our Impact
+          </h2>
+          <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto">
             Track our journey of creating positive change and building stronger
             communities through comprehensive housing support and recovery
             programs.
@@ -226,10 +228,10 @@ const ImpactSection = () => {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-6">
               Future Goals & Impact
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto">
               Our commitment to creating lasting change drives us forward.
               Here's how we're planning to expand our impact in the coming
               years.

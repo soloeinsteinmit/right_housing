@@ -29,13 +29,13 @@ const TeamMemberCard = React.memo(({ member, index }) => (
           <img
             src={member.image}
             alt={member.name}
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full  object-cover transform group-hover:scale-110 transition-transform duration-500"
           />
         </div>
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-success-900 via-success-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end">
           {/* Bio - Revealed on Hover */}
-          <div className="opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-300 overflow-hidden p-5">
+          <div className="opacity-0 group-hover:h-auto group-hover:opacity-100 max-[480px]:hidden transition-all duration-300 overflow-hidden p-5">
             <p className="text-white text-sm">{member.bio}</p>
           </div>
         </div>
@@ -45,7 +45,9 @@ const TeamMemberCard = React.memo(({ member, index }) => (
       <div className="p-6">
         {/* Name and Role */}
         <div className="mb-4">
-          <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-1">
+            {member.name}
+          </h3>
           <p className="text-success-600 font-medium">{member.role}</p>
         </div>
 
@@ -55,6 +57,11 @@ const TeamMemberCard = React.memo(({ member, index }) => (
             "
           </div>
           <p className="text-gray-600 italic text-sm pl-4">{member.quote}</p>
+        </div>
+
+        {/* Bio - Revealed on Hover */}
+        <div className="max-[480px]:flex hidden mb-3">
+          <p className="text-gray-600 text-sm">{member.bio}</p>
         </div>
 
         {/* Expertise Tags */}
@@ -97,16 +104,32 @@ const JoinTeamCTA = React.memo(({ navigate }) => (
     <div className="bg-white rounded-3xl p-12 shadow-lg relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5" />
+        <svg
+          className="w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <pattern
+            id="grid"
+            width="10"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 10 0 L 0 0 0 10"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.5"
+            />
           </pattern>
           <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
       </div>
 
       <div className="relative z-10">
-        <h3 className="text-3xl font-bold text-gray-900 mb-4">Join Our Mission</h3>
+        <h3 className="text-3xl font-bold text-gray-900 mb-4">
+          Join Our Mission
+        </h3>
         <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
           We're seeking passionate individuals dedicated to empowering others
           through recovery and transition support. Join us in making a lasting
@@ -141,15 +164,24 @@ const TeamSection = () => {
         role: "Founder & Executive Director",
         image: woman1,
         bio: "With extensive experience in recovery programs and transitional housing, Anita leads our mission to transform lives through comprehensive support and empowerment.",
-        expertise: ["Program Development", "Recovery Support", "Community Outreach"],
-        quote: "Every individual deserves a chance to rebuild their life with dignity and support.",
+        expertise: [
+          "Program Development",
+          "Recovery Support",
+          "Community Outreach",
+        ],
+        quote:
+          "Every individual deserves a chance to rebuild their life with dignity and support.",
       },
       {
         name: "Michael Chen",
         role: "Recovery Programs Director",
         image: man1,
         bio: "Michael specializes in developing holistic recovery programs that address mental health, addiction recovery, and life skills development.",
-        expertise: ["Addiction Recovery", "Mental Health Support", "Life Skills Training"],
+        expertise: [
+          "Addiction Recovery",
+          "Mental Health Support",
+          "Life Skills Training",
+        ],
         quote: "Recovery is a journey we take together, one step at a time.",
       },
       {
@@ -165,7 +197,13 @@ const TeamSection = () => {
         role: "Tech Advocate",
         image: man2,
         bio: "Solomon ensures a strong digital presence by developing and managing the organization's website, host applications, and online platforms. He leverages cutting-edge technology to enhance user engagement, streamline operations, and safeguard data security.",
-        expertise: ["Digital Strategy", "Tech Integration", "Data Security", "AI & Automation", "Platform Managment"],
+        expertise: [
+          "Digital Strategy",
+          "Tech Integration",
+          "Data Security",
+          "AI & Automation",
+          "Platform Managment",
+        ],
         quote: "Innovative solutions drive impactful change.",
       },
     ],
@@ -189,10 +227,10 @@ const TeamSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4">
             Meet Our Leadership Team
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto">
             Dedicated professionals committed to empowering individuals through
             recovery, reintegration, and sustainable independence.
           </p>

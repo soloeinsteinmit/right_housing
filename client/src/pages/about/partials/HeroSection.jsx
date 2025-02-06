@@ -137,7 +137,7 @@ const HeroSection = () => {
   const shapes = useMemo(() => Array(5).fill(null), []);
 
   return (
-    <section className="relative min-h-screen flex max-md:py-16 items-center overflow-hidden bg-gray-50">
+    <section className="relative min-h-screen flex max-md:py-2 items-center overflow-hidden bg-gray-50">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-success-50/50 to-transparent" />
@@ -163,7 +163,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      <div className="container mx-auto px-12 max-md:px-6 mt-20 max-lg:mt-32 max-lg:pb-24 pb-10 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Text Content */}
           <motion.div
@@ -171,23 +171,23 @@ const HeroSection = () => {
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.6 }}
-            className="cursor-default"
+            className="cursor-default "
           >
-            <h1 className="text-7xl font-bold mb-6">
+            <h1 className="text-7xl max-[580px]:text-5xl font-bold mb-6  max-[480px]:text-center">
               <span className="text-gray-900">Transforming</span>
               <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-success-600 to-success-800">
                 Lives
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+            <p className="text-xl max-[480px]:text-lg max-[480px]:text-center text-gray-600 mb-8 leading-relaxed">
               At RIGHT Housing, we believe that true healing happens when the
               mind, body, and spirit are nurtured together. We provide
               transitional housing for men and women who are navigating
               recovery, reentry, or mental health challenges, offering more than
               just a roof over their heads.
             </p>
-            <div className="flex flex-wrap gap-6 cursor-default">
+            <div className="flex flex-wrap max-[480px]:justify-center gap-6 cursor-default">
               <motion.div className="flex items-center gap-3 bg-success-50 text-success-700 px-6 py-3 rounded-full">
                 <span className="font-semibold">Holistic Support</span>
                 <span className="w-px h-4 bg-success-200" />
@@ -207,7 +207,7 @@ const HeroSection = () => {
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative cursor-default"
+            className="relative cursor-default max-[480px]:mx-4"
           >
             <div className="relative z-10">
               <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">

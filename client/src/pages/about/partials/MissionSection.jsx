@@ -29,7 +29,7 @@ const MissionCard = React.memo(() => (
   >
     <div className="bg-white rounded-3xl p-10 shadow-xl">
       <div className="absolute -top-8 left-10 bg-success-600 text-white px-8 py-4 rounded-2xl shadow-lg">
-        <h3 className="text-2xl font-bold">Our Mission</h3>
+        <h3 className="text-2xl max-[480px]:text-xl font-bold">Our Mission</h3>
       </div>
       <div className="mt-8">
         <p className="text-gray-600 leading-relaxed">
@@ -60,7 +60,7 @@ const VisionCard = React.memo(() => (
   >
     <div className="bg-white rounded-3xl p-10 shadow-xl">
       <div className="absolute -top-8 left-10 bg-warning-600 text-white px-8 py-4 rounded-2xl shadow-lg">
-        <h3 className="text-2xl font-bold">Our Vision</h3>
+        <h3 className="text-2xl max-[480px]:text-xl font-bold">Our Vision</h3>
       </div>
       <div className="mt-8 h-full">
         <p className="text-gray-600 leading-relaxed">
@@ -90,19 +90,6 @@ const ValueCard = React.memo(({ value, index }) => (
         {index + 1}
       </div>
       <div className="w-16 h-16 bg-success-100 rounded-2xl flex items-center justify-center mb-6 transform -rotate-6 group-hover:rotate-0 transition-transform">
-        {/* <svg
-          className="w-8 h-8 text-success-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d={value.icon}
-          />
-        </svg> */}
         <span className="text-4xl font-bold text-success-600">
           {value.text}
         </span>
@@ -208,14 +195,14 @@ const MissionSection = () => {
           className="text-center mb-20"
         >
           <div className="inline-block">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4">
               Our Core Values
             </h2>
             <div className="h-2 w-full bg-gradient-to-r from-success-500 to-warning-500 rounded-full" />
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
+        <div className="grid grid-cols-1 mx-4 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
           <ConnectingLines />
           {values.map((value, index) => (
             <ValueCard key={index} value={value} index={index} />
