@@ -127,11 +127,12 @@ const Footer = () => {
         <BackgroundSVG />
       </div>
 
-      <div className="relative max-w-[1400px] mx-auto px-4 py-16">
+      <div className="relative max-w-[1400px] mx-auto px-4 max-lg:px-5   py-16">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="flex flex-wrap gap-16">
+          {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-12 bg-green-400"> */}
           {/* Brand Section */}
-          <div className="space-y-6">
+          <div className="space-y-6 w-72">
             <h2 className="text-2xl font-bold text-warning-400">
               Right Housing Inc.
             </h2>
@@ -148,34 +149,41 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <FooterSection title="Quick Links">
-            {quickLinks.map((link) => (
-              <FooterLink key={link.to} to={link.to}>
-                {link.text}
-              </FooterLink>
-            ))}
-          </FooterSection>
+          <div className="min-w-40 w-72">
+            <FooterSection title="Quick Links">
+              {quickLinks.map((link) => (
+                <FooterLink key={link.to} to={link.to}>
+                  {link.text}
+                </FooterLink>
+              ))}
+            </FooterSection>
+          </div>
 
           {/* Get Involved */}
-          <FooterSection title="Get Involved">
-            {getInvolvedLinks.map((link) => (
-              <FooterLink key={link.to} to={link.to}>
-                {link.text}
-              </FooterLink>
-            ))}
-          </FooterSection>
+          <div className="min-w-40 w-72">
+            <FooterSection title="Get Involved">
+              {getInvolvedLinks.map((link) => (
+                <FooterLink key={link.to} to={link.to}>
+                  {link.text}
+                </FooterLink>
+              ))}
+            </FooterSection>
+          </div>
 
           {/* Legal */}
-          <FooterSection title="Legal">
-            {legalLinks.map((link) => (
-              <FooterLink key={link.to} to={link.to}>
-                {link.text}
-              </FooterLink>
-            ))}
-          </FooterSection>
+
+          <div className="min-w-40 w-72">
+            <FooterSection title="Legal">
+              {legalLinks.map((link) => (
+                <FooterLink key={link.to} to={link.to}>
+                  {link.text}
+                </FooterLink>
+              ))}
+            </FooterSection>
+          </div>
 
           {/* Contact Info */}
-          <div>
+          <div className="w-72">
             <h3 className="text-lg font-semibold mb-6 text-warning-400">
               Contact Us
             </h3>

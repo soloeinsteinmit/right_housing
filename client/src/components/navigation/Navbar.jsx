@@ -11,6 +11,7 @@ import { HandCoins, ChevronDown } from "lucide-react";
 import usePulseAnimation, { PULSE_COLORS } from "../../hooks/usePulseAnimation";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedHamburger from "./AnimatedHamburger";
+import { Mail, Phone } from "lucide-react";
 
 // Memoized navigation items
 const navItems = [
@@ -36,10 +37,10 @@ const Logo = memo(() => (
     <img
       src={logo}
       alt="RIGHT Housing Inc Logo"
-      className="h-10 w-10 rounded-md scale-85"
+      className="h-10 w-10 max-[340px]:h-8 max-[340px]:w-8 rounded-md scale-85"
     />
-    <span className="text-xl font-bold text-success-900">
-      RIGHT Housing Inc.
+    <span className="text-xl max-[340px]:text-lg font-bold text-success-900">
+      RIGHT Housing <span className="max-[340px]:hidden">Inc.</span>
     </span>
   </Link>
 ));
@@ -112,6 +113,36 @@ const OtherPagesDropdown = memo(({ showOtherPages, setShowOtherPages }) => (
   </div>
 ));
 
+const ActionButtons = memo(({ navigate, pulseVariant }) => (
+  <div className="flex items-center space-x-4">
+    <Button
+      className="text-white"
+      variant="shadow"
+      color="success"
+      onPress={() => {
+        navigate("/apply");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
+    >
+      Apply Now
+    </Button>
+    <motion.button
+      className="flex items-center justify-center gap-2 bg-warning-500 hover:bg-warning-600 rounded-medium px-4 py-2 text-white shadow-sm"
+      // size="sm"
+      variants={pulseVariant}
+      initial="initial"
+      animate="animate"
+      whileTap="tap"
+      onClick={() => {
+        navigate("/donate");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
+    >
+      Donate Now <HandCoins className="w-4 h-4" />
+    </motion.button>
+  </div>
+));
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -123,6 +154,24 @@ const Navbar = () => {
   const pulseVariant = usePulseAnimation({
     color: PULSE_COLORS.WARNING,
   });
+
+  // Add effect to handle body scroll locking
+  useEffect(() => {
+    if (isMenuOpen) {
+      // Save current scroll position and lock scroll
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+    } else {
+      // Restore scroll position and unlock scroll
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    }
+  }, [isMenuOpen]);
 
   const handleScroll = useCallback(() => {
     const currentScrollPos = window.scrollY;
@@ -178,13 +227,27 @@ const Navbar = () => {
     >
       <div className="absolute inset-0 bg-white/60 backdrop-blur-md shadow-md"></div>
 
-      <div className="container mx-auto px-4 relative">
-        <div className="flex justify-between items-center h-20">
+      <div className="container w-full mx-auto relative max-xl:px-0 max-xl:max-w-full">
+        {/* <div className="flex sm:hidden items-center justify-between py-5 px-5 bg-success-100/50">
+          <div>
+            <div className="flex items-center space-x-3 text-success-600">
+              <Phone className="w-6 h-6 text-warning-400" />
+              <span className="text-lg">+1 (555) 123-4567</span>
+            </div>
+          </div>
+          <ActionButtons navigate={navigate} pulseVariant={pulseVariant} />
+        </div> */}
+        {/* <div className="flex items-center space-x-3 text-success">
+              <Mail className="w-5 h-5 text-warning-400" />
+              <span>contact@righthousing.org</span>
+            </div>  */}
+
+        <div className="flex justify-between items-center h-20 max-xl:px-5">
           <Logo />
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <nav className="hidden md:flex items-center">
+          <div className="hidden lg:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center">
               {navItems.map((item, index) => (
                 <NavLink
                   key={item.path}
@@ -201,41 +264,18 @@ const Navbar = () => {
             </nav>
 
             {/* Action Buttons */}
-            <div className="flex items-center space-x-4">
-              <Button
-                className="text-white"
-                variant="shadow"
-                color="success"
-                onPress={() => {
-                  navigate("/apply");
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-              >
-                Apply Now
-              </Button>
-              {/* </Link> */}
-              {/* <Link to="/donate"> */}
-              <motion.button
-                className="flex items-center justify-center gap-2 bg-warning-500 hover:bg-warning-600 rounded-medium px-4 py-2 text-white shadow-sm"
-                // size="sm"
-                variants={pulseVariant}
-                initial="initial"
-                animate="animate"
-                whileTap="tap"
-                onClick={() => {
-                  navigate("/donate");
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-              >
-                Donate Now <HandCoins className="w-4 h-4" />
-              </motion.button>
-              {/* </Link> */}
-            </div>
+            <ActionButtons navigate={navigate} pulseVariant={pulseVariant} />
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
-            <AnimatedHamburger isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+          <div className="lg:hidden flex gap-5">
+            <div className="max-sm:hidden flex items-center justify-center">
+              <ActionButtons navigate={navigate} pulseVariant={pulseVariant} />
+            </div>
+            <AnimatedHamburger
+              isOpen={isMenuOpen}
+              toggleMenu={() => setIsMenuOpen(!isMenuOpen)}
+            />
           </div>
         </div>
 
@@ -246,7 +286,7 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden mobile-menu-container"
+              className="lg:hidden mobile-menu-container"
             >
               <div className="py-4 space-y-4">
                 {navItems.map((item) => (
@@ -279,6 +319,30 @@ const Navbar = () => {
                     {page.name}
                   </Link>
                 ))}
+              </div>
+              <div className="hidden flex-col max-sm:flex p-4 space-y-2 border-t border-success-100/20">
+                <Link
+                  to="/apply"
+                  className="block w-full"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Button className="w-full bg-success-700 hover:bg-success-800 text-white">
+                    Apply Now
+                  </Button>
+                </Link>
+                <motion.button
+                  className="w-full flex items-center justify-center gap-2 bg-warning-500 hover:bg-warning-600 rounded-medium px-4 py-2 text-white"
+                  variants={pulseVariant}
+                  initial="initial"
+                  animate="animate"
+                  whileTap="tap"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    navigate("/donate");
+                  }}
+                >
+                  Donate Now <HandCoins className="w-4 h-4" />
+                </motion.button>
               </div>
             </motion.div>
           )}

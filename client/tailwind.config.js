@@ -7,10 +7,14 @@ module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@heroui/theme/dist/components/(button|checkbox|date-picker|image|input|select|skeleton|popover|ripple|spinner|form|calendar|date-input|listbox|divider|scroll-shadow).js"
+    "./node_modules/@heroui/theme/dist/components/(button|checkbox|date-picker|image|input|select|skeleton|popover|ripple|spinner|form|calendar|date-input|listbox|divider|scroll-shadow).js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      // screens: {
+      //   xs: { max: "480px" },
+      // },
+    },
   },
   darkMode: "class",
   plugins: [heroui()],

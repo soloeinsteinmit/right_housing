@@ -313,7 +313,7 @@ function HeroSection() {
     ),
     []
   );
-
+  // TODO: WORKING ON HERO SECTION RESPONSIVENESS
   return (
     <div
       id="hero-section"
