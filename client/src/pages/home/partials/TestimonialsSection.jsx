@@ -64,7 +64,7 @@ const ProgressDots = memo(({ total, activeIndex, onDotClick }) => (
 const TestimonialContent = memo(({ testimonial, itemVariants }) => (
   <motion.div variants={itemVariants} className="mb-6">
     <StarRating rating={testimonial.rating} />
-    <blockquote className="text-2xl font-medium leading-relaxed mb-6 relative">
+    <blockquote className="text-2xl max-[480px]:text-xl font-medium leading-relaxed mb-6 relative">
       <span className="text-success-400">"</span>
       {testimonial.quote}
       <span className="text-success-400">"</span>
@@ -223,13 +223,13 @@ const TestimonialsSection = () => {
             transition={{ duration: 0.5 }}
             className="inline-flex items-center justify-center mb-6"
           >
-            <Quote className="w-12 h-12 text-success-400 transform -scale-x-100" />
+            <Quote className="w-12 h-12 max-[480px]:w-10 max-[480px]:h-10 text-success-400 transform -scale-x-100" />
           </motion.div>
 
-          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-success-400 to-success-200 bg-clip-text text-transparent">
+          <h2 className="text-5xl max-[480px]:text-4xl font-bold mb-6 bg-gradient-to-r from-success-400 to-success-200 bg-clip-text text-transparent">
             Voices of Transformation
           </h2>
-          <p className="text-xl text-success-200 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl max-[480px]:text-lg text-success-200 max-w-3xl mx-auto leading-relaxed">
             Real stories from individuals who have found hope, healing, and a
             new beginning through our programs.
           </p>

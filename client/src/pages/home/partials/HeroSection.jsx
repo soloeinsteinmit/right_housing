@@ -40,7 +40,8 @@ function HeroSection() {
         description:
           "Supporting individuals in their journey to recovery and reintegration with comprehensive support.",
         image: drug,
-        className: "bg-[#14171F] text-white w-[260px] h-[350px]",
+        className:
+          "bg-[#14171F] text-white w-[260px] h-[350px] max-[840px]:w-full",
       },
       {
         type: "join",
@@ -49,7 +50,7 @@ function HeroSection() {
         description: "Difference Today",
         // description: "Lives Transformed",
         btnText: "Support Our Mission",
-        className: "bg-success-100 w-[260px] h-[250px]",
+        className: "bg-success-100 w-[260px] h-[250px] max-[840px]:w-full",
       },
       {
         type: "education",
@@ -57,7 +58,8 @@ function HeroSection() {
         description:
           "Helping formerly incarcerated individuals transition back into society.",
         image: homeless1,
-        className: "bg-[#14171F] text-white w-[260px] h-[350px]",
+        className:
+          "bg-[#14171F] text-white w-[260px] h-[350px] max-[840px]:w-full",
       },
       {
         type: "explore",
@@ -157,7 +159,7 @@ function HeroSection() {
     () => (
       <div className="absolute inset-0 -z-1 opacity-50">
         <svg
-          className="w-full h-full"
+          className="w-full h-full max-[840px]:h-dvh max-[840px]:scale-150"
           viewBox="0 0 1200 800"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -317,7 +319,7 @@ function HeroSection() {
   return (
     <div
       id="hero-section"
-      className="max-w-[1600px] mx-auto px-4 py-10 relative overflow-hidden"
+      className="max-w-[1600px] mx-auto px-4 py-10 relative overflow-hidden "
     >
       {renderBackgroundPattern()}
 
@@ -336,7 +338,7 @@ function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-6xl font-bold leading-tight relative"
+              className="text-6xl max-md:text-5xl max-[540px]:text-4xl font-bold leading-tight relative"
               variants={animations.itemVariants}
             >
               <motion.span
@@ -410,7 +412,7 @@ function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-xl text-gray-600"
+              className="text-xl max-md:text-lg max-[540px]:text-base max-md:w-[90%] mx-auto text-gray-600"
               variants={animations.itemVariants}
             >
               Empowering individuals on their journey to recovery and reentry
@@ -450,15 +452,15 @@ function HeroSection() {
 
       {/* Bento Grid */}
       <motion.div
-        className="flex justify-center mt-18"
+        className="flex justify-center items-center mt-18"
         variants={animations.cardContainerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-3 place-items-start">
+        <div className="grid grid-cols-5 max-[1366px]:grid-cols-3 max-[840px]:grid-cols-1 gap-3 max-[840px]:gap-5 place-items-start max-[840px]:place-items-center ">
           {/* First Column */}
           <motion.div
-            className="space-y-3 z-40"
+            className="space-y-3 z-40 max-[1366px]:hidden"
             variants={animations.cardVariants}
           >
             {/* Stat Card */}
@@ -495,7 +497,7 @@ function HeroSection() {
             <div
               className={`rounded-[32px] overflow-hidden ${cards[5].className}`}
             >
-              <div className="p-4 flex items-center justify-center gap-2  h-full">
+              <div className="p-4 flex w-full items-center justify-center gap-2 h-full">
                 <span className="text-xl">{cards[5].icon}</span>
                 <span className="text-xl font-semibold">{cards[5].title}</span>
               </div>
@@ -504,7 +506,7 @@ function HeroSection() {
 
           {/* Second Column */}
           <motion.div
-            className="space-y-3 flex flex-col items-end justify-end h-full"
+            className="space-y-3 flex flex-col items-end justify-end max-[840px]:items-center max-[840px]:justify-center  h-full"
             variants={animations.cardVariants}
           >
             {/* Health Card */}
@@ -517,7 +519,7 @@ function HeroSection() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/60" />
-              <div className="p-4 h-full flex flex-col justify-end relative z-10 ">
+              <div className="p-4 max-[840px]:p-6 h-full flex flex-col justify-end relative z-10 ">
                 <p className="text-base text-default-400 font-semibold mb-2">
                   {cards[1].title}
                 </p>
@@ -526,15 +528,24 @@ function HeroSection() {
                 </p>
               </div>
             </div>
+            {/* Help Card */}
+            <div
+              className={`rounded-[32px] max-[840px]:w-full hidden max-[1366px]:flex overflow-hidden  max-[840px]:z-[100] ${cards[5].className}`}
+            >
+              <div className="p-4 flex w-full items-center justify-center gap-2 h-full">
+                <span className="text-xl">{cards[5].icon}</span>
+                <span className="text-xl font-semibold">{cards[5].title}</span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Middle Column */}
           <motion.div
-            className="space-y-3 flex flex-col items-end justify-end h-full"
+            className="space-y-3 flex flex-col items-end justify-end h-full max-[840px]:hidden"
             variants={animations.cardVariants}
           >
             {/* Join Card */}
-            <div className="mb-6 w-full  flex items-center justify-center">
+            <div className="mb-6 w-full flex items-center justify-center">
               <AnimatedScrollButton onClick={scrollToNextSection} />
             </div>
             <div
@@ -570,7 +581,7 @@ function HeroSection() {
 
           {/* Fourth Column */}
           <motion.div
-            className="space-y-3 flex flex-col items-end justify-end h-full"
+            className="space-y-3 flex flex-col items-end justify-end max-[840px]:items-center max-[840px]:justify-center h-full w-full"
             variants={animations.cardVariants}
           >
             {/* Education Card */}
@@ -583,17 +594,35 @@ function HeroSection() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/60" />
-              <div className="p-4 h-full flex flex-col justify-end relative z-10">
+              <div className="p-4 max-[840px]:p-6 h-full flex flex-col justify-end relative z-10">
                 <h3 className="text-base text-default-400 font-semibold mb-2">
                   {cards[3].title}
                 </h3>
                 <p className="text-white text-base">{cards[3].description}</p>
               </div>
             </div>
+
+            {/* Help Card */}
+            <div
+              className={`rounded-[32px] max-[840px]:w-full hidden max-[1366px]:flex overflow-hidden ${cards[5].className}`}
+            >
+              <div className="p-4 flex w-full items-center justify-center bg-warning-900 gap-3 h-full">
+                <span className="text-xl">
+                  {/* {cards[5].icon} */}
+                  <HeartEmoji className="w-14" />
+                </span>
+                <span className="text-xl font-semibold text-warning-500">
+                  Every Helping Hand Makes a Difference
+                </span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Fifth Column */}
-          <motion.div className="space-y-3" variants={animations.cardVariants}>
+          <motion.div
+            className="space-y-3 max-[1366px]:hidden"
+            variants={animations.cardVariants}
+          >
             {/* hands Card */}
             <div
               className={`rounded-[32px] overflow-hidden ${cards[0].className}`}

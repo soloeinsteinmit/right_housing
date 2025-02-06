@@ -240,7 +240,7 @@ const WhatIsRightHousing = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
       <AnimatePresence>
         <motion.div
-          className="grid md:grid-cols-2 gap-16 items-center justify-items-center"
+          className="grid md:grid-cols-2 gap-16 max-md:gap-8 items-center justify-items-center"
           variants={animations.container}
           initial="hidden"
           whileInView="visible"

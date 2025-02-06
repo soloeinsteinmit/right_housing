@@ -189,7 +189,10 @@ const FaqSection = () => {
         className="relative max-w-[1400px] mx-auto px-4 py-24"
       >
         {/* Header Section */}
-        <motion.div variants={itemVariants} className="text-center mb-20">
+        <motion.div
+          variants={itemVariants}
+          className="text-center mb-20 max-[480px]:mb-8"
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -200,10 +203,10 @@ const FaqSection = () => {
             <span className="text-sm font-semibold">Common Questions</span>
           </motion.div>
 
-          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-success-600 to-success-800 bg-clip-text text-transparent">
+          <h2 className="text-5xl max-[480px]:text-4xl font-bold mb-6 bg-gradient-to-r from-success-600 to-success-800 bg-clip-text text-transparent">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Find answers to common questions about our housing programs,
             eligibility requirements, and support services.
           </p>
@@ -340,7 +343,7 @@ const FaqSection = () => {
             color="warning"
             size="lg"
             radius="full"
-            className="text-white"
+            className="text-white max-[503px]:mb-4"
             endContent={<ArrowUpRight className="w-5 h-5" />}
           >
             See all FAQs

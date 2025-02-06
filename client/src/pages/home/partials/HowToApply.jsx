@@ -213,7 +213,7 @@ const HowToApply = () => {
       >
         <button
           onClick={() => handleStepClick(step.number)}
-          className={`relative z-10 flex items-start space-x-4 p-4 rounded-xl transition-all duration-300 ${
+          className={`relative z-10 flex items-start space-x-4 p-4 rounded-xl transition-all duration-300 max-lg:w-full ${
             activeStep === step.number
               ? "bg-white shadow-xl border border-amber-200 transform scale-105"
               : "hover:bg-white/50 hover:scale-102"
@@ -302,7 +302,7 @@ const HowToApply = () => {
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
-            <div className="relative">
+            <div className="relative max-lg:mx-6">
               <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-success-200 via-amber-200 to-success-200" />
               {steps.map(renderStep)}
             </div>

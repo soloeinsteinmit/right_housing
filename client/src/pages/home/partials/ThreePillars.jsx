@@ -135,7 +135,7 @@ const ThreePillars = () => {
         }`}
       >
         {/* Connecting Line */}
-        <div className="absolute inset-0 flex justify-center">
+        <div className="absolute inset-0 flex justify-center max-[1023px]:hidden">
           <div className="w-px bg-gradient-to-b from-success-200 via-amber-200 to-success-200" />
         </div>
 
@@ -164,10 +164,10 @@ const ThreePillars = () => {
                   {section.subtitle}
                 </span>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900">
+              <h3 className="text-3xl max-[480px]:text-2xl font-bold text-gray-900">
                 {section.title}
               </h3>
-              <div className="text-xl text-gray-600 leading-relaxed whitespace-pre-line">
+              <div className="text-xl max-[480px]:text-lg text-gray-600 leading-relaxed whitespace-pre-line">
                 {section.content}
               </div>
               {section.highlight && (
@@ -339,7 +339,7 @@ const ThreePillars = () => {
               What Makes RIGHT Housing Exist?
             </h2> */}
             <motion.h3
-              className="text-5xl font-bold text-white mb-8"
+              className="text-5xl max-[604px]:text-4xl max-[460px]:text-3xl font-bold text-white mb-8"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
@@ -353,7 +353,7 @@ const ThreePillars = () => {
                 {/* <UnderlinePath /> */}
               </span>
             </motion.h3>
-            <p className="text-xl text-gray-200 leading-relaxed">
+            <p className="text-xl max-[604px]:text-lg text-gray-200 leading-relaxed">
               At RIGHT Housing, we believe in the power of second chances and
               the strength of community to transform lives. Every person
               deserves the opportunity to rebuild, recover, and thrive.
@@ -389,10 +389,10 @@ const ThreePillars = () => {
           viewport={{ once: true }}
           className="max-w-3xl mx-auto text-center px-4 sm:px-6 lg:px-8"
         >
-          <h3 className="text-3xl font-bold text-gray-900 mb-6">
+          <h3 className="text-3xl max-[480px]:text-2xl font-bold text-gray-900 mb-6">
             Join Us in Making a Difference
           </h3>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl max-[480px]:text-lg text-gray-600 mb-8">
             Together, we can create more than just housing – we can build
             communities where recovery, reintegration, and mental wellness
             flourish.

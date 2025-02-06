@@ -129,13 +129,13 @@ const SectionHeader = memo(() => (
     viewport={{ once: true }}
     className="text-center mb-16"
   >
-    <h2 className="text-success-600 text-lg font-medium mb-2">
+    <h2 className="text-success-600 text-lg max-[480px]:text-base font-medium mb-2">
       CHECK OUT OUR RESOURCES
     </h2>
-    <h3 className="text-4xl font-bold text-gray-900 mb-6">
+    <h3 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-6 max-[480px]:mb-4">
       Find What You Need
     </h3>
-    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+    <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto">
       Access everything you need to know about RIGHT Housing - from becoming a
       member to supporting our cause.
     </p>
@@ -144,7 +144,7 @@ const SectionHeader = memo(() => (
 
 // Memoized partner logo component
 const PartnerLogo = memo(({ partner }) => (
-  <div className="mx-8">
+  <div className="mx-8 max-[480px]:mx-4">
     <img
       src={partner.logo}
       alt={partner.name}
@@ -232,7 +232,7 @@ const FindWhatYouNeed = () => {
                     Partners & Supporters
                   </span>
                 </div>
-                <h3 className="text-4xl font-bold text-gray-900 mb-4">
+                <h3 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4 max-[480px]:mb-0">
                   Trusted by Leading <br />
                   <span className="text-success-600 relative">
                     Organizations
@@ -267,7 +267,7 @@ const FindWhatYouNeed = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-12"
+            className="flex flex-col mx-8 sm:flex-row gap-4 justify-center mt-12"
           >
             <Link
               to="/partners"
