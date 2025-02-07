@@ -108,7 +108,7 @@ const BackgroundPattern = React.memo(() => (
 ));
 
 const SectionHeader = React.memo(() => (
-  <div className="max-w-3xl mx-auto text-center mb-20">
+  <div className="max-w-3xl mx-auto text-center mb-20 max-[480px]:mb-10">
     <motion.div
       variants={fadeInUpVariants}
       initial="hidden"
@@ -116,13 +116,13 @@ const SectionHeader = React.memo(() => (
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <h2 className="text-4xl font-bold text-gray-900 mb-6">
+      <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-6 max-[480px]:mb-2">
         Eligibility Requirements
       </h2>
-      <p className="text-xl text-gray-600">
+      <p className="text-xl text-gray-600 max-[480px]:text-lg">
         We maintain specific eligibility criteria to ensure the safety and
-        success of all our residents. Review the requirements below to
-        determine if our program is the right fit for you.
+        success of all our residents. Review the requirements below to determine
+        if our program is the right fit for you.
       </p>
     </motion.div>
   </div>
@@ -199,8 +199,8 @@ const CallToAction = React.memo(() => {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-success-50 text-lg mb-8"
               >
-                Take the first step towards a better future. Our team is
-                here to guide you through the admission process.
+                Take the first step towards a better future. Our team is here to
+                guide you through the admission process.
               </motion.p>
               <motion.div
                 variants={fadeInLeftVariants}

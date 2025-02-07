@@ -100,7 +100,9 @@ const StatItem = React.memo(({ icon, value, label }) => (
     <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-warning-400/20 flex items-center justify-center text-warning-400">
       {icon}
     </div>
-    <div className="text-3xl font-bold text-white mb-1">{value}</div>
+    <div className="text-3xl max-[480px]:text-2xl font-bold text-white mb-1">
+      {value}
+    </div>
     <div className="text-sm text-white/80">{label}</div>
   </div>
 ));
@@ -150,8 +152,8 @@ const ProgramsHero = () => {
       </div>
 
       {/* Content Container */}
-      <div className="relative container mx-auto px-4 py-20">
-        <div className="grid lg:grid-cols-12 gap-16 items-center justify-center">
+      <div className="relative container mx-auto px-4 py-20 max-lg:py-0 max-lg:pb-32">
+        <div className="grid lg:grid-cols-12 gap-16 max-[480px]:gap-10 items-center justify-center">
           {/* Text Content */}
           <motion.div
             className="lg:col-span-6 text-center lg:text-left pt-16"
@@ -161,7 +163,7 @@ const ProgramsHero = () => {
             transition={{ duration: 0.8 }}
           >
             <motion.h1
-              className="text-8xl font-bold leading-tight text-white mb-6"
+              className="text-8xl max-sm:text-7xl max-[480px]:text-5xl font-bold leading-tight text-white mb-6 "
               variants={textVariants}
               transition={{ delay: 0.2 }}
             >
@@ -169,7 +171,7 @@ const ProgramsHero = () => {
               <span className="block text-warning-400 mt-2">Your Future</span>
             </motion.h1>
             <motion.p
-              className="text-xl text-white/90 leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-12"
+              className="text-xl max-[480px]:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-12"
               variants={textVariants}
               transition={{ delay: 0.4 }}
             >
@@ -180,7 +182,7 @@ const ProgramsHero = () => {
 
             {/* Stats */}
             <motion.div
-              className="flex gap-8 mb-12"
+              className="flex gap-8 mb-12 max-lg:justify-center"
               variants={textVariants}
               transition={{ delay: 0.6 }}
             >

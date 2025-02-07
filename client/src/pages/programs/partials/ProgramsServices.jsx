@@ -369,9 +369,9 @@ const ProgramsServices = () => {
     <div className="relative overflow-hidden">
       <AnimatedSVGBackground />
 
-      <div className="relative grid grid-cols-12 min-h-screen gap-0 items-center">
+      <div className="relative grid grid-cols-12 max-lg:grid-cols-1 min-h-screen gap-0 items-center">
         {/* Left Panel - Program Titles */}
-        <div className="col-span-4 h-full bg-gray-50/50 border-r border-gray-200 px-16 py-16 overflow-y-auto flex justify-center items-center">
+        <div className="col-span-4 h-full bg-gray-50/50 border-r border-gray-200 px-16 py-16 max-lg:px-8 overflow-y-auto flex justify-center items-center">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -380,7 +380,7 @@ const ProgramsServices = () => {
           >
             <div className="mb-12">
               <div className="relative inline-block max-w-[385px]">
-                <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-success-600 to-success-400 bg-clip-text text-transparent">
+                <h2 className="text-5xl max-[480px]:text-4xl font-bold mb-4 max-[480px]:mb-2 bg-gradient-to-r from-success-600 to-success-400 bg-clip-text text-transparent">
                   Our Programs & Services
                 </h2>
                 <SparkleEffect />
@@ -406,7 +406,7 @@ const ProgramsServices = () => {
         </div>
 
         {/* Right Panel - Program Details */}
-        <div className="col-span-8 p-12 overflow-y-auto">
+        <div className="col-span-8 p-12 max-[480px]:p-10 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedProgram?.id}
@@ -420,16 +420,16 @@ const ProgramsServices = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="flex items-center gap-4 mb-6"
+                  className="flex items-center gap-4 mb-6 max-[480px]:mb-3"
                 >
                   <div className="p-3 rounded-lg bg-success-50 text-success-600">
                     {selectedProgram?.icon}
                   </div>
-                  <h2 className="text-4xl font-bold text-gray-900">
+                  <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900">
                     {selectedProgram?.title}
                   </h2>
                 </motion.div>
-                <p className="text-xl text-gray-600">
+                <p className="text-xl max-[480px]:text-lg text-gray-600">
                   {selectedProgram?.description}
                 </p>
               </div>
