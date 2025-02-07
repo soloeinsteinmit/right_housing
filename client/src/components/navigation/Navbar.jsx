@@ -155,24 +155,6 @@ const Navbar = () => {
     color: PULSE_COLORS.WARNING,
   });
 
-  // Add effect to handle body scroll locking
-  useEffect(() => {
-    if (isMenuOpen) {
-      // Save current scroll position and lock scroll
-      const scrollY = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
-    } else {
-      // Restore scroll position and unlock scroll
-      const scrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
-    }
-  }, [isMenuOpen]);
-
   const handleScroll = useCallback(() => {
     const currentScrollPos = window.scrollY;
     setIsScrolled(currentScrollPos > 20);
@@ -199,13 +181,22 @@ const Navbar = () => {
     if (isMenuOpen) {
       document.addEventListener("click", handleClickOutside);
       document.body.classList.add("blur-background");
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100vh';
+      document.body.style.touchAction = 'none';
     } else {
       document.body.classList.remove("blur-background");
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+      document.body.style.touchAction = '';
     }
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
       document.body.classList.remove("blur-background");
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+      document.body.style.touchAction = '';
     };
   }, [isMenuOpen, handleClickOutside]);
 
@@ -221,27 +212,13 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full z-[1000] transition-all duration-300 ${
+      className={`fixed w-full z-[9999] transition-all duration-300 ${
         visible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
       <div className="absolute inset-0 bg-white/60 backdrop-blur-md shadow-md"></div>
 
       <div className="container w-full mx-auto relative max-xl:px-0 max-xl:max-w-full">
-        {/* <div className="flex sm:hidden items-center justify-between py-5 px-5 bg-success-100/50">
-          <div>
-            <div className="flex items-center space-x-3 text-success-600">
-              <Phone className="w-6 h-6 text-warning-400" />
-              <span className="text-lg">+1 (555) 123-4567</span>
-            </div>
-          </div>
-          <ActionButtons navigate={navigate} pulseVariant={pulseVariant} />
-        </div> */}
-        {/* <div className="flex items-center space-x-3 text-success">
-              <Mail className="w-5 h-5 text-warning-400" />
-              <span>contact@righthousing.org</span>
-            </div>  */}
-
         <div className="flex justify-between items-center h-20 max-xl:px-5">
           <Logo />
 
@@ -286,7 +263,10 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden mobile-menu-container"
+              className="lg:hidden mobile-menu-container fixed top-20 left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg z-[9999] overflow-y-auto"
+              style={{
+                maxHeight: 'calc(100vh - 5rem)'
+              }}
             >
               <div className="py-4 space-y-4">
                 {navItems.map((item) => (

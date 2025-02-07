@@ -42,6 +42,23 @@ const NoResultsFound = React.memo(() => (
     </p>
   </motion.div>
 ));
+// Memoized NoResultsFound component
+const ContactSupport = React.memo(({ className = "" }) => (
+  <div className={`mt-8 p-4 bg-success-50 rounded-lg ${className}`}>
+    <h3 className="text-success-900 font-medium mb-2">Need More Help?</h3>
+    <p className="text-success-700 text-sm mb-4">
+      Our support team is here to assist you with any questions.
+    </p>
+    <Button
+      color="success"
+      variant="shadow"
+      className="w-full text-white"
+      endContent={<ArrowUpRight className="w-4 h-4" />}
+    >
+      Contact Support
+    </Button>
+  </div>
+));
 
 const Faq = () => {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -210,7 +227,7 @@ const Faq = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50 py-32">
+      <div className="min-h-screen bg-gray-50 py-32 max-[480px]:py-12 max-[480px]:pt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
@@ -266,22 +283,7 @@ const Faq = () => {
                 </nav>
 
                 {/* Contact Support */}
-                <div className="mt-8 p-4 bg-success-50 rounded-lg">
-                  <h3 className="text-success-900 font-medium mb-2">
-                    Need More Help?
-                  </h3>
-                  <p className="text-success-700 text-sm mb-4">
-                    Our support team is here to assist you with any questions.
-                  </p>
-                  <Button
-                    color="success"
-                    variant="shadow"
-                    className="w-full text-white"
-                    endContent={<ArrowUpRight className="w-4 h-4" />}
-                  >
-                    Contact Support
-                  </Button>
-                </div>
+                <ContactSupport className="block max-lg:hidden" />
               </div>
             </div>
 
@@ -337,6 +339,8 @@ const Faq = () => {
                   <NoResultsFound />
                 )}
               </AnimatePresence>
+              {/* Contact Support */}
+              <ContactSupport className="hidden max-lg:block" />
             </div>
           </div>
         </div>

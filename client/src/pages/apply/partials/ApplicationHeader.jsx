@@ -19,7 +19,7 @@ const ApplicationHeader = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="text-5xl font-bold mb-6 bg-gradient-to-r from-success-600 to-success-800 bg-clip-text text-transparent"
+        className="text-5xl max-[540px]:text-4xl font-bold mb-6 max-[540px]:mb-2 bg-gradient-to-r from-success-600 to-success-800 bg-clip-text text-transparent"
       >
         Start Your Journey to RIGHT Housing
       </motion.h1>
@@ -28,7 +28,7 @@ const ApplicationHeader = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+        className="text-xl max-[540px]:text-base text-gray-600 max-w-3xl mx-auto leading-relaxed"
       >
         Complete the interest form below to begin your path towards
         recovery-supportive housing. Our team is here to help you every step of

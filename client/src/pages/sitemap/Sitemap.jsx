@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import {
   Home,
@@ -226,40 +227,94 @@ const QuickHelp = memo(() => (
 QuickHelp.displayName = "QuickHelp";
 
 const Sitemap = () => {
+  // SEO structured data for sitemap
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "RIGHT Housing Sitemap | Complete Website Navigation",
+    "description": "Navigate through RIGHT Housing's complete website structure. Find all our pages including housing services, support programs, resources, and legal information.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "RIGHT Housing Inc.",
+      "url": "https://righthousing.org"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": siteStructure.flatMap((section, index) =>
+        section.links.map((link, linkIndex) => ({
+          "@type": "ListItem",
+          "position": index * 10 + linkIndex + 1,
+          "name": link.name,
+          "url": `https://righthousing.org${link.path}`
+        }))
+      )
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-20 pt-36">
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
-          {/* Header */}
+    <>
+      <Helmet>
+        {/* Primary Meta Tags */}
+        <title>RIGHT Housing Sitemap | Complete Website Navigation</title>
+        <meta 
+          name="description" 
+          content="Navigate through RIGHT Housing's complete website structure. Find all our pages including housing services, support programs, resources, and legal information."
+        />
+        <meta 
+          name="keywords" 
+          content="RIGHT Housing sitemap, website navigation, site structure, page directory, website map, site index, page listing, navigation guide, website sections, content map, site organization, website structure, page overview, site navigation, content directory, website index, page map, navigation overview, site listing, website guide"
+        />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="RIGHT Housing Sitemap | Complete Website Navigation" />
+        <meta 
+          property="og:description" 
+          content="Navigate through RIGHT Housing's complete website structure. Find all our pages including housing services, support programs, resources, and legal information."
+        />
+
+        {/* Twitter */}
+        <meta name="twitter:title" content="RIGHT Housing Sitemap | Complete Website Navigation" />
+        <meta 
+          name="twitter:description" 
+          content="Navigate through RIGHT Housing's complete website structure. Find all our pages including housing services, support programs, resources, and legal information."
+        />
+
+        {/* Additional Meta Tags */}
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+        <meta name="article:modified_time" content="2025-02-07" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
+      <div className="min-h-screen bg-gray-50/50 py-16">
+        <div className="container mx-auto px-4">
           <motion.div
             variants={fadeInUpVariant}
             initial="hidden"
             animate="visible"
             className="text-center mb-16"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Site Navigation
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Website Navigation
             </h1>
-            <p className="text-xl text-gray-600">
-              Find everything you need to navigate our website
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Find everything you need on our website. Browse through our main pages,
+              services, resources, and more.
             </p>
           </motion.div>
 
-          {/* Content */}
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {siteStructure.map((section, index) => (
-              <SectionCard
-                key={section.title}
-                section={section}
-                index={index}
-              />
+              <SectionCard key={section.title} section={section} index={index} />
             ))}
           </div>
-
-          <QuickHelp />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

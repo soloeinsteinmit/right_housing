@@ -118,6 +118,7 @@ const Footer = () => {
   const legalLinks = [
     { to: "/privacy-policy", text: "Privacy Policy" },
     { to: "/terms-of-service", text: "Terms of Service" },
+    { to: "/faqs", text: "FAQs" },
   ];
 
   return (
@@ -173,7 +174,7 @@ const Footer = () => {
           {/* Legal */}
 
           <div className="min-w-40 w-72">
-            <FooterSection title="Legal">
+            <FooterSection title="Legal & Support">
               {legalLinks.map((link) => (
                 <FooterLink key={link.to} to={link.to}>
                   {link.text}
