@@ -82,10 +82,10 @@ const SectionHeader = React.memo(() => (
     viewport={{ once: true }}
     className="text-center mb-16"
   >
-    <h2 className="text-4xl font-bold text-gray-900 mb-4">
+    <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4">
       Support Hours & Services
     </h2>
-    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+    <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-2xl mx-auto">
       Our doors are always open for those seeking help. With 24/7 crisis support
       and comprehensive recovery services, we're here when you need us most.
     </p>

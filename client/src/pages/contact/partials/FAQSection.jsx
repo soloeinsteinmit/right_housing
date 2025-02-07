@@ -68,13 +68,12 @@ const SectionHeader = React.memo(() => (
     viewport={{ once: true }}
     className="text-center mb-12"
   >
-    <h2 className="text-4xl font-bold text-gray-900 mb-4">
+    <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4">
       Recovery Support FAQ
     </h2>
-    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-      Find answers about our recovery programs and housing transition
-      support. We're here to help you on your journey to stability and
-      independence.
+    <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto">
+      Find answers about our recovery programs and housing transition support.
+      We're here to help you on your journey to stability and independence.
     </p>
   </motion.div>
 ));
@@ -104,7 +103,9 @@ const FAQItem = React.memo(({ faq, index, isExpanded, onToggle }) => (
           }`}
         >
           <svg
-            className={`w-5 h-5 ${isExpanded ? "text-success-600" : "text-gray-400"}`}
+            className={`w-5 h-5 ${
+              isExpanded ? "text-success-600" : "text-gray-400"
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -137,80 +138,99 @@ const FAQItem = React.memo(({ faq, index, isExpanded, onToggle }) => (
   </motion.div>
 ));
 
-const SupportOption = React.memo(({ icon: Icon, title, description, actionText, actionLink, bgColor, iconBgColor, iconTextColor, buttonBgColor, buttonHoverBgColor, delay }) => (
-  <motion.div
-    variants={fadeInUpVariants}
-    initial="hidden"
-    whileInView="visible"
-    transition={{ duration: 0.6, delay }}
-    viewport={{ once: true }}
-    className={`${bgColor} rounded-2xl p-8`}
-  >
-    <div className="flex items-center gap-4 mb-4">
-      <div className={`w-12 h-12 ${iconBgColor} rounded-xl flex items-center justify-center`}>
-        <Icon className={`w-6 h-6 ${iconTextColor}`} />
+const SupportOption = React.memo(
+  ({
+    icon: Icon,
+    title,
+    description,
+    actionText,
+    actionLink,
+    bgColor,
+    iconBgColor,
+    iconTextColor,
+    buttonBgColor,
+    buttonHoverBgColor,
+    delay,
+  }) => (
+    <motion.div
+      variants={fadeInUpVariants}
+      initial="hidden"
+      whileInView="visible"
+      transition={{ duration: 0.6, delay }}
+      viewport={{ once: true }}
+      className={`${bgColor} rounded-2xl p-8`}
+    >
+      <div className="flex items-center gap-4 mb-4">
+        <div
+          className={`w-12 h-12 ${iconBgColor} rounded-xl flex items-center justify-center`}
+        >
+          <Icon className={`w-6 h-6 ${iconTextColor}`} />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+          <p className="text-gray-600">{description}</p>
+        </div>
       </div>
-      <div>
-        <h3 className="text-xl font-bold text-gray-900">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-      </div>
-    </div>
-    {actionLink ? (
-      <a
-        href={actionLink}
-        className={`inline-flex items-center gap-2 ${buttonBgColor} text-white px-6 py-3 rounded-full hover:${buttonHoverBgColor} transition-colors w-full justify-center`}
-      >
-        {actionText}
-      </a>
-    ) : (
-      <button
-        className={`inline-flex items-center gap-2 ${buttonBgColor} text-white px-6 py-3 rounded-full hover:${buttonHoverBgColor} transition-colors w-full justify-center`}
-      >
-        {actionText}
-      </button>
-    )}
-  </motion.div>
-));
+      {actionLink ? (
+        <a
+          href={actionLink}
+          className={`inline-flex items-center gap-2 ${buttonBgColor} text-white px-6 py-3 rounded-full hover:${buttonHoverBgColor} transition-colors w-full justify-center`}
+        >
+          {actionText}
+        </a>
+      ) : (
+        <button
+          className={`inline-flex items-center gap-2 ${buttonBgColor} text-white px-6 py-3 rounded-full hover:${buttonHoverBgColor} transition-colors w-full justify-center`}
+        >
+          {actionText}
+        </button>
+      )}
+    </motion.div>
+  )
+);
 
 const FAQSection = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   const handleToggle = useCallback((index) => {
-    setExpandedIndex(prevIndex => prevIndex === index ? null : index);
+    setExpandedIndex((prevIndex) => (prevIndex === index ? null : index));
   }, []);
 
-  const supportOptions = useMemo(() => [
-    {
-      icon: Phone,
-      title: "24/7 Crisis Support",
-      description: "Immediate assistance available",
-      actionText: "Call 1-800-RIGHT-HOUSE",
-      actionLink: "tel:1-800-RIGHT-HOUSE",
-      bgColor: "bg-success-50",
-      iconBgColor: "bg-success-100",
-      iconTextColor: "text-success-600",
-      buttonBgColor: "bg-success-600",
-      buttonHoverBgColor: "bg-success-700",
-      delay: 0.3,
-    },
-    {
-      icon: MessageCircle,
-      title: "General Inquiries",
-      description: "Questions about our programs",
-      actionText: "Contact Support Team",
-      bgColor: "bg-warning-50",
-      iconBgColor: "bg-warning-100",
-      iconTextColor: "text-warning-600",
-      buttonBgColor: "bg-warning-600",
-      buttonHoverBgColor: "bg-warning-700",
-      delay: 0.4,
-    },
-  ], []);
+  const supportOptions = useMemo(
+    () => [
+      {
+        icon: Phone,
+        title: "24/7 Crisis Support",
+        description: "Immediate assistance available",
+        actionText: "Call 1-800-RIGHT-HOUSE",
+        actionLink: "tel:1-800-RIGHT-HOUSE",
+        bgColor: "bg-success-50",
+        iconBgColor: "bg-success-100",
+        iconTextColor: "text-success-600",
+        buttonBgColor: "bg-success-600",
+        buttonHoverBgColor: "bg-success-700",
+        delay: 0.3,
+      },
+      {
+        icon: MessageCircle,
+        title: "General Inquiries",
+        description: "Questions about our programs",
+        actionText: "Contact Support Team",
+        bgColor: "bg-warning-50",
+        iconBgColor: "bg-warning-100",
+        iconTextColor: "text-warning-600",
+        buttonBgColor: "bg-warning-600",
+        buttonHoverBgColor: "bg-warning-700",
+        delay: 0.4,
+      },
+    ],
+    []
+  );
 
   return (
     <section className="bg-white py-16 relative overflow-hidden">
       <BackgroundPattern />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeader />
 

@@ -36,8 +36,8 @@ const contactInfo = [
     icon: <Mail className="w-8 h-8" />,
     title: "Email Us",
     description: "Get in touch via email",
-    value: "support@righthouseinc.org",
-    link: "mailto:support@righthouseinc.org",
+    value: "info@righthousing.org",
+    link: "mailto:info@righthousing.org",
     color: "success",
   },
   {
@@ -258,7 +258,7 @@ const ContactHero = () => {
     <section
       id="contact-hero"
       ref={sectionRef}
-      className="relative bg-gray-50 flex items-center pt-40"
+      className="relative bg-gray-50 flex items-center pt-40 max-lg:pt-24 max-md:pt-16 max-[480px]:pt-8"
     >
       <motion.div
         className="absolute inset-0 overflow-hidden"
@@ -271,18 +271,18 @@ const ContactHero = () => {
         <MinimalisticBackground />
       </motion.div>
 
-      <div className="container mx-auto px-4 py-24 relative">
+      <div className="container mx-auto px-4 py-24 max-[480px]:py-20 relative">
         <motion.div
           variants={fadeInUpVariants}
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-16 max-[480px]:mb-8"
         >
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="text-5xl max-[480px]:text-4xl md:text-6xl font-bold text-gray-900 mb-6 max-[480px]:mb-2">
             Get in Touch
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-2xl mx-auto">
             We're here to help you on your journey to recovery. Reach out to us
             through any of these channels.
           </p>
@@ -292,7 +292,7 @@ const ContactHero = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto w-full"
         >
           {contactInfo.map((info) => (
             <ContactCard key={info.title} info={info} />

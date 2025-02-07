@@ -50,65 +50,75 @@ const Contact = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact RIGHT Housing Inc.",
-    "description": "Get in touch with RIGHT Housing for housing support, recovery services, or program information. We're here to help you start your journey to recovery and independence.",
-    "mainEntity": {
+    name: "Contact RIGHT Housing Inc.",
+    description:
+      "Get in touch with RIGHT Housing for housing support, recovery services, or program information. We're here to help you start your journey to recovery and independence.",
+    mainEntity: {
       "@type": "Organization",
-      "name": "RIGHT Housing Inc.",
-      "description": "Providing transitional housing and comprehensive support services for individuals in recovery and reentry.",
-      "url": "https://righthousing.org",
-      "contactPoint": {
+      name: "RIGHT Housing Inc.",
+      description:
+        "Providing transitional housing and comprehensive support services for individuals in recovery and reentry.",
+      url: "https://righthousing.org",
+      contactPoint: {
         "@type": "ContactPoint",
-        "telephone": "+1-XXX-XXX-XXXX",
-        "contactType": "customer service",
-        "areaServed": "Camden",
-        "availableLanguage": "English",
-        "hoursAvailable": "Mo-Fr 09:00-17:00"
+        telephone: "+1-XXX-XXX-XXXX",
+        contactType: "customer service",
+        areaServed: "Camden",
+        availableLanguage: "English",
+        hoursAvailable: "Mo-Fr 09:00-17:00",
       },
-      "location": {
+      location: {
         "@type": "Place",
-        "name": "RIGHT Housing Main Office",
-        "address": {
+        name: "RIGHT Housing Main Office",
+        address: {
           "@type": "PostalAddress",
-          "addressLocality": "Camden",
-          "addressRegion": "NJ",
-          "addressCountry": "US"
+          addressLocality: "Camden",
+          addressRegion: "NJ",
+          addressCountry: "US",
         },
-        "geo": {
+        geo: {
           "@type": "GeoCoordinates",
-          "latitude": "XX.XXXXX",
-          "longitude": "-XX.XXXXX"
-        }
-      }
-    }
+          latitude: "XX.XXXXX",
+          longitude: "-XX.XXXXX",
+        },
+      },
+    },
   };
 
   return (
     <>
       <Helmet>
         {/* Primary Meta Tags */}
-        <title>Contact RIGHT Housing | Get Support for Recovery & Housing Services</title>
-        <meta 
-          name="description" 
+        <title>
+          Contact RIGHT Housing | Get Support for Recovery & Housing Services
+        </title>
+        <meta
+          name="description"
           content="Contact RIGHT Housing for information about our transitional housing, recovery support, and comprehensive services. We're here to help you start your journey to recovery and independence."
         />
-        <meta 
-          name="keywords" 
+        <meta
+          name="keywords"
           content="contact RIGHT Housing, housing support contact, recovery services contact, RIGHT Housing location, Camden housing support, contact recovery services, housing assistance contact, support services contact, RIGHT Housing address, RIGHT Housing phone, RIGHT Housing email, recovery support contact, transitional housing inquiry, program information, housing application, support services inquiry, recovery program contact, Camden housing assistance, housing support office, recovery support office"
         />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Contact RIGHT Housing | Get Support for Recovery & Housing Services" />
-        <meta 
-          property="og:description" 
+        <meta
+          property="og:title"
+          content="Contact RIGHT Housing | Get Support for Recovery & Housing Services"
+        />
+        <meta
+          property="og:description"
           content="Contact RIGHT Housing for information about our transitional housing, recovery support, and comprehensive services. We're here to help you start your journey to recovery and independence."
         />
 
         {/* Twitter */}
-        <meta name="twitter:title" content="Contact RIGHT Housing | Get Support for Recovery & Housing Services" />
-        <meta 
-          name="twitter:description" 
+        <meta
+          name="twitter:title"
+          content="Contact RIGHT Housing | Get Support for Recovery & Housing Services"
+        />
+        <meta
+          name="twitter:description"
           content="Contact RIGHT Housing for information about our transitional housing, recovery support, and comprehensive services. We're here to help you start your journey to recovery and independence."
         />
 
@@ -128,7 +138,7 @@ const Contact = () => {
         <ContactHero />
         <MapSection />
         <OfficeHoursSection />
-        <ContactForm 
+        <ContactForm
           formData={formData}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
@@ -137,7 +147,11 @@ const Contact = () => {
           formSteps={formSteps}
         />
         <FAQSection />
-        <CallToActionSection />
+
+        {/* Call to Action Section */}
+        <section className="py-20 bg-success-900 text-white">
+          <CallToActionSection />
+        </section>
       </div>
     </>
   );

@@ -55,10 +55,10 @@ const SectionHeader = React.memo(() => (
     viewport={{ once: true }}
     className="text-center mb-12"
   >
-    <h2 className="text-4xl font-bold text-gray-900 mb-4">
+    <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4">
       Recovery Support Centers
     </h2>
-    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+    <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-2xl mx-auto">
       Visit our support centers to learn about our comprehensive recovery
       programs and housing solutions. Our team is ready to assist you on your
       journey to stability and independence.
@@ -138,7 +138,7 @@ const MapContainer = React.memo(() => (
         className="rounded-2xl"
       />
 
-      <MapOverlay />
+      {/* <MapOverlay /> */}
     </div>
   </motion.div>
 ));
