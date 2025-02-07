@@ -128,7 +128,7 @@ const DonateHero = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
+            <h1 className="text-5xl max-[480px]:text-4xl md:text-7xl font-bold text-gray-900 mb-6">
               Make a{" "}
               <span className="text-success-600 relative">
                 Difference
@@ -148,7 +148,7 @@ const DonateHero = () => {
                 </motion.svg>
               </span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto mb-8">
               Your generosity can transform lives. Every donation brings us
               closer to providing safe, stable housing for those in need.
             </p>

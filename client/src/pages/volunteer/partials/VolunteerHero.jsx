@@ -1,25 +1,27 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
 import { Heart, Users, Calendar } from "lucide-react";
-import usePulseAnimation, { PULSE_COLORS } from "../../../hooks/usePulseAnimation";
+import usePulseAnimation, {
+  PULSE_COLORS,
+} from "../../../hooks/usePulseAnimation";
 
 // Animation variants
 const backgroundVariants = {
   right: {
     scale: [1, 1.1, 1],
     opacity: [0.3, 0.2, 0.3],
-    transition: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+    transition: { duration: 8, repeat: Infinity, ease: "easeInOut" },
   },
   left: {
     scale: [1.1, 1, 1.1],
     opacity: [0.2, 0.3, 0.2],
-    transition: { duration: 8, repeat: Infinity, ease: "easeInOut" }
-  }
+    transition: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+  },
 };
 
 const fadeInUpVariant = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 };
 
 const stats = [
@@ -96,7 +98,7 @@ const VolunteerHero = () => {
             variants={fadeInUpVariant}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-5xl max-[480px]:text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Make a{" "}
               <span className="text-success-600 relative inline-block">
                 Difference
@@ -108,10 +110,10 @@ const VolunteerHero = () => {
                 />
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-              Join our community of dedicated volunteers and help us create lasting
-              change. Your time and skills can transform lives and strengthen our
-              mission.
+            <p className="text-xl max-[480px]:text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
+              Join our community of dedicated volunteers and help us create
+              lasting change. Your time and skills can transform lives and
+              strengthen our mission.
             </p>
 
             {/* Stats */}

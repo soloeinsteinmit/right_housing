@@ -92,7 +92,7 @@ const DonationOptions = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl font-bold text-gray-900 mb-4"
+              className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4"
             >
               Choose Your Impact
             </motion.h2>

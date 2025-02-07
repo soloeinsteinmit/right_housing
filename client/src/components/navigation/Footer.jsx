@@ -103,7 +103,7 @@ const Footer = () => {
   const quickLinks = [
     { to: "/", text: "Home" },
     { to: "/about", text: "About Us" },
-    { to: "/programs", text: "Our Programs" },
+    { to: "/services", text: "Services" },
     { to: "/impact", text: "Impact Stories" },
     { to: "/gallery", text: "Gallery" },
     { to: "/contact", text: "Contact Us" },
