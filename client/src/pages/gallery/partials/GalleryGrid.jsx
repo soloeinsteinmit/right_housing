@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Eye, MapPin, Calendar } from "lucide-react";
-import com1 from "../../../assets/com_impact.jpg";
-import com2 from "../../../assets/com-impact2.jpg";
-import housing from "../../../assets/housing.jpg";
+import com1 from "../../../assets/com_impact.webp";
+import com2 from "../../../assets/com-impact2.webp";
+import housing from "../../../assets/housing.webp";
 
 const GalleryGrid = ({ onImageClick, activeFilter }) => {
   // Sample gallery data - replace with your actual project images

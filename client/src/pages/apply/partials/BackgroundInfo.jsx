@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Input, Textarea } from "@heroui/input";
 import { Select, SelectSection, SelectItem } from "@heroui/select";
 
-const BackgroundInfo = ({ onNext, onPrev }) => {
+const BackgroundInfo = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -15,31 +15,36 @@ const BackgroundInfo = ({ onNext, onPrev }) => {
       <div className="space-y-8">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Background & Current Situation
+            Background Information
           </h2>
           <p className="text-gray-600">
-            Help us understand your journey and current circumstances so we can
-            better assist you.
+            Please share some information about yourself to help us better
+            understand your needs. All fields are optional but will help us
+            provide better assistance.
           </p>
         </div>
 
         <div className="flex flex-col gap-6">
-          {/* Recovery Journey */}
+          {/* Background Information */}
+
           <Textarea
             variant="bordered"
             size="lg"
-            placeholder="Please share your recovery journey (optional)"
-            label="Recovery Journey"
-            labelPlacement="outside"
+            label="Tell us about your background (Optional)"
+            placeholder="Share a brief summary of your background and life experiences"
             minRows={4}
+            className="w-full"
+            labelPlacement="outside"
+            autoFocus
           />
 
-          {/* Current Living Situation */}
+          {/* Current Situation */}
           <Select
             variant="bordered"
             size="lg"
+            label="Current Living Situation (Optional)"
             placeholder="Select your current living situation"
-            label="Current Living Situation"
+            className="w-full"
             labelPlacement="outside"
           >
             <SelectItem value="temporary">Temporary Housing</SelectItem>
@@ -49,12 +54,12 @@ const BackgroundInfo = ({ onNext, onPrev }) => {
             <SelectItem value="other">Other</SelectItem>
           </Select>
 
-          {/* Employment Status */}
           <Select
             variant="bordered"
             size="lg"
+            label="Employment Status (Optional)"
             placeholder="Select your employment status"
-            label="Employment Status"
+            className="w-full"
             labelPlacement="outside"
           >
             <SelectItem value="full-time">Full-time</SelectItem>
@@ -64,14 +69,28 @@ const BackgroundInfo = ({ onNext, onPrev }) => {
             <SelectItem value="other">Other</SelectItem>
           </Select>
 
-          {/* Support System */}
+          {/* Current Support */}
+
           <Textarea
             variant="bordered"
             size="lg"
-            placeholder="Describe your current support system (family, friends, counselors, etc.)"
-            label="Support System"
-            labelPlacement="outside"
+            placeholder="Describe your current situation and any support you currently receive"
             minRows={4}
+            className="w-full"
+            label="Current Situation (Optional)"
+            labelPlacement="outside"
+          />
+
+          {/* Interest */}
+
+          <Textarea
+            variant="bordered"
+            size="lg"
+            placeholder="Tell us why you're interested in our housing program and what you hope to achieve"
+            minRows={4}
+            className="w-full"
+            label="Why are you interested? (Optional)"
+            labelPlacement="outside"
           />
         </div>
       </div>

@@ -25,16 +25,8 @@ const PlaceholderImage = ({ className = "", color = "success" }) => {
             />
           </pattern>
         </defs>
-        <rect
-          width="100"
-          height="100"
-          fill={`var(--${color}-50)`}
-        />
-        <rect
-          width="100"
-          height="100"
-          fill="url(#placeholder-pattern)"
-        />
+        <rect width="100" height="100" fill={`var(--${color}-50)`} />
+        <rect width="100" height="100" fill="url(#placeholder-pattern)" />
       </svg>
     </div>
   );

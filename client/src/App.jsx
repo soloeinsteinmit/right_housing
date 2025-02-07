@@ -4,6 +4,7 @@
  */
 
 import { RouterProvider } from "react-router-dom";
+import { HelmetProvider } from 'react-helmet-async';
 import router from "./routes/router";
 import "./styles/blur.css";
 
@@ -15,7 +16,11 @@ import "./styles/blur.css";
  * @returns {JSX.Element} The rendered App component
  */
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
+  );
 }
 
 export default App;

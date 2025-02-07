@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ClipboardList,
@@ -7,7 +7,6 @@ import {
   Brain,
   Activity,
   Home,
-  ArrowRight,
 } from "lucide-react";
 import { caseManagementImages } from "./caseManagementImages";
 
@@ -182,7 +181,10 @@ const getAccentColors = (service, isActive) => {
 };
 
 const ServiceButton = ({ service, isActive, onClick }) => {
-  const colors = getAccentColors(service, isActive);
+  const colors = useMemo(
+    () => getAccentColors(service, isActive),
+    [service.id, isActive]
+  );
 
   return (
     <motion.button
@@ -230,8 +232,31 @@ const ServiceButton = ({ service, isActive, onClick }) => {
   );
 };
 
+const ServiceDetail = React.memo(({ detail, index, colors }) => (
+  <motion.div
+    key={detail.title}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: index * 0.1 }}
+    className="relative"
+  >
+    <div className="relative z-10">
+      <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+        {detail.title}
+      </h3>
+      <p className="text-gray-600 leading-relaxed">{detail.content}</p>
+    </div>
+    <div
+      className="absolute top-0 left-0 w-1 h-full rounded-full transform -translate-x-6"
+      style={{
+        background: `linear-gradient(to bottom, ${colors.border}, ${colors.text})`,
+      }}
+    />
+  </motion.div>
+));
+
 const ServiceContent = ({ service }) => {
-  const colors = getAccentColors(service);
+  const colors = useMemo(() => getAccentColors(service), [service.id]);
 
   return (
     <motion.div
@@ -241,7 +266,7 @@ const ServiceContent = ({ service }) => {
       className="h-full"
     >
       <div className="relative h-full">
-        <div className="grid grid-cols-12 gap-8">
+        <div className="grid grid-cols-12 gap-8 max-md:grid-cols-1">
           {/* Content */}
           <div className="col-span-7">
             {/* Header */}
@@ -256,10 +281,10 @@ const ServiceContent = ({ service }) => {
                 {service.icon}
                 <span className="font-medium">{service.subtitle}</span>
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-6 max-[480px]:mb-2">
                 {service.title}
               </h2>
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-xl max-[480px]:text-lg text-gray-600 leading-relaxed">
                 {service.description}
               </p>
             </div>
@@ -267,28 +292,12 @@ const ServiceContent = ({ service }) => {
             {/* Details Grid */}
             <div className="grid gap-8">
               {service.details.map((detail, idx) => (
-                <motion.div
+                <ServiceDetail
                   key={detail.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="relative"
-                >
-                  <div className="relative z-10">
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                      {detail.title}
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      {detail.content}
-                    </p>
-                  </div>
-                  <div
-                    className="absolute top-0 left-0 w-1 h-full rounded-full transform -translate-x-6"
-                    style={{
-                      background: `linear-gradient(to bottom, ${colors.border}, ${colors.text})`,
-                    }}
-                  />
-                </motion.div>
+                  detail={detail}
+                  index={idx}
+                  colors={colors}
+                />
               ))}
             </div>
           </div>
@@ -327,55 +336,59 @@ const ServiceContent = ({ service }) => {
   );
 };
 
+const BackgroundPattern = React.memo(() => (
+  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-60" />
+    <div className="absolute inset-0">
+      {[...Array(3)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute"
+          style={{
+            top: `${20 + i * 30}%`,
+            left: `${10 + i * 20}%`,
+            width: `${300 + i * 100}px`,
+            height: `${300 + i * 100}px`,
+            background: `linear-gradient(120deg, var(--success-100), var(--success-50))`,
+            borderRadius: "38% 62% 63% 37% / 41% 44% 56% 59%",
+            opacity: 0.1,
+            transform: `rotate(${i * 45}deg)`,
+          }}
+          animate={{
+            borderRadius: [
+              "38% 62% 63% 37% / 41% 44% 56% 59%",
+              "45% 55% 57% 43% / 38% 47% 53% 62%",
+              "38% 62% 63% 37% / 41% 44% 56% 59%",
+            ],
+            rotate: [i * 45, (i + 1) * 45, i * 45],
+          }}
+          transition={{
+            duration: 20 + i * 5,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      ))}
+    </div>
+  </div>
+));
+
 const ProgramsCaseManagement = () => {
   const [activeService, setActiveService] = useState(services[0].id);
 
   return (
     <section className="py-20 bg-gray-50 relative overflow-hidden min-h-screen">
       {/* Background Pattern */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-60" />
-        <div className="absolute inset-0">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              style={{
-                top: `${20 + i * 30}%`,
-                left: `${10 + i * 20}%`,
-                width: `${300 + i * 100}px`,
-                height: `${300 + i * 100}px`,
-                background: `linear-gradient(120deg, var(--success-100), var(--success-50))`,
-                borderRadius: "38% 62% 63% 37% / 41% 44% 56% 59%",
-                opacity: 0.1,
-                transform: `rotate(${i * 45}deg)`,
-              }}
-              animate={{
-                borderRadius: [
-                  "38% 62% 63% 37% / 41% 44% 56% 59%",
-                  "45% 55% 57% 43% / 38% 47% 53% 62%",
-                  "38% 62% 63% 37% / 41% 44% 56% 59%",
-                ],
-                rotate: [i * 45, (i + 1) * 45, i * 45],
-              }}
-              transition={{
-                duration: 20 + i * 5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-          ))}
-        </div>
-      </div>
+      <BackgroundPattern />
 
       {/* Section Header */}
       <div className="container mx-auto px-4 relative">
-        <div className="max-w-3xl mx-auto text-center mb-20">
+        <div className="max-w-3xl mx-auto text-center mb-20 max-[480px]:mb-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-success-50 text-success-700 px-4 py-2 rounded-full mb-6"
+            className="inline-flex items-center gap-2 bg-success-50 text-success-700 px-4 py-2 rounded-full mb-6 max-[480px]:mb-2"
           >
             <ClipboardList className="w-5 h-5" />
             <span className="font-medium">
@@ -388,7 +401,7 @@ const ProgramsCaseManagement = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl font-bold text-gray-900 mb-6"
+            className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-6 max-[480px]:mb-2"
           >
             Your Journey, Our Support
           </motion.h2>
@@ -398,7 +411,7 @@ const ProgramsCaseManagement = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-gray-600"
+            className="text-xl max-[480px]:text-lg text-gray-600"
           >
             Our case managers work closely with residents to provide
             individualized support and connect them to various resources,
@@ -409,7 +422,7 @@ const ProgramsCaseManagement = () => {
         {/* Two-Column Layout */}
         <div className="grid lg:grid-cols-12 gap-16 max-w-8xl mx-auto">
           {/* Left Side - Content */}
-          <div className="lg:col-span-8 lg:order-1 order-2">
+          <div className="lg:col-span-8 lg:order-1 order-2 max-xl:ml-8">
             <AnimatePresence mode="wait">
               {services.map(
                 (service) =>
@@ -439,4 +452,4 @@ const ProgramsCaseManagement = () => {
   );
 };
 
-export default ProgramsCaseManagement;
+export default React.memo(ProgramsCaseManagement);
