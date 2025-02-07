@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
+import { Helmet } from "react-helmet-async";
 
 // Memoized NoResultsFound component
 const NoResultsFound = React.memo(() => (
@@ -119,6 +120,26 @@ const Faq = () => {
     []
   );
 
+  // SEO structured data for FAQ page
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+    about: {
+      "@type": "Organization",
+      name: "RIGHT Housing Inc.",
+      description:
+        "Providing transitional housing and comprehensive support services for individuals in recovery.",
+    },
+  };
+
   // Memoized toggle function
   const toggleQuestion = useCallback((index) => {
     setOpenQuestions((prev) =>
@@ -140,137 +161,187 @@ const Faq = () => {
   }, [faqs, activeCategory, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl font-bold text-gray-900 mb-4"
-          >
-            Frequently Asked Questions
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg text-gray-600 max-w-2xl mx-auto"
-          >
-            Find answers to common questions about RIGHT Housing's programs,
-            eligibility requirements, and support services.
-          </motion.p>
-        </div>
+    <>
+      <Helmet>
+        {/* Primary Meta Tags */}
+        <title>
+          RIGHT Housing FAQ | Recovery Housing & Support Services Information
+        </title>
+        <meta
+          name="description"
+          content="Find answers to frequently asked questions about RIGHT Housing's recovery support services, transitional housing programs, eligibility requirements, and application process."
+        />
+        <meta
+          name="keywords"
+          content="RIGHT Housing FAQ, recovery housing questions, transitional housing FAQ, housing support FAQ, recovery support questions, program eligibility, housing assistance FAQ, support services FAQ, application process, program requirements, recovery program FAQ, housing program questions, community support FAQ, RIGHT Housing help, recovery housing information, transitional housing information, support services information, program costs, volunteer opportunities, recovery support FAQ"
+        />
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar Navigation - Now Sticky */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-5">
-              {/* Search Bar */}
-              <Input
-                type="text"
-                placeholder="Search FAQs..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full mb-3 focus:ring-2 focus:ring-success-500 focus:border-transparent"
-                variant="bordered"
-                size="lg"
-                startContent={<Search className="w-5 h-5 text-gray-400" />}
-              />
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="RIGHT Housing FAQ | Recovery Housing & Support Services Information"
+        />
+        <meta
+          property="og:description"
+          content="Find answers to frequently asked questions about RIGHT Housing's recovery support services, transitional housing programs, eligibility requirements, and application process."
+        />
 
-              {/* Categories */}
-              <nav className="space-y-1">
-                {categories.map((category) => (
-                  <button
-                    key={category.id}
-                    onClick={() => setActiveCategory(category.id)}
-                    className={`w-full text-left px-4 py-2 rounded-lg transition-colors duration-200 ${
-                      activeCategory === category.id
-                        ? "bg-success-50 text-success-700 font-medium"
-                        : "text-gray-600 hover:bg-gray-100"
-                    }`}
-                  >
-                    {category.name}
-                  </button>
-                ))}
-              </nav>
+        {/* Twitter */}
+        <meta
+          name="twitter:title"
+          content="RIGHT Housing FAQ | Recovery Housing & Support Services Information"
+        />
+        <meta
+          name="twitter:description"
+          content="Find answers to frequently asked questions about RIGHT Housing's recovery support services, transitional housing programs, eligibility requirements, and application process."
+        />
 
-              {/* Contact Support */}
-              <div className="mt-8 p-4 bg-success-50 rounded-lg">
-                <h3 className="text-success-900 font-medium mb-2">
-                  Need More Help?
-                </h3>
-                <p className="text-success-700 text-sm mb-4">
-                  Our support team is here to assist you with any questions.
-                </p>
-                <Button
-                  color="success"
-                  variant="shadow"
-                  className="w-full text-white"
-                  endContent={<ArrowUpRight className="w-4 h-4" />}
-                >
-                  Contact Support
-                </Button>
-              </div>
-            </div>
+        {/* Additional Meta Tags */}
+        <meta
+          name="robots"
+          content="index, follow, max-snippet:-1, max-image-preview:large"
+        />
+        <meta name="article:modified_time" content="2025-02-07" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
+      <div className="min-h-screen bg-gray-50 py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-4xl font-bold text-gray-900 mb-4"
+            >
+              Frequently Asked Questions
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-lg text-gray-600 max-w-2xl mx-auto"
+            >
+              Find answers to common questions about RIGHT Housing's programs,
+              eligibility requirements, and support services.
+            </motion.p>
           </div>
 
-          {/* FAQ Content */}
-          <div className="lg:col-span-3">
-            <AnimatePresence>
-              {filteredFaqs.length > 0 ? (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="bg-white rounded-xl shadow-sm divide-y divide-gray-200"
-                >
-                  {filteredFaqs.map((faq, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Sidebar Navigation - Now Sticky */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-5">
+                {/* Search Bar */}
+                <Input
+                  type="text"
+                  placeholder="Search FAQs..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full mb-3 focus:ring-2 focus:ring-success-500 focus:border-transparent"
+                  variant="bordered"
+                  size="lg"
+                  startContent={<Search className="w-5 h-5 text-gray-400" />}
+                />
+
+                {/* Categories */}
+                <nav className="space-y-1">
+                  {categories.map((category) => (
+                    <button
+                      key={category.id}
+                      onClick={() => setActiveCategory(category.id)}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors duration-200 ${
+                        activeCategory === category.id
+                          ? "bg-success-50 text-success-700 font-medium"
+                          : "text-gray-600 hover:bg-gray-100"
+                      }`}
                     >
-                      <button
-                        onClick={() => toggleQuestion(index)}
-                        className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-success-50/20"
-                      >
-                        <span className="font-medium text-gray-900">
-                          {faq.question}
-                        </span>
-                        {openQuestions.includes(index) ? (
-                          <ChevronUp className="w-5 h-5 text-success-500" />
-                        ) : (
-                          <ChevronDown className="w-5 h-5 text-success-500" />
-                        )}
-                      </button>
-                      <AnimatePresence mode="wait">
-                        {openQuestions.includes(index) && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="px-6 pb-4"
-                          >
-                            <p className="text-gray-600 whitespace-pre-line">
-                              {faq.answer}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
+                      {category.name}
+                    </button>
                   ))}
-                </motion.div>
-              ) : (
-                <NoResultsFound />
-              )}
-            </AnimatePresence>
+                </nav>
+
+                {/* Contact Support */}
+                <div className="mt-8 p-4 bg-success-50 rounded-lg">
+                  <h3 className="text-success-900 font-medium mb-2">
+                    Need More Help?
+                  </h3>
+                  <p className="text-success-700 text-sm mb-4">
+                    Our support team is here to assist you with any questions.
+                  </p>
+                  <Button
+                    color="success"
+                    variant="shadow"
+                    className="w-full text-white"
+                    endContent={<ArrowUpRight className="w-4 h-4" />}
+                  >
+                    Contact Support
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* FAQ Content */}
+            <div className="lg:col-span-3">
+              <AnimatePresence>
+                {filteredFaqs.length > 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="bg-white rounded-xl shadow-sm divide-y divide-gray-200"
+                  >
+                    {filteredFaqs.map((faq, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <button
+                          onClick={() => toggleQuestion(index)}
+                          className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-success-50/20"
+                        >
+                          <span className="font-medium text-gray-900">
+                            {faq.question}
+                          </span>
+                          {openQuestions.includes(index) ? (
+                            <ChevronUp className="w-5 h-5 text-success-500" />
+                          ) : (
+                            <ChevronDown className="w-5 h-5 text-success-500" />
+                          )}
+                        </button>
+                        <AnimatePresence mode="wait">
+                          {openQuestions.includes(index) && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="px-6 pb-4"
+                            >
+                              <p className="text-gray-600 whitespace-pre-line">
+                                {faq.answer}
+                              </p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                ) : (
+                  <NoResultsFound />
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

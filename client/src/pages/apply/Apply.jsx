@@ -5,6 +5,7 @@
 
 import React, { useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@heroui/button";
 import { ArrowLeft, ArrowRight, Send } from "lucide-react";
 
@@ -124,6 +125,42 @@ const ApplicationForm = () => {
 
   const CurrentStepComponent = FORM_STEPS[currentStep];
 
+  // SEO structured data for application form
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebForm",
+    "name": "RIGHT Housing Application Form",
+    "description": "Apply for RIGHT Housing's transitional housing and recovery support services. Complete our secure online application process.",
+    "url": "https://righthousing.org/apply",
+    "provider": {
+      "@type": "NGO",
+      "name": "RIGHT Housing Inc.",
+      "description": "Providing transitional housing and comprehensive support services for individuals in recovery."
+    },
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Personal Information",
+        "text": "Fill out your personal details and contact information"
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Background Information",
+        "text": "Provide relevant background information for your application"
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Document Upload",
+        "text": "Upload required documentation to support your application"
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Review and Submit",
+        "text": "Review your application details and submit"
+      }
+    ]
+  };
+
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     try {
@@ -139,36 +176,75 @@ const ApplicationForm = () => {
   }, [setSubmitting, setError, nextStep]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-16">
-        <ApplicationHeader />
-        <ApplicationProgress />
+    <>
+      <Helmet>
+        {/* Primary Meta Tags */}
+        <title>Apply for RIGHT Housing | Recovery Housing Application</title>
+        <meta 
+          name="description" 
+          content="Apply for RIGHT Housing's transitional housing and recovery support services. Our simple online application process helps you start your journey to recovery and independence."
+        />
+        <meta 
+          name="keywords" 
+          content="housing application, recovery housing apply, transitional housing application, RIGHT Housing application, recovery support application, housing assistance application, program application, recovery program apply, housing support application, application process, housing eligibility, recovery housing program, transitional housing program, support services application, recovery assistance application, housing program application, application requirements, recovery housing eligibility"
+        />
 
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentStep}
-              variants={formVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.3 }}
-            >
-              <CurrentStepComponent />
-            </motion.div>
-          </AnimatePresence>
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Apply for RIGHT Housing | Recovery Housing Application" />
+        <meta 
+          property="og:description" 
+          content="Apply for RIGHT Housing's transitional housing and recovery support services. Our simple online application process helps you start your journey to recovery and independence."
+        />
 
-          <NavigationButtons
-            currentStep={currentStep}
-            isSubmitting={isSubmitting}
-            onPrev={prevStep}
-            onNext={nextStep}
-          />
-        </form>
+        {/* Twitter */}
+        <meta name="twitter:title" content="Apply for RIGHT Housing | Recovery Housing Application" />
+        <meta 
+          name="twitter:description" 
+          content="Apply for RIGHT Housing's transitional housing and recovery support services. Our simple online application process helps you start your journey to recovery and independence."
+        />
 
-        <HelpText />
+        {/* Additional Meta Tags */}
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+        <meta name="application-name" content="RIGHT Housing Application Portal" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-16">
+          <ApplicationHeader />
+          <ApplicationProgress />
+
+          <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                variants={formVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.3 }}
+              >
+                <CurrentStepComponent />
+              </motion.div>
+            </AnimatePresence>
+
+            <NavigationButtons
+              currentStep={currentStep}
+              isSubmitting={isSubmitting}
+              onPrev={prevStep}
+              onNext={nextStep}
+            />
+          </form>
+
+          <HelpText />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
