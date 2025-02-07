@@ -36,7 +36,7 @@ const GalleryHero = () => {
                 <Camera className="w-8 h-8" />
               </div>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-5xl max-[480px]:text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Our Project{" "}
               <span className="text-success-600 relative inline-block">
                 Gallery
@@ -48,9 +48,9 @@ const GalleryHero = () => {
                 />
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Explore our completed projects and witness the transformative impact
-              of our housing initiatives on communities.
+            <p className="text-xl max-[480px]:text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
+              Explore our completed projects and witness the transformative
+              impact of our housing initiatives on communities.
             </p>
 
             {/* Stats */}
@@ -67,10 +67,12 @@ const GalleryHero = () => {
                   transition={{ delay: 0.5 }}
                   className="text-center"
                 >
-                  <h3 className="text-3xl font-bold text-gray-900 mb-2">
+                  <h3 className="text-3xl max-[480px]:text-2xl font-bold text-gray-900 mb-2">
                     {stat.number}
                   </h3>
-                  <p className="text-gray-600">{stat.label}</p>
+                  <p className="text-gray-600 max-[480px]:text-sm">
+                    {stat.label}
+                  </p>
                 </motion.div>
               ))}
             </div>

@@ -7,7 +7,7 @@ import { Button } from "@heroui/button";
 // Animation variants
 const fadeInVariant = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 };
 
 const cardVariants = {
@@ -39,8 +39,8 @@ const decorativeVariants = {
   hidden: { scaleX: 0 },
   visible: {
     scaleX: 1,
-    transition: { duration: 0.6 }
-  }
+    transition: { duration: 0.6 },
+  },
 };
 
 const stories = [
@@ -79,10 +79,10 @@ const SectionHeader = memo(() => (
     variants={fadeInVariant}
     className="text-center mb-16"
   >
-    <h2 className="text-4xl font-bold text-gray-900 mb-4">
+    <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4">
       Stories of Impact
     </h2>
-    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+    <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-2xl mx-auto">
       See how your donations make a real difference in people's lives
     </p>
   </motion.div>
@@ -151,7 +151,7 @@ StoryCard.displayName = "StoryCard";
 
 const CtaSection = memo(() => {
   const navigate = useNavigate();
-  
+
   const handleClick = useCallback(() => {
     navigate("/impact");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -189,9 +189,9 @@ const ImpactStories = () => {
     <section className="py-24 bg-success-50 relative overflow-hidden">
       <div className="container mx-auto px-4">
         <SectionHeader />
-        
+
         {/* Stories Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto max-[670px]:ml-3">
           {stories.map((story, index) => (
             <StoryCard key={story.author} story={story} index={index} />
           ))}

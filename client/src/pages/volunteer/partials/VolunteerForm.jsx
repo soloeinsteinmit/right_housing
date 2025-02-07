@@ -9,7 +9,7 @@ import usePulseAnimation, {
 
 const fadeInUpVariant = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 };
 
 const interestOptions = [
@@ -51,8 +51,8 @@ const FormHeader = memo(() => (
       Join Our Volunteer Team
     </h2>
     <p className="text-gray-600">
-      Fill out the form below to start your journey as a volunteer.
-      We'll get back to you within 48 hours.
+      Fill out the form below to start your journey as a volunteer. We'll get
+      back to you within 48 hours.
     </p>
   </div>
 ));
@@ -205,12 +205,15 @@ const VolunteerForm = () => {
     }));
   }, []);
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
-    // Here you would typically submit the form data to your backend
-    console.log("Form submitted:", formData);
-    // Show success message or redirect
-  }, [formData]);
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      // Here you would typically submit the form data to your backend
+      console.log("Form submitted:", formData);
+      // Show success message or redirect
+    },
+    [formData]
+  );
 
   return (
     <section className="py-20 bg-gray-50" id="volunteer-form">
@@ -230,11 +233,8 @@ const VolunteerForm = () => {
                 formData={formData}
                 onChange={handleInputChange}
               />
-              
-              <AddressFields
-                formData={formData}
-                onChange={handleInputChange}
-              />
+
+              <AddressFields formData={formData} onChange={handleInputChange} />
 
               <PreferenceFields
                 formData={formData}

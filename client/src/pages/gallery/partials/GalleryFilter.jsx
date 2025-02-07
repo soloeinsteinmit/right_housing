@@ -22,7 +22,7 @@ const GalleryFilter = ({ activeFilter, setActiveFilter }) => {
   ];
 
   return (
-    <nav className="flex items-center gap-2">
+    <nav className="flex items-center gap-2 max-lg:flex-wrap max-lg:justify-evenly">
       {filters.map((filter) => (
         <button
           key={filter.id}

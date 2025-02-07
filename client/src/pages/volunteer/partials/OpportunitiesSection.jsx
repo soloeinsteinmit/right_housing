@@ -1,10 +1,19 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
-import { Heart, Home, Book, Users, Briefcase, Clock, Wrench, Star } from "lucide-react";
+import {
+  Heart,
+  Home,
+  Book,
+  Users,
+  Briefcase,
+  Clock,
+  Wrench,
+  Star,
+} from "lucide-react";
 
 const fadeInUpVariant = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 };
 
 const opportunities = [
@@ -114,10 +123,10 @@ const OpportunitiesSection = () => {
             variants={fadeInUpVariant}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4">
               Volunteer Opportunities
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl max-[480px]:text-lg text-gray-600 max-w-3xl mx-auto">
               Discover meaningful ways to contribute your time and skills to our
               mission
             </p>
