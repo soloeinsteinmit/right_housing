@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
+// import Newsletter from "../Newsletter";
 
 // Memoized background SVG component
 const BackgroundSVG = memo(() => (
@@ -204,32 +205,14 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6 text-warning-400">
-              Stay Updated
-            </h3>
-            <p className="text-success-100 mb-4">
-              Subscribe to our newsletter for the latest updates and news.
-            </p>
-            <form className="space-y-3">
-              {/* TODO: make it HeroUI Input */}
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 rounded-full bg-success-800 border border-success-700 focus:outline-none focus:border-warning-400 text-white placeholder-success-300"
-              />
-              <Button className="w-full px-6 py-2 bg-warning-500 hover:bg-warning-600 text-white rounded-full transition-colors">
-                Subscribe
-              </Button>
-            </form>
-          </div>
+          {/* Newsletter form */}
+          {/* <Newsletter /> */}
 
           {/* <div className="flex w-[500px] items-center justify-between bg-red-400 gap-5"> */}
           {/* Impact Counter */}
           <div className="bg-success-800/30 rounded-lg p-4 h-fit">
             <h4 className="text-warning font-semibold mb-2">Our Progress</h4>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-2xl font-bold text-white">500+</p>
                 <p className="text-sm text-success-300">Lives Changed</p>

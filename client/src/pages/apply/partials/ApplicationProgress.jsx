@@ -13,13 +13,13 @@ const formSteps = [
     title: "Background Info",
     icon: History,
   },
+  // {
+  //   number: 3,
+  //   title: "Documents",
+  //   icon: FileText,
+  // },
   {
     number: 3,
-    title: "Documents",
-    icon: FileText,
-  },
-  {
-    number: 4,
     title: "Review & Submit",
     icon: CheckCircle,
   },
@@ -31,7 +31,7 @@ const ApplicationProgress = React.memo(() => {
   } = useApplication();
 
   return (
-    <div className="bg-gray-50 px-8 py-6 max-w-6xl mx-auto max-sm:px-2">
+    <div className="bg-gray-50 px-8 py-6 max-w-4xl mx-auto max-sm:px-2">
       <div className="flex justify-between items-center max-lg:flex-wrap max-lg:gap-3 max-sm:flex-col max-sm:justify-start max-sm:items-start">
         {formSteps.map((step, index) => (
           <div key={step.number} className="flex items-center max-sm:w-full">

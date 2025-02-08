@@ -1,11 +1,53 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, Toaster } from "sonner";
 import teamLead from "../../../assets/woman1.jpg";
 import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Select, SelectItem } from "@heroui/select";
 import { Send } from "lucide-react";
+
+const STORAGE_KEY = "about_contact_form_data";
+
+const loadFormData = () => {
+  try {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    return savedData ? JSON.parse(savedData) : {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      type: "volunteer",
+    };
+  } catch (error) {
+    console.error("Error loading form data:", error);
+    return {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      type: "volunteer",
+    };
+  }
+};
+
+const saveFormData = (data) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (error) {
+    console.error("Error saving form data:", error);
+  }
+};
+
+const clearFormData = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.error("Error clearing form data:", error);
+  }
+};
 
 // Animation variants
 const containerVariants = {
@@ -70,28 +112,71 @@ const ContactInfo = React.memo(() => (
 
 const AboutContactForm = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-    type: "volunteer",
-  });
+  const [formData, setFormData] = useState(loadFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Memoize form handlers
-  const handleSubmit = useMemo(
-    () => (e) => {
-      e.preventDefault();
-      console.log("Form submitted:", formData);
-    },
-    [formData]
-  );
+  useEffect(() => {
+    saveFormData(formData);
+  }, [formData]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate form data
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await toast.promise(
+        axios.post("http://localhost:2468/api/about/get-involved", formData),
+        {
+          loading: "Sending your message...",
+          success: () => {
+            // Clear form data from localStorage and reset state
+            clearFormData();
+            setFormData({
+              name: "",
+              email: "",
+              phone: "",
+              message: "",
+              type: "volunteer",
+            });
+            return "Message sent successfully! We'll get back to you soon.";
+          },
+          error: (error) => {
+            console.error("Form submission error:", error);
+            return (
+              error.response?.data?.message ||
+              "Failed to send message. Please try again later."
+            );
+          },
+        },
+        {
+          duration: 5000,
+        }
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleChange = useMemo(
     () => (e) => {
+      const value = e.target.type === "select-one" ? e : e.target.value;
       setFormData((prev) => ({
         ...prev,
-        [e.target.name]: e.target.value,
+        [e.target.name]: value,
       }));
     },
     []
@@ -110,6 +195,19 @@ const AboutContactForm = () => {
 
   return (
     <section className="py-24 bg-gray-50">
+      <Toaster
+        position="top-center"
+        expand={true}
+        richColors
+        toastOptions={{
+          style: {
+            fontSize: "16px",
+            fontWeight: "500",
+          },
+          className: "my-toast-class",
+          duration: 4000,
+        }}
+      />
       <div className="container mx-auto px-4">
         <motion.div
           variants={containerVariants}
@@ -199,12 +297,37 @@ const AboutContactForm = () => {
                   <Button
                     color="success"
                     type="submit"
-                    className="w-full text-white transition-transform duration-300 hover:scale-105"
+                    className="w-full text-white"
                     size="lg"
                     variant="shadow"
-                    endContent={<Send className="text-white w-4 h-4" />}
+                    isDisabled={isSubmitting}
+                    startContent={
+                      isSubmitting && (
+                        <svg
+                          className="animate-spin h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
+                        </svg>
+                      )
+                    }
+                    endContent={!isSubmitting && <Send className="w-4 h-4" />}
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Get Involved"}
                   </Button>
                 </form>
               </div>

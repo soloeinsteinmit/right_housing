@@ -51,7 +51,9 @@ const BackgroundInfo = () => {
             <SelectItem value="treatment">Treatment Facility</SelectItem>
             <SelectItem value="shelter">Shelter</SelectItem>
             <SelectItem value="friends">Staying with Friends/Family</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
+            <SelectItem value="other">
+              Other (Specify in Current Situation)
+            </SelectItem>
           </Select>
 
           <Select
@@ -66,7 +68,9 @@ const BackgroundInfo = () => {
             <SelectItem value="part-time">Part-time</SelectItem>
             <SelectItem value="seeking">Actively Job Seeking</SelectItem>
             <SelectItem value="unable">Unable to Work</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
+            <SelectItem value="other">
+              Other (Specify in Current Situation)
+            </SelectItem>
           </Select>
 
           {/* Current Support */}

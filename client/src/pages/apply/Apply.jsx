@@ -25,8 +25,8 @@ import ReviewSubmit from "./partials/ReviewSubmit";
 const FORM_STEPS = {
   1: PersonalInfoForm,
   2: BackgroundInfo,
-  3: DocumentUpload,
-  4: ReviewSubmit,
+  // 3: DocumentUpload,
+  3: ReviewSubmit,
 };
 
 // Animation variants for form transitions
@@ -62,7 +62,7 @@ const NavigationButtons = React.memo(
       )}
 
       <div className="ml-auto">
-        {currentStep < 4 ? (
+        {currentStep < 3 ? (
           <Button
             type="button"
             color="success"
@@ -160,11 +160,11 @@ const ApplicationForm = () => {
         name: "Background Information",
         text: "Provide relevant background information for your application",
       },
-      {
-        "@type": "HowToStep",
-        name: "Document Upload",
-        text: "Upload required documentation to support your application",
-      },
+      // {
+      //   "@type": "HowToStep",
+      //   name: "Document Upload",
+      //   text: "Upload required documentation to support your application",
+      // },
       {
         "@type": "HowToStep",
         name: "Review and Submit",
@@ -176,7 +176,7 @@ const ApplicationForm = () => {
   const handleSubmit = useCallback(
     async (e) => {
       if (e) e.preventDefault;
-      if (currentStep !== 4) {
+      if (currentStep !== 3) {
         nextStep();
         return;
       }

@@ -1,9 +1,19 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { Mail, Phone, Calendar, Send, Info, SendToBack } from "lucide-react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
+import {
+  Mail,
+  Phone,
+  Calendar,
+  Send,
+  Info,
+  SendToBack,
+  ArrowBigLeftDash,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input, Textarea } from "@heroui/input";
 import { Tooltip } from "@heroui/tooltip";
 import { Select, SelectItem } from "@heroui/select";
+import axios from "axios";
+import { toast } from "sonner";
 
 // Animation variants
 const fadeInVariants = {
@@ -21,11 +31,59 @@ const initialFormData = {
   firstName: "",
   lastName: "",
   email: "",
-  phone: "",
+  phoneNumber: "",
   subject: "",
   message: "",
   preferredContact: "email",
   bestTime: "morning",
+};
+
+const STORAGE_KEY = "contact_form_data";
+const STEP_STORAGE_KEY = "contact_form_step";
+
+const loadFormData = () => {
+  try {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    return savedData ? JSON.parse(savedData) : initialFormData;
+  } catch (error) {
+    console.error("Error loading form data:", error);
+    return initialFormData;
+  }
+};
+
+const loadActiveStep = () => {
+  try {
+    const savedStep = localStorage.getItem(STEP_STORAGE_KEY);
+    return savedStep ? parseInt(savedStep, 10) : 1;
+  } catch (error) {
+    console.error("Error loading active step:", error);
+    return 1;
+  }
+};
+
+const saveFormData = (data) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (error) {
+    console.error("Error saving form data:", error);
+  }
+};
+
+const saveActiveStep = (step) => {
+  try {
+    localStorage.setItem(STEP_STORAGE_KEY, step.toString());
+  } catch (error) {
+    console.error("Error saving active step:", error);
+  }
+};
+
+const clearFormData = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STEP_STORAGE_KEY);
+  } catch (error) {
+    console.error("Error clearing form data:", error);
+  }
 };
 
 const BackgroundPattern = React.memo(() => (
@@ -149,7 +207,7 @@ const ContactDetailsStep = React.memo(({ formData, onChange }) => (
       labelPlacement="outside"
       placeholder="123-456-7890"
       name="phoneNumber"
-      value={formData.phone}
+      value={formData.phoneNumber}
       onChange={onChange}
       isRequired
       size="lg"
@@ -250,70 +308,245 @@ const MessageStep = React.memo(({ formData, onChange }) => (
 ));
 
 const NavigationButtons = React.memo(
-  ({ activeStep, onPrevious, onNext, onSubmit }) => (
-    <div className="mt-8 flex justify-between items-center">
-      <button
-        type="button"
-        onClick={onPrevious}
-        className={`px-6 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors ${
-          activeStep === 1 ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-        disabled={activeStep === 1}
-      >
-        Previous
-      </button>
-      {activeStep < 3 ? (
-        <button
-          type="button"
-          onClick={onNext}
-          className="px-6 py-3 bg-success-600 text-white rounded-xl hover:bg-success-700 transition-colors flex items-center gap-2"
-        >
-          Next
-          <Send className="w-4 h-4" />
-        </button>
-      ) : (
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          type="submit"
-          onClick={onSubmit}
-          className="px-8 py-3 bg-success-600 text-white rounded-xl hover:bg-success-700 transition-colors flex items-center gap-2"
-        >
-          Submit
-          <Send className="w-4 h-4" />
-        </motion.button>
-      )}
-    </div>
-  )
+  ({ activeStep, onPrevious, onNext, isSubmitting, isTransitioning }) => {
+    // console.log("[NavigationButtons] Rendering with activeStep:", activeStep);
+    return (
+      <div className="mt-8 flex justify-between items-center">
+        {activeStep > 1 && (
+          <motion.button
+            type="button"
+            onClick={onPrevious}
+            className="px-8 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors flex items-center gap-2"
+            whileTap={{ scale: 0.98 }}
+            disabled={isSubmitting || isTransitioning}
+          >
+            <ArrowBigLeftDash className="w-4 h-4" />
+            Previous
+          </motion.button>
+        )}
+
+        {activeStep <= 2 ? (
+          <motion.button
+            type="button"
+            onClick={onNext}
+            className="px-8 py-3 bg-success-600 text-white rounded-xl hover:bg-success-700 transition-colors flex items-center gap-2 ml-auto"
+            whileTap={{ scale: 0.98 }}
+            disabled={isTransitioning}
+          >
+            Next
+            <Send className="w-4 h-4" />
+          </motion.button>
+        ) : (
+          <motion.button
+            type="submit"
+            className={`px-8 py-3 bg-success-600 text-white rounded-xl transition-all flex items-center gap-2 ml-auto ${
+              isSubmitting || isTransitioning ? "opacity-75 cursor-not-allowed" : "hover:bg-success-700"
+            }`}
+            whileTap={isSubmitting || isTransitioning ? {} : { scale: 0.98 }}
+            disabled={isSubmitting || isTransitioning}
+          >
+            {isSubmitting ? (
+              <>
+                <svg
+                  className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Sending...
+              </>
+            ) : (
+              <>
+                Submit
+                <Send className="w-4 h-4" />
+              </>
+            )}
+          </motion.button>
+        )}
+      </div>
+    );
+  }
 );
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState(initialFormData);
-  const [activeStep, setActiveStep] = useState(1);
+  const [formData, setFormData] = useState(loadFormData);
+  const [activeStep, setActiveStep] = useState(loadActiveStep);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      // Handle form submission
-      console.log("Form submitted:", formData);
-    },
-    [formData]
-  );
+  useEffect(() => {
+    saveFormData(formData);
+  }, [formData]);
+
+  useEffect(() => {
+    saveActiveStep(activeStep);
+  }, [activeStep]);
 
   const handleChange = useCallback((e) => {
+    // console.log("[handleChange] Field changed:", e.target.name);
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   }, []);
 
+  const validateStep = useCallback(
+    (step) => {
+      // console.log("[validateStep] Validating step:", step);
+      const stepValidation = {
+        1: {
+          fields: {
+            firstName: "First Name",
+            lastName: "Last Name",
+          },
+        },
+        2: {
+          fields: {
+            email: "Email",
+            phoneNumber: "Phone Number",
+          },
+          customValidation: () => {
+            // console.log("[customValidation] Validating email format");
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+              return "Please enter a valid email address";
+            }
+            return null;
+          },
+        },
+        3: {
+          fields: {
+            subject: "Subject",
+            message: "Message",
+            bestTime: "Best Time to Contact",
+          },
+        },
+      };
+
+      const validation = stepValidation[step];
+      if (!validation) return { isValid: true };
+
+      const missingFields = Object.entries(validation.fields)
+        .filter(([key]) => !formData[key])
+        .map(([_, label]) => label);
+
+      // console.log("[validateStep] Missing fields:", missingFields);
+
+      if (missingFields.length > 0) {
+        return {
+          isValid: false,
+          error: `Please fill in all required fields: ${missingFields.join(
+            ", "
+          )}`,
+        };
+      }
+
+      if (validation.customValidation) {
+        const customError = validation.customValidation();
+        if (customError) {
+          return { isValid: false, error: customError };
+        }
+      }
+
+      return { isValid: true };
+    },
+    [formData]
+  );
+
   const handlePrevious = useCallback(() => {
+    // console.log("[handlePrevious] Moving to previous step");
     setActiveStep((prev) => Math.max(1, prev - 1));
   }, []);
 
   const handleNext = useCallback(() => {
+    // console.log("[handleNext] Attempting to move to next step from step:", activeStep);
+    const { isValid, error } = validateStep(activeStep);
+
+    if (!isValid) {
+      // console.log("[handleNext] Validation failed:", error);
+      toast.error(error, { duration: 4000 });
+      return;
+    }
+
+    // console.log("[handleNext] Moving to next step");
+    setIsTransitioning(true);
     setActiveStep((prev) => Math.min(3, prev + 1));
-  }, []);
+    // Reset transitioning state after animation completes
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [activeStep, validateStep]);
+
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      // console.log("[handleSubmit] Form submitted at step:", activeStep);
+
+      // If we're not on step 3 or transitioning, just prevent form submission
+      if (activeStep !== 3) {
+        // console.log("[handleSubmit] Not on last step, preventing submission");
+        e.stopPropagation();
+        return;
+      }
+
+      if (isTransitioning) {
+        // console.log("[handleSubmit] In transition, preventing submission");
+        e.stopPropagation();
+        return;
+      }
+
+      const { isValid, error } = validateStep(activeStep);
+      if (!isValid) {
+        // console.log("[handleSubmit] Validation failed:", error);
+        toast.error(error, { duration: 4000 });
+        return;
+      }
+
+      // console.log("[handleSubmit] Starting API submission");
+      setIsSubmitting(true);
+
+      try {
+        await toast.promise(
+          axios.post("http://localhost:2468/api/contact/submit", formData),
+          {
+            loading: "Sending your message...",
+            success: () => {
+              // console.log("[handleSubmit] API call successful, resetting form");
+              clearFormData();
+              setFormData(initialFormData);
+              setActiveStep(1);
+              return "Message sent successfully! We'll get back to you soon.";
+            },
+            error: (error) => {
+              console.error("[handleSubmit] API call failed:", error);
+              return (
+                error.response?.data?.message ||
+                "Failed to send message. Please try again later."
+              );
+            },
+          },
+          {
+            duration: 5000,
+          }
+        );
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [activeStep, formData, validateStep, isTransitioning]
+  );
 
   const renderActiveStep = useMemo(() => {
     switch (activeStep) {
@@ -348,7 +581,7 @@ const ContactForm = () => {
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
             <ProgressSteps activeStep={activeStep} />
 
-            <form onSubmit={handleSubmit} className="p-8 lg:p-12">
+            <form onSubmit={handleSubmit} className="relative p-8 lg:p-12">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStep}
@@ -365,7 +598,8 @@ const ContactForm = () => {
                 activeStep={activeStep}
                 onPrevious={handlePrevious}
                 onNext={handleNext}
-                onSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                isTransitioning={isTransitioning}
               />
             </form>
           </div>

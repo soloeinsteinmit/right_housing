@@ -1,9 +1,11 @@
-import { memo, useState, useCallback } from "react";
+import { memo, useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Input, Textarea } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
 import { Divider } from "@heroui/divider";
 import { Send, Clock, Calendar, MapPin } from "lucide-react";
+import axios from "axios";
+import { toast, Toaster } from "sonner";
 import usePulseAnimation, {
   PULSE_COLORS,
 } from "../../../hooks/usePulseAnimation";
@@ -51,6 +53,34 @@ const initialFormState = {
   availability: [],
   experience: "",
   motivation: "",
+};
+
+const STORAGE_KEY = "volunteer_form_data";
+
+const loadFormData = () => {
+  try {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    return savedData ? JSON.parse(savedData) : initialFormState;
+  } catch (error) {
+    console.error("Error loading form data:", error);
+    return initialFormState;
+  }
+};
+
+const saveFormData = (data) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (error) {
+    console.error("Error saving form data:", error);
+  }
+};
+
+const clearFormData = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.error("Error clearing form data:", error);
+  }
 };
 
 const FormHeader = memo(() => (
@@ -118,121 +148,155 @@ const PersonalInfoFields = memo(({ formData, onChange }) => (
 
 PersonalInfoFields.displayName = "PersonalInfoFields";
 
-const AddressFields = memo(({ formData, onChange }) => (
-  <>
-    <p className="text-lg font-bold">Address</p>
-    <div className="space-y-6">
-      <Input
-        label="Street Address"
-        name="address"
-        value={formData.address}
-        onChange={onChange}
-        variant="bordered"
-        isRequired
-      />
-      <div className="grid md:grid-cols-3 gap-6">
+const AddressFields = memo(({ formData, onChange }) => {
+  const [stateValue, setStateValue] = useState("");
+  const [selectedState, setSelectedState] = useState(formData.state || null);
+
+  const handleStateSelection = (stateKey) => {
+    const selectedStateObj = states.find(
+      (state) => state.abbreviation === stateKey
+    );
+    setSelectedState(stateKey);
+    onChange({
+      target: {
+        name: "state",
+        value: selectedStateObj
+          ? `${selectedStateObj.name} ${selectedStateObj.abbreviation}`
+          : "",
+      },
+    });
+  };
+
+  const handleStateInput = (value) => {
+    setStateValue(value);
+  };
+
+  return (
+    <>
+      <p className="text-lg font-bold">Address</p>
+      <div className="space-y-6">
         <Input
-          label="City"
-          name="city"
-          value={formData.city}
+          label="Street Address"
+          name="address"
+          value={formData.address}
           onChange={onChange}
           variant="bordered"
           isRequired
         />
-        <Autocomplete
-          className="max-w-xs"
-          defaultItems={states}
-          label="Select State"
-          // placeholder=" State"
-          variant="bordered"
-          // onInputValueChange={onChange}
-        >
-          {(state) => (
-            <AutocompleteItem
-              key={state.abbreviation}
-              startContent={
-                <Avatar
-                  alt={state.name}
-                  className="w-6 h-6"
-                  src={`https://flagcdn.com/${state.abbreviation.toLowerCase()}.svg`}
-                />
-              }
-            >
-              {state.name}
-            </AutocompleteItem>
-          )}
-        </Autocomplete>
-        {/* <Input
-          label="State"
-          name="state"
-          value={formData.state}
-          onChange={onChange}
-          variant="bordered"
-          isRequired
-        /> */}
-        <Input
-          label="ZIP Code"
-          name="zipCode"
-          value={formData.zipCode}
-          onChange={onChange}
-          isRequired
-          variant="bordered"
-        />
+        <div className="grid md:grid-cols-3 gap-6">
+          <Input
+            label="City"
+            name="city"
+            value={formData.city}
+            onChange={onChange}
+            variant="bordered"
+            isRequired
+          />
+          <Autocomplete
+            className="max-w-xs"
+            defaultItems={states}
+            label="Select State"
+            variant="bordered"
+            isRequired
+            selectedKey={selectedState}
+            onSelectionChange={handleStateSelection}
+            onInputChange={handleStateInput}
+          >
+            {(state) => (
+              <AutocompleteItem
+                key={state.abbreviation}
+                startContent={
+                  <Avatar
+                    alt={state.name}
+                    className="w-6 h-6"
+                    src={`https://flagcdn.com/${state.abbreviation.toLowerCase()}.svg`}
+                  />
+                }
+              >
+                {state.name}
+              </AutocompleteItem>
+            )}
+          </Autocomplete>
+          <Input
+            label="ZIP Code"
+            name="zipCode"
+            value={formData.zipCode}
+            onChange={onChange}
+            isRequired
+            variant="bordered"
+          />
+        </div>
       </div>
-    </div>
-  </>
-));
+    </>
+  );
+});
 
 AddressFields.displayName = "AddressFields";
 
-const PreferenceFields = memo(({ formData, onSelectChange }) => (
-  <>
-    <p className="text-lg font-bold">Preferences</p>
-    <div className="grid md:grid-cols-2 gap-6">
-      <Select
-        label="Areas of Interest"
-        multiple
-        name="interests"
-        value={formData.interests}
-        onChange={(value) => onSelectChange("interests", value)}
-        isRequired
-        variant="bordered"
-        selectionMode="multiple"
-      >
-        {interestOptions.map((option) => (
-          <SelectItem key={option} value={option}>
-            {option}
-          </SelectItem>
-        ))}
-      </Select>
+const PreferenceFields = memo(({ formData, onSelectChange }) => {
+  const [interests, setInterests] = useState(new Set(formData.interests || []));
+  const [availability, setAvailability] = useState(
+    new Set(formData.availability || [])
+  );
 
-      <Select
-        label="Availability"
-        multiple
-        name="availability"
-        value={formData.availability}
-        onChange={(value) => onSelectChange("availability", value)}
-        isRequired
-        variant="bordered"
-        selectionMode="multiple"
-      >
-        {availabilityOptions.map((option) => (
-          <SelectItem key={option} value={option}>
-            {option}
-          </SelectItem>
-        ))}
-      </Select>
-    </div>
-  </>
-));
+  useEffect(() => {
+    onSelectChange("interests", Array.from(interests));
+  }, [interests, onSelectChange]);
+
+  useEffect(() => {
+    onSelectChange("availability", Array.from(availability));
+  }, [availability, onSelectChange]);
+
+  return (
+    <>
+      <p className="text-lg font-bold">Preferences</p>
+      <div className="grid md:grid-cols-2 gap-6">
+        <Select
+          label="Areas of Interest"
+          selectedKeys={interests}
+          onSelectionChange={setInterests}
+          variant="bordered"
+          isRequired
+          selectionMode="multiple"
+        >
+          {interestOptions.map((option) => (
+            <SelectItem key={option} value={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </Select>
+
+        <Select
+          label="Availability"
+          selectedKeys={availability}
+          onSelectionChange={setAvailability}
+          variant="bordered"
+          isRequired
+          selectionMode="multiple"
+        >
+          {availabilityOptions.map((option) => (
+            <SelectItem key={option} value={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </Select>
+      </div>
+    </>
+  );
+});
 
 PreferenceFields.displayName = "PreferenceFields";
 
 const VolunteerForm = () => {
-  const [formData, setFormData] = useState(initialFormState);
+  const [formData, setFormData] = useState(loadFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const pulseVariant = usePulseAnimation({
     color: PULSE_COLORS.SUCCESS,
   });
+
+  useEffect(() => {
+    saveFormData(formData);
+  }, [formData]);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -249,22 +313,96 @@ const VolunteerForm = () => {
     }));
   }, []);
 
+  const validateForm = () => {
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "email",
+      "phone",
+      "address",
+      "city",
+      "zipCode",
+      "interests",
+      "availability",
+      "experience",
+      "motivation",
+    ];
+
+    const missingFields = requiredFields.filter((field) => {
+      const value = formData[field];
+      return Array.isArray(value) ? value.length === 0 : !value;
+    });
+
+    if (missingFields.length > 0) {
+      toast.error("Please fill in all required fields");
+      return false;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Please enter a valid email address");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      // Here you would typically submit the form data to your backend
-      console.log("Form submitted:", formData);
-      // Show success message or redirect
+
+      if (!validateForm()) {
+        return;
+      }
+
+      setIsSubmitting(true);
+
+      try {
+        await toast.promise(
+          axios.post("http://localhost:2468/api/volunteer/submit", formData),
+          {
+            loading: "Submitting your application...",
+            success: () => {
+              // Clear form data from localStorage and reset state
+              clearFormData();
+              setFormData(initialFormState);
+              return "Application submitted successfully! We'll be in touch within 48 hours.";
+            },
+            error: (error) => {
+              console.error("Form submission error:", error);
+              return (
+                error.response?.data?.message ||
+                "Failed to submit application. Please try again later."
+              );
+            },
+          },
+          {
+            duration: 5000,
+          }
+        );
+      } finally {
+        setIsSubmitting(false);
+      }
     },
     [formData]
   );
 
-  const onInputChange = (value) => {
-    // setValue(value);
-  };
-
   return (
     <section className="py-20 bg-gray-50" id="volunteer-form">
+      <Toaster
+        position="top-center"
+        expand={true}
+        richColors
+        toastOptions={{
+          style: {
+            fontSize: "16px",
+            fontWeight: "500",
+          },
+          className: "my-toast-class",
+          duration: 4000,
+        }}
+      />
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -320,14 +458,47 @@ const VolunteerForm = () => {
 
               <motion.button
                 type="submit"
-                variants={pulseVariant}
-                initial="initial"
-                animate="animate"
-                whileTap="tap"
-                className="w-full py-4 bg-success-600 text-white rounded-xl font-semibold inline-flex items-center justify-center gap-2 shadow-lg shadow-success-600/20"
+                // variants={pulseVariant}
+                // initial="initial"
+                // animate="animate"
+                // whileTap="tap"
+                disabled={isSubmitting}
+                className={`w-full py-4 bg-success-600 text-white transition-color duration-300 hover:bg-success-700 rounded-xl font-semibold inline-flex items-center justify-center gap-2 shadow-lg shadow-success-600/20 ${
+                  isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+                }`}
               >
-                Submit Application
-                <Send className="w-5 h-5" />
+                <div className="flex items-center gap-2">
+                  {isSubmitting ? (
+                    <>
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      Submit Application
+                      <Send className="w-5 h-5" />
+                    </>
+                  )}
+                </div>
               </motion.button>
 
               {/* Additional Information */}

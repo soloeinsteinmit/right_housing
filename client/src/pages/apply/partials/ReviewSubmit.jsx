@@ -102,7 +102,7 @@ const ReviewSubmit = ({ formData }) => {
         </div>
 
         {/* Documents Review */}
-        <div>
+        {/* <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">
             Uploaded Documents
           </h3>
@@ -117,7 +117,7 @@ const ReviewSubmit = ({ formData }) => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* Completion Status */}
         <div

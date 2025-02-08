@@ -8,44 +8,13 @@ import CallToActionSection from "../home/partials/CallToActionSection";
 import { useState } from "react";
 import { Mail, Phone, MessageSquare, Calendar, Send } from "lucide-react";
 import ContactForm from "./partials/ContactForm";
+import { Toaster } from "sonner";
 
 /**
  * Contact page component with animated backgrounds and HeroUI components.
  * Features a modern design with smooth animations and interactive elements.
  */
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-    preferredContact: "email",
-    bestTime: "morning",
-  });
-
-  const [activeStep, setActiveStep] = useState(1);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const formSteps = [
-    { number: 1, title: "Personal Info" },
-    { number: 2, title: "Contact Details" },
-    { number: 3, title: "Message" },
-  ];
-
   // SEO structured data for Contact page
   const structuredData = {
     "@context": "https://schema.org",
@@ -134,18 +103,25 @@ const Contact = () => {
         <meta name="ICBM" content="XX.XXXXX, -XX.XXXXX" />
       </Helmet>
 
+      <Toaster
+        position="top-center"
+        expand={true}
+        richColors
+        toastOptions={{
+          style: {
+            fontSize: "16px",
+            fontWeight: "500",
+          },
+          className: "my-toast-class",
+          duration: 4000,
+        }}
+      />
+
       <div className="min-h-screen bg-white">
         <ContactHero />
         <MapSection />
         <OfficeHoursSection />
-        <ContactForm
-          formData={formData}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-          formSteps={formSteps}
-        />
+        <ContactForm />
         <FAQSection />
 
         {/* Call to Action Section */}
