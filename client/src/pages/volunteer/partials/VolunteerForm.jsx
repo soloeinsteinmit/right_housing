@@ -2,10 +2,18 @@ import { memo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Input, Textarea } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
+import { Divider } from "@heroui/divider";
 import { Send, Clock, Calendar, MapPin } from "lucide-react";
 import usePulseAnimation, {
   PULSE_COLORS,
 } from "../../../hooks/usePulseAnimation";
+import {
+  Autocomplete,
+  AutocompleteSection,
+  AutocompleteItem,
+} from "@heroui/autocomplete";
+import { Avatar } from "@heroui/avatar";
+import { states } from "./states";
 
 const fadeInUpVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -61,7 +69,8 @@ FormHeader.displayName = "FormHeader";
 
 const PersonalInfoFields = memo(({ formData, onChange }) => (
   <>
-    <div className="grid md:grid-cols-2 gap-6">
+    <p className="text-lg font-bold">Personal Info</p>
+    <div className="grid md:grid-cols-2 gap-6 ">
       <Input
         label="First Name"
         name="firstName"
@@ -69,6 +78,7 @@ const PersonalInfoFields = memo(({ formData, onChange }) => (
         onChange={onChange}
         required
         variant="bordered"
+        isRequired
       />
       <Input
         label="Last Name"
@@ -77,6 +87,7 @@ const PersonalInfoFields = memo(({ formData, onChange }) => (
         onChange={onChange}
         required
         variant="bordered"
+        isRequired
       />
     </div>
 
@@ -89,6 +100,7 @@ const PersonalInfoFields = memo(({ formData, onChange }) => (
         onChange={onChange}
         required
         variant="bordered"
+        isRequired
       />
       <Input
         label="Phone"
@@ -98,6 +110,7 @@ const PersonalInfoFields = memo(({ formData, onChange }) => (
         onChange={onChange}
         required
         variant="bordered"
+        isRequired
       />
     </div>
   </>
@@ -106,80 +119,111 @@ const PersonalInfoFields = memo(({ formData, onChange }) => (
 PersonalInfoFields.displayName = "PersonalInfoFields";
 
 const AddressFields = memo(({ formData, onChange }) => (
-  <div className="space-y-6">
-    <Input
-      label="Street Address"
-      name="address"
-      value={formData.address}
-      onChange={onChange}
-      required
-      variant="bordered"
-    />
-    <div className="grid md:grid-cols-3 gap-6">
+  <>
+    <p className="text-lg font-bold">Address</p>
+    <div className="space-y-6">
       <Input
-        label="City"
-        name="city"
-        value={formData.city}
+        label="Street Address"
+        name="address"
+        value={formData.address}
         onChange={onChange}
-        required
         variant="bordered"
+        isRequired
       />
-      <Input
-        label="State"
-        name="state"
-        value={formData.state}
-        onChange={onChange}
-        required
-        variant="bordered"
-      />
-      <Input
-        label="ZIP Code"
-        name="zipCode"
-        value={formData.zipCode}
-        onChange={onChange}
-        required
-        variant="bordered"
-      />
+      <div className="grid md:grid-cols-3 gap-6">
+        <Input
+          label="City"
+          name="city"
+          value={formData.city}
+          onChange={onChange}
+          variant="bordered"
+          isRequired
+        />
+        <Autocomplete
+          className="max-w-xs"
+          defaultItems={states}
+          label="Select State"
+          // placeholder=" State"
+          variant="bordered"
+          // onInputValueChange={onChange}
+        >
+          {(state) => (
+            <AutocompleteItem
+              key={state.abbreviation}
+              startContent={
+                <Avatar
+                  alt={state.name}
+                  className="w-6 h-6"
+                  src={`https://flagcdn.com/${state.abbreviation.toLowerCase()}.svg`}
+                />
+              }
+            >
+              {state.name}
+            </AutocompleteItem>
+          )}
+        </Autocomplete>
+        {/* <Input
+          label="State"
+          name="state"
+          value={formData.state}
+          onChange={onChange}
+          variant="bordered"
+          isRequired
+        /> */}
+        <Input
+          label="ZIP Code"
+          name="zipCode"
+          value={formData.zipCode}
+          onChange={onChange}
+          isRequired
+          variant="bordered"
+        />
+      </div>
     </div>
-  </div>
+  </>
 ));
 
 AddressFields.displayName = "AddressFields";
 
 const PreferenceFields = memo(({ formData, onSelectChange }) => (
-  <div className="grid md:grid-cols-2 gap-6">
-    <Select
-      label="Areas of Interest"
-      multiple
-      name="interests"
-      value={formData.interests}
-      onChange={(value) => onSelectChange("interests", value)}
-      required
-      variant="bordered"
-    >
-      {interestOptions.map((option) => (
-        <SelectItem key={option} value={option}>
-          {option}
-        </SelectItem>
-      ))}
-    </Select>
+  <>
+    <p className="text-lg font-bold">Preferences</p>
+    <div className="grid md:grid-cols-2 gap-6">
+      <Select
+        label="Areas of Interest"
+        multiple
+        name="interests"
+        value={formData.interests}
+        onChange={(value) => onSelectChange("interests", value)}
+        isRequired
+        variant="bordered"
+        selectionMode="multiple"
+      >
+        {interestOptions.map((option) => (
+          <SelectItem key={option} value={option}>
+            {option}
+          </SelectItem>
+        ))}
+      </Select>
 
-    <Select
-      label="Availability"
-      multiple
-      name="availability"
-      value={formData.availability}
-      onChange={(value) => onSelectChange("availability", value)}
-      required
-      variant="bordered"
-    >
-      {availabilityOptions.map((option) => (
-        <SelectItem key={option} value={option}>
-          {option}
-        </SelectItem>
-      ))}
-    </Select>
-  </div>
+      <Select
+        label="Availability"
+        multiple
+        name="availability"
+        value={formData.availability}
+        onChange={(value) => onSelectChange("availability", value)}
+        isRequired
+        variant="bordered"
+        selectionMode="multiple"
+      >
+        {availabilityOptions.map((option) => (
+          <SelectItem key={option} value={option}>
+            {option}
+          </SelectItem>
+        ))}
+      </Select>
+    </div>
+  </>
 ));
 
 PreferenceFields.displayName = "PreferenceFields";
@@ -215,6 +259,10 @@ const VolunteerForm = () => {
     [formData]
   );
 
+  const onInputChange = (value) => {
+    // setValue(value);
+  };
+
   return (
     <section className="py-20 bg-gray-50" id="volunteer-form">
       <div className="container mx-auto px-4">
@@ -228,20 +276,27 @@ const VolunteerForm = () => {
           >
             <FormHeader />
 
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <PersonalInfoFields
                 formData={formData}
                 onChange={handleInputChange}
               />
 
+              <Divider />
+
               <AddressFields formData={formData} onChange={handleInputChange} />
+
+              <Divider />
 
               <PreferenceFields
                 formData={formData}
                 onSelectChange={handleSelectChange}
               />
 
+              <Divider />
+
               <div className="space-y-6">
+                <p className="text-lg font-bold">Experience & Motivation </p>
                 <Textarea
                   label="Previous Volunteer Experience"
                   name="experience"
@@ -249,6 +304,7 @@ const VolunteerForm = () => {
                   onChange={handleInputChange}
                   rows={4}
                   variant="bordered"
+                  isRequired
                 />
 
                 <Textarea
@@ -257,8 +313,8 @@ const VolunteerForm = () => {
                   value={formData.motivation}
                   onChange={handleInputChange}
                   rows={4}
-                  required
                   variant="bordered"
+                  isRequired
                 />
               </div>
 

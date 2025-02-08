@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from "react";
-import { Mail, Phone, Calendar, Send, Info } from "lucide-react";
+import { Mail, Phone, Calendar, Send, Info, SendToBack } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input, Textarea } from "@heroui/input";
 import { Tooltip } from "@heroui/tooltip";
@@ -174,7 +174,7 @@ const ContactDetailsStep = React.memo(({ formData, onChange }) => (
           <Info className="w-4 h-4 text-gray-400" />
         </Tooltip>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 max-[900px]:grid-cols-1 gap-4">
         <ContactMethodButton
           icon={Mail}
           label="Email"
@@ -189,6 +189,15 @@ const ContactDetailsStep = React.memo(({ formData, onChange }) => (
           label="Phone"
           value="phone"
           selected={formData.preferredContact === "phone"}
+          onChange={(value) =>
+            onChange({ target: { name: "preferredContact", value } })
+          }
+        />
+        <ContactMethodButton
+          icon={SendToBack}
+          label="Both Email & Phone"
+          value="both"
+          selected={formData.preferredContact === "both"}
           onChange={(value) =>
             onChange({ target: { name: "preferredContact", value } })
           }
