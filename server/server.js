@@ -39,10 +39,12 @@ const transporter = nodemailer.createTransport({
 // Import routes
 const contactRoutes = require("./src/routes/contactRoutes");
 const aboutRoutes = require("./src/routes/aboutRoutes");
+const volunteerRoutes = require("./src/routes/volunteerRoutes");
 
 // Use routes
 app.use("/api/contact", contactRoutes);
 app.use("/api/about", aboutRoutes);
+app.use("/api/volunteer", volunteerRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {
