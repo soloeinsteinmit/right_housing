@@ -27,7 +27,7 @@ class ContactEmailService extends BaseEmailService {
       firstName,
       lastName,
       email,
-      phone,
+      phoneNumber,
       subject,
       message,
       preferredContact,
@@ -86,9 +86,9 @@ class ContactEmailService extends BaseEmailService {
                                     <td style="padding: 8px 0; color: #333333;"><a href="mailto:${email}" style="color: #10B981; text-decoration: none;">${email}</a></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px 0; color: #666666;"><strong>Phone:</strong></td>
+                                    <td style="padding: 8px 0; color: #666666;"><strong>Phone Number:</strong></td>
                                     <td style="padding: 8px 0; color: #333333;">${
-                                      phone || "Not provided"
+                                      phoneNumber || "Not provided"
                                     }</td>
                                 </tr>
                             </table>
