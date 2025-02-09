@@ -9,6 +9,7 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@heroui/button";
 import { ArrowLeft, ArrowRight, Send } from "lucide-react";
 import { toast, Toaster } from "sonner";
+import axios from "axios";
 
 import {
   ApplicationProvider,
@@ -18,14 +19,12 @@ import ApplicationHeader from "./partials/ApplicationHeader";
 import ApplicationProgress from "./partials/ApplicationProgress";
 import PersonalInfoForm from "./partials/PersonalInfoForm";
 import BackgroundInfo from "./partials/BackgroundInfo";
-import DocumentUpload from "./partials/DocumentUpload";
 import ReviewSubmit from "./partials/ReviewSubmit";
 
 // Form step components mapping
 const FORM_STEPS = {
   1: PersonalInfoForm,
   2: BackgroundInfo,
-  // 3: DocumentUpload,
   3: ReviewSubmit,
 };
 
@@ -40,58 +39,64 @@ const formVariants = {
  * Navigation buttons component for form steps
  */
 const NavigationButtons = React.memo(
-  ({ currentStep, isSubmitting, onPrev, onNext, onSubmit }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="flex justify-between mt-8"
-    >
-      {currentStep > 1 && (
-        <Button
-          type="button"
-          variant="bordered"
-          color="success"
-          startContent={<ArrowLeft className="w-4 h-4" />}
-          onPress={onPrev}
-          aria-label="Previous Step"
-          isDisabled={isSubmitting}
-        >
-          Previous
-        </Button>
-      )}
+  ({ currentStep, isSubmitting, onPrev, onNext, onSubmit }) => {
+    // console.log("Current Step:", currentStep); // Debug log
 
-      <div className="ml-auto">
-        {currentStep < 3 ? (
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex justify-between mt-8"
+      >
+        {/* Previous button - only show if not on first step */}
+        {currentStep > 1 && (
           <Button
             type="button"
+            variant="bordered"
             color="success"
-            variant="shadow"
-            className="text-white"
-            endContent={<ArrowRight className="w-4 h-4" />}
-            onPress={onNext}
-            aria-label="Next Step"
+            startContent={<ArrowLeft className="w-4 h-4" />}
+            onPress={onPrev}
+            aria-label="Previous Step"
             isDisabled={isSubmitting}
           >
-            Next Step
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            color="success"
-            variant="shadow"
-            className="text-white"
-            endContent={<Send className="w-4 h-4" />}
-            aria-label="Submit Application"
-            isLoading={isSubmitting}
-            onPress={onSubmit}
-          >
-            Submit Application
+            Previous
           </Button>
         )}
-      </div>
-    </motion.div>
-  )
+
+        {/* Next/Submit button */}
+        <div className={`${currentStep <= 1 ? "ml-auto" : ""}`}>
+          {currentStep < 3 ? (
+            <Button
+              type="button"
+              color="success"
+              variant="shadow"
+              className="text-white"
+              endContent={<ArrowRight className="w-4 h-4" />}
+              onPress={onNext}
+              aria-label="Next Step"
+              isDisabled={isSubmitting}
+            >
+              Next Step
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              color="success"
+              variant="shadow"
+              className="text-white"
+              endContent={<Send className="w-4 h-4" />}
+              aria-label="Submit Application"
+              isLoading={isSubmitting}
+              onPress={onSubmit}
+            >
+              Submit Application
+            </Button>
+          )}
+        </div>
+      </motion.div>
+    );
+  }
 );
 
 NavigationButtons.displayName = "NavigationButtons";
@@ -123,7 +128,8 @@ const GOOGLE_FORM_URL =
  */
 const ApplicationForm = () => {
   const {
-    state: { currentStep, isSubmitting, formData },
+    state,
+    updateFormData,
     nextStep,
     prevStep,
     setSubmitting,
@@ -131,53 +137,27 @@ const ApplicationForm = () => {
     resetForm,
   } = useApplication();
 
+  const { currentStep, isSubmitting, formData } = state;
   const [showRedirectAnimation, setShowRedirectAnimation] = useState(false);
 
-  const CurrentStepComponent = FORM_STEPS[currentStep];
+  const StepComponent = FORM_STEPS[Number(currentStep) || 1];
 
-  // SEO structured data for application form
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebForm",
-    name: "RIGHT Housing Application Form",
-    description:
-      "Apply for RIGHT Housing's transitional housing and recovery support services. Complete our secure online application process.",
-    url: "https://righthousing.org/apply",
-    provider: {
-      "@type": "NGO",
-      name: "RIGHT Housing Inc.",
-      description:
-        "Providing transitional housing and comprehensive support services for individuals in recovery.",
-    },
-    step: [
-      {
-        "@type": "HowToStep",
-        name: "Personal Information",
-        text: "Fill out your personal details and contact information",
-      },
-      {
-        "@type": "HowToStep",
-        name: "Background Information",
-        text: "Provide relevant background information for your application",
-      },
-      // {
-      //   "@type": "HowToStep",
-      //   name: "Document Upload",
-      //   text: "Upload required documentation to support your application",
-      // },
-      {
-        "@type": "HowToStep",
-        name: "Review and Submit",
-        text: "Review your application details and submit",
-      },
-    ],
-  };
+  // Handle next step
+  const handleNext = useCallback(() => {
+    nextStep();
+  }, [nextStep]);
 
+  // Handle previous step
+  const handlePrev = useCallback(() => {
+    prevStep();
+  }, [prevStep]);
+
+  // Handle submit
   const handleSubmit = useCallback(
     async (e) => {
       if (e) e.preventDefault;
       if (currentStep !== 3) {
-        nextStep();
+        handleNext();
         return;
       }
 
@@ -192,8 +172,56 @@ const ApplicationForm = () => {
           }
         );
 
-        // Simulate API call with a delay
-        await new Promise((r) => setTimeout(r, 3000));
+        // Prepare form data for submission
+        const submissionData = {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phoneNumber: formData.phone,
+          currentAddress: formData.address,
+          dateOfBirth: formData.dateOfBirth,
+          background: formData.background || "",
+          livingStatus: formData.livingStatus || "",
+          employmentStatus: formData.employmentStatus || "",
+          currentSituation: formData.currentSituation || "",
+          interest: formData.interest || "",
+          deviceInfo: {
+            userAgent: window.navigator.userAgent,
+          },
+          location: "::1", // Default to localhost IP
+        };
+
+        // Try to get user's location if available
+        if (navigator.geolocation) {
+          try {
+            const position = await new Promise((resolve, reject) => {
+              navigator.geolocation.getCurrentPosition(resolve, reject, {
+                timeout: 5000, // 5 second timeout
+                maximumAge: 0, // Don't use cached position
+                enableHighAccuracy: true,
+              });
+            });
+
+            submissionData.location = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+          } catch (locationError) {
+            console.log("Location access denied or timeout:", locationError);
+            // Keep default ::1 location
+          }
+        }
+
+        // Submit to backend
+        const response = await axios.post(
+          "http://localhost:2468/api/housing/apply",
+          submissionData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         // Dismiss loading toast and show success
         toast.dismiss(loadingToastId);
@@ -229,27 +257,61 @@ const ApplicationForm = () => {
         // Open Google Form in a new tab
         window.open(GOOGLE_FORM_URL, "_blank");
 
-        // Reset the form
+        // Reset the form and localStorage
         resetForm();
         setShowRedirectAnimation(false);
       } catch (error) {
-        toast.error(
-          "There was an error submitting your form. Please try again.",
-          {
-            duration: 4000,
-            style: {
-              background: "#EF4444", // error red
-              color: "white",
-            },
-          }
-        );
+        const errorMessage =
+          error.response?.data?.message ||
+          "There was an error submitting your form. Please try again.";
+
+        toast.error(errorMessage, {
+          duration: 4000,
+          style: {
+            background: "#EF4444", // error red
+            color: "white",
+          },
+        });
         setError(error.message);
       } finally {
         setSubmitting(false);
       }
     },
-    [currentStep, setSubmitting, setError, resetForm, nextStep]
+    [currentStep, formData, setSubmitting, setError, resetForm, handleNext]
   );
+
+  // SEO structured data for application form
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebForm",
+    name: "RIGHT Housing Application Form",
+    description:
+      "Apply for RIGHT Housing's transitional housing and recovery support services. Complete our secure online application process.",
+    url: "https://righthousing.org/apply",
+    provider: {
+      "@type": "NGO",
+      name: "RIGHT Housing Inc.",
+      description:
+        "Providing transitional housing and comprehensive support services for individuals in recovery.",
+    },
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "Personal Information",
+        text: "Fill out your personal details and contact information",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Background Information",
+        text: "Provide relevant background information for your application",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Review and Submit",
+        text: "Review your application details and submit",
+      },
+    ],
+  };
 
   return (
     <>
@@ -360,17 +422,17 @@ const ApplicationForm = () => {
                   exit="exit"
                   transition={{ duration: 0.3 }}
                 >
-                  <CurrentStepComponent formData={formData} />
+                  {StepComponent && <StepComponent />}
                 </motion.div>
               )}
             </AnimatePresence>
 
             {!showRedirectAnimation && (
               <NavigationButtons
-                currentStep={currentStep}
+                currentStep={Number(currentStep)}
                 isSubmitting={isSubmitting}
-                onPrev={prevStep}
-                onNext={handleSubmit}
+                onPrev={handlePrev}
+                onNext={handleNext}
                 onSubmit={handleSubmit}
               />
             )}

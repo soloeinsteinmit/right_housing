@@ -13,6 +13,47 @@ class GetInvolvedEmailService extends BaseEmailService {
   }
 
   /**
+   * Format location data for email
+   * @private
+   * @param {Object} location - Location data from form submission
+   * @returns {string} Formatted location string
+   */
+  formatLocation(location) {
+    if (!location) return "Location not provided";
+
+    // Handle IP address format (e.g. ::1)
+    if (location === "::1") return "Local Development";
+
+    if (location.latitude && location.longitude) {
+      return `${location.latitude.toFixed(6)}, ${location.longitude.toFixed(
+        6
+      )}`;
+    }
+
+    if (typeof location === "string") {
+      return location;
+    }
+
+    return "Location format unknown";
+  }
+
+  /**
+   * Format device info data for email
+   * @private
+   * @param {Object} deviceInfo - Device info data from form submission
+   * @returns {string} Formatted device info string
+   */
+  formatDeviceInfo(deviceInfo) {
+    if (!deviceInfo) return "Device info not provided";
+
+    if (typeof deviceInfo === "string") {
+      return deviceInfo;
+    }
+
+    return "Device info format unknown";
+  }
+
+  /**
    * Create email template for Get Involved form
    * @private
    * @param {Object} formData - The Get Involved form data
@@ -21,6 +62,9 @@ class GetInvolvedEmailService extends BaseEmailService {
   createEmailTemplate(formData) {
     const { name, email, phone, type, message, deviceInfo, location } =
       formData;
+
+    const formattedLocation = this.formatLocation(location);
+    // const formattedDeviceInfo = this.formatDeviceInfo(deviceInfo);
 
     return `
      <!DOCTYPE html>
@@ -91,7 +135,7 @@ class GetInvolvedEmailService extends BaseEmailService {
                         <!-- Message Section -->
                         <div style="background-color: #f8fdfb; border-left: 4px solid #10B981; padding: 20px; margin-bottom: 20px;">
                             <h3 style="color: #10B981; margin: 0 0 15px 0; font-size: 18px; font-family: 'Vollkorn', Arial, serif; font-weight: 600;">Message</h3>
-                            <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; background-color: #ffffff; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px; font-family: 'Vollkorn', Arial, serif;">${message}</p>
+                            <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; word-wrap: break-word; hyphens: auto; -ms-hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto; background-color: #ffffff; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px; font-family: 'Vollkorn', Arial, serif;">${message}</p>
                         </div>
 
                         <!-- Quick Action Buttons -->
@@ -114,9 +158,7 @@ class GetInvolvedEmailService extends BaseEmailService {
                             <p style="margin: 0;">
                                 <strong>Submission Details:</strong><br/>
                                 Device: ${deviceInfo || "Unknown Device"}<br/>
-                                Location: ${
-                                  location || "Location not available"
-                                }<br/>
+                                Location: ${formattedLocation}<br/>
                                 Time: ${new Date().toLocaleString("en-US", {
                                   timeZone: "America/New_York",
                                 })} EST

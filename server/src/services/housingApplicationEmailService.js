@@ -22,6 +22,43 @@ class HousingApplicationEmailService extends BaseEmailService {
   }
 
   /**
+   * Format location data for email
+   * @private
+   * @param {Object} location - Location data from form submission
+   * @returns {string} Formatted location string
+   */
+  formatLocation(location) {
+    if (!location) return "Location not provided";
+
+    // Handle IP address format (e.g. ::1)
+    if (location === "::1") return "Local Development";
+
+    if (location.latitude && location.longitude) {
+      return `${location.latitude.toFixed(6)}, ${location.longitude.toFixed(
+        6
+      )}`;
+    }
+
+    if (typeof location === "string") {
+      return location;
+    }
+
+    return "Location format unknown";
+  }
+
+  /**
+   * Format device info for email
+   * @private
+   * @param {Object} deviceInfo - Device information from form submission
+   * @returns {string} Formatted device string
+   */
+  formatDeviceInfo(deviceInfo) {
+    if (!deviceInfo || !deviceInfo.userAgent)
+      return "Device info not available";
+    return deviceInfo.userAgent;
+  }
+
+  /**
    * Create email template for housing application
    * @private
    * @param {Object} formData - The housing application form data
@@ -49,6 +86,9 @@ class HousingApplicationEmailService extends BaseEmailService {
       month: "long",
       day: "numeric",
     });
+
+    const formattedLocation = this.formatLocation(location);
+    // const formattedDeviceInfo = this.formatDeviceInfo(deviceInfo);
 
     return `
       <!DOCTYPE html>
@@ -110,7 +150,7 @@ class HousingApplicationEmailService extends BaseEmailService {
                       <h3 style="color: #10B981; margin: 0 0 15px 0; font-size: 18px;">Background Information</h3>
                       <div style="margin-bottom: 15px;">
                           <strong style="color: #666666;">Background Summary:</strong>
-                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap;">${
+                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; word-wrap: break-word; hyphens: auto; -ms-hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto;">${
                             background || "Not provided"
                           }</p>
                       </div>
@@ -137,13 +177,13 @@ class HousingApplicationEmailService extends BaseEmailService {
                       <h3 style="color: #10B981; margin: 0 0 15px 0; font-size: 18px;">Additional Information</h3>
                       <div style="margin-bottom: 15px;">
                           <strong style="color: #666666;">Current Situation:</strong>
-                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap;">${
+                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; word-wrap: break-word; hyphens: auto; -ms-hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto;">${
                             currentSituation || "Not provided"
                           }</p>
                       </div>
                       <div>
                           <strong style="color: #666666;">Interest & Goals:</strong>
-                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap;">${
+                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; word-wrap: break-word; hyphens: auto; -ms-hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto;">${
                             interest || "Not provided"
                           }</p>
                       </div>
@@ -163,8 +203,8 @@ class HousingApplicationEmailService extends BaseEmailService {
                   <div style="font-size: 12px; color: rgba(255,255,255,0.9);">
                       <p style="margin: 0;">
                           <strong>Submission Details:</strong><br/>
-                          Device: ${deviceInfo || "Unknown Device"}<br/>
-                          Location: ${location || "Location not available"}<br/>
+                          Device: ${deviceInfo}<br/>
+                          Location: ${formattedLocation}<br/>
                           Time: ${new Date().toLocaleString("en-US", {
                             timeZone: "America/New_York",
                           })} EST

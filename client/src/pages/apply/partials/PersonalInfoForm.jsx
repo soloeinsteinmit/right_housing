@@ -3,14 +3,41 @@ import { motion } from "framer-motion";
 import { User, Mail, Phone, Home, Calendar } from "lucide-react";
 import { Input } from "@heroui/input";
 import { DatePicker } from "@heroui/date-picker";
+import { parseDate, getLocalTimeZone } from "@internationalized/date";
+import { useDateFormatter } from "@react-aria/i18n";
+import { useApplication } from "../context/ApplicationContext";
 
-const PersonalInfoForm = ({ formData, setFormData }) => {
+const PersonalInfoForm = () => {
+  const { state, updateFormData } = useApplication();
+  const { formData } = state;
+  const formatter = useDateFormatter({ dateStyle: "long" });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    updateFormData({ [name]: value });
+  };
+
+  // This handles converting DatePicker's MM-DD-YYYY to long format for storage
+  const handleDateChange = (date) => {
+    if (date) {
+      const formattedDate = formatter.format(date.toDate(getLocalTimeZone()));
+      updateFormData({ dateOfBirth: formattedDate });
+    } else {
+      updateFormData({ dateOfBirth: "" });
+    }
+  };
+
+  // This function converts from stored long format back to MM-DD-YYYY for DatePicker
+  const parseMMDDYY = (dateString) => {
+    // Convert from "February 12, 2023" back to date object
+    const date = new Date(dateString);
+
+    // Format as MM-DD-YYYY for DatePicker
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const year = date.getFullYear();
+
+    return parseDate(`${year}-${month}-${day}`);
   };
 
   return (
@@ -29,8 +56,9 @@ const PersonalInfoForm = ({ formData, setFormData }) => {
           <Input
             label="First Name"
             placeholder="Enter your first name"
+            name="firstName"
             onChange={handleChange}
-            value={formData?.firstName || ""}
+            value={formData.firstName}
             isRequired
             type="text"
             size="lg"
@@ -41,8 +69,9 @@ const PersonalInfoForm = ({ formData, setFormData }) => {
           <Input
             label="Last Name"
             placeholder="Enter your last name"
+            name="lastName"
             onChange={handleChange}
-            value={formData?.lastName || ""}
+            value={formData.lastName}
             isRequired
             type="text"
             size="lg"
@@ -56,8 +85,9 @@ const PersonalInfoForm = ({ formData, setFormData }) => {
         <Input
           label="Email Address"
           placeholder="Enter your email address"
+          name="email"
           onChange={handleChange}
-          value={formData?.email || ""}
+          value={formData.email}
           isRequired
           type="email"
           size="lg"
@@ -69,8 +99,9 @@ const PersonalInfoForm = ({ formData, setFormData }) => {
         <Input
           label="Phone Number"
           placeholder="Enter your phone number"
+          name="phone"
           onChange={handleChange}
-          value={formData?.phone || ""}
+          value={formData.phone}
           isRequired
           type="text"
           size="lg"
@@ -84,8 +115,9 @@ const PersonalInfoForm = ({ formData, setFormData }) => {
         <Input
           label="Current Address"
           placeholder="Enter your current address"
+          name="address"
           onChange={handleChange}
-          value={formData?.address || ""}
+          value={formData.address}
           isRequired
           type="text"
           size="lg"
@@ -100,15 +132,16 @@ const PersonalInfoForm = ({ formData, setFormData }) => {
             Date of Birth
           </span>
           <DatePicker
-            startContent={<Calendar className="h-5 w-5 text-gray-400" />}
-            className="w-full text-gray-900"
-            // label="Date of Birth"
-            // onChange={handleChange}
-            // value={formData?.dateOfBirth || ""}
+            placeholder="Select your date of birth"
+            onChange={handleDateChange}
+            showMonthAndYearPickers
+            value={
+              formData.dateOfBirth ? parseMMDDYY(formData.dateOfBirth) : null
+            }
+            isRequired
             size="lg"
-            // isRequired
             variant="bordered"
-            labelPlacement="outside"
+            startContent={<Calendar className="h-5 w-5 text-gray-400" />}
             aria-label="Date of Birth"
             color="success"
           />

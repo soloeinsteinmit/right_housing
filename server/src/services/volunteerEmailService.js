@@ -24,6 +24,47 @@ class VolunteerEmailService extends BaseEmailService {
   }
 
   /**
+   * Format location data for email
+   * @private
+   * @param {Object} location - Location data from form submission
+   * @returns {string} Formatted location string
+   */
+  formatLocation(location) {
+    if (!location) return "Location not provided";
+
+    // Handle IP address format (e.g. ::1)
+    if (location === "::1") return "Local Development";
+
+    if (location.latitude && location.longitude) {
+      return `${location.latitude.toFixed(6)}, ${location.longitude.toFixed(
+        6
+      )}`;
+    }
+
+    if (typeof location === "string") {
+      return location;
+    }
+
+    return "Location format unknown";
+  }
+
+  /**
+   * Format device info data for email
+   * @private
+   * @param {Object} deviceInfo - Device info data from form submission
+   * @returns {string} Formatted device info string
+   */
+  formatDeviceInfo(deviceInfo) {
+    if (!deviceInfo) return "Device info not provided";
+
+    if (typeof deviceInfo === "string") {
+      return deviceInfo;
+    }
+
+    return "Device info format unknown";
+  }
+
+  /**
    * Create email template for volunteer form
    * @private
    * @param {Object} formData - The volunteer form data
@@ -49,10 +90,14 @@ class VolunteerEmailService extends BaseEmailService {
 
     const interestsList = interests
       .map((interest) => this.interestTypes[interest] || interest)
-      .join(", ");
+      .join("<br/>");
+
     const availabilityList = availability
       .map((time) => this.availabilityTypes[time] || time)
-      .join(", ");
+      .join("<br/>");
+
+    const formattedLocation = this.formatLocation(location);
+    // const formattedDeviceInfo = this.formatDeviceInfo(deviceInfo);
 
     return `
       <!DOCTYPE html>
@@ -60,7 +105,7 @@ class VolunteerEmailService extends BaseEmailService {
       <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>RIGHT Housing Volunteer Application</title>
+          <title>RIGHT Housing - Volunteer Application</title>
           <link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
           <style>
               * {
@@ -127,14 +172,31 @@ class VolunteerEmailService extends BaseEmailService {
 
                   <!-- Experience & Motivation -->
                   <div style="background-color: #f8fdfb; border-left: 4px solid #FFD700; padding: 20px; margin-bottom: 20px;">
-                      <h3 style="color: #10B981; margin: 0 0 15px 0; font-size: 18px;">Experience & Motivation</h3>
+                      <h3 style="color: #10B981; margin: 0 0 15px 0; font-size: 18px;">Volunteer Preferences</h3>
                       <div style="margin-bottom: 15px;">
-                          <strong style="color: #666666;">Previous Experience:</strong>
-                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap;">${experience || "No previous experience"}</p>
+                          <strong style="color: #666666;">Areas of Interest:</strong>
+                          <p style="margin: 5px 0; color: #333333;">${interestsList}</p>
+                      </div>
+                      <div style="margin-bottom: 15px;">
+                          <strong style="color: #666666;">Availability:</strong>
+                          <p style="margin: 5px 0; color: #333333;">${availabilityList}</p>
+                      </div>
+                  </div>
+
+                  <!-- Additional Information -->
+                  <div style="background-color: #f8fdfb; border-left: 4px solid #10B981; padding: 20px; margin-bottom: 20px;">
+                      <h3 style="color: #10B981; margin: 0 0 15px 0; font-size: 18px;">Additional Information</h3>
+                      <div style="margin-bottom: 15px;">
+                          <strong style="color: #666666;">Relevant Experience:</strong>
+                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; word-wrap: break-word; hyphens: auto; -ms-hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto;">${
+                            experience || "Not provided"
+                          }</p>
                       </div>
                       <div>
-                          <strong style="color: #666666;">Motivation:</strong>
-                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap;">${motivation}</p>
+                          <strong style="color: #666666;">Motivation to Volunteer:</strong>
+                          <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; word-wrap: break-word; hyphens: auto; -ms-hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto;">${
+                            motivation || "Not provided"
+                          }</p>
                       </div>
                   </div>
               </div>
@@ -153,7 +215,7 @@ class VolunteerEmailService extends BaseEmailService {
                       <p style="margin: 0;">
                           <strong>Submission Details:</strong><br/>
                           Device: ${deviceInfo || "Unknown Device"}<br/>
-                          Location: ${location || "Location not available"}<br/>
+                          Location: ${formattedLocation}<br/>
                           Time: ${new Date().toLocaleString("en-US", {
                             timeZone: "America/New_York",
                           })} EST

@@ -17,6 +17,47 @@ class ContactEmailService extends BaseEmailService {
   }
 
   /**
+   * Format location data for email
+   * @private
+   * @param {Object} location - Location data from form submission
+   * @returns {string} Formatted location string
+   */
+  formatLocation(location) {
+    if (!location) return "Location not provided";
+
+    // Handle IP address format (e.g. ::1)
+    if (location === "::1") return "Local Development";
+
+    if (location.latitude && location.longitude) {
+      return `${location.latitude.toFixed(6)}, ${location.longitude.toFixed(
+        6
+      )}`;
+    }
+
+    if (typeof location === "string") {
+      return location;
+    }
+
+    return "Location format unknown";
+  }
+
+  /**
+   * Format device info data for email
+   * @private
+   * @param {Object} deviceInfo - Device info data from form submission
+   * @returns {string} Formatted device info string
+   */
+  formatDeviceInfo(deviceInfo) {
+    if (!deviceInfo) return "Device info not provided";
+
+    if (typeof deviceInfo === "string") {
+      return deviceInfo;
+    }
+
+    return "Device info format unknown";
+  }
+
+  /**
    * Create email template for contact form
    * @private
    * @param {Object} formData - The contact form data
@@ -35,6 +76,9 @@ class ContactEmailService extends BaseEmailService {
       deviceInfo,
       location,
     } = formData;
+
+    const formattedLocation = this.formatLocation(location);
+    // const formattedDeviceInfo = this.formatDeviceInfo(deviceInfo);
 
     return `
       <!DOCTYPE html>
@@ -124,7 +168,7 @@ class ContactEmailService extends BaseEmailService {
                             </div>
                             <div>
                                 <strong style="color: #666666;">Message:</strong>
-                                <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; background-color: #ffffff; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px; font-family: 'Vollkorn', Arial, serif;">${message}</p>
+                                <p style="margin: 5px 0; color: #333333; white-space: pre-wrap; word-wrap: break-word; hyphens: auto; -ms-hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto; background-color: #ffffff; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px; font-family: 'Vollkorn', Arial, serif;">${message}</p>
                             </div>
                         </div>
 
@@ -147,8 +191,8 @@ class ContactEmailService extends BaseEmailService {
                   <div style="font-size: 12px; color: rgba(255,255,255,0.9); font-family: 'Vollkorn', Arial, serif;">
                       <p style="margin: 0;">
                           <strong>Submission Details:</strong><br/>
-                          Device: ${deviceInfo || "Unknown Device"}<br/>
-                          Location: ${location || "Location not available"}<br/>
+                           Device: ${deviceInfo || "Unknown Device"}<br/>
+                          Location: ${formattedLocation}<br/>
                           Time: ${new Date().toLocaleString("en-US", {
                             timeZone: "America/New_York",
                           })} EST
