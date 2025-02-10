@@ -355,7 +355,7 @@ function HeroSection() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
-                  className="inline-block text-success-600"
+                  className="inline-block text-success-600 font-agu"
                 >
                   Men and Women
                 </motion.span>
@@ -470,7 +470,9 @@ function HeroSection() {
               <div className="h-full flex justify-between flex-col relative">
                 <StatsBackgroundPattern />
                 <div className="p-6 mt-9 relative z-10">
-                  <h2 className="text-6xl font-bold mb-4">{cards[0].title}</h2>
+                  <h2 className="text-6xl font-bold mb-4 font-agu">
+                    {cards[0].title}
+                  </h2>
                   <p className="mb-6 text-default-200 text-base font-normal flex-grow">
                     {cards[0].description}
                   </p>
@@ -499,7 +501,9 @@ function HeroSection() {
             >
               <div className="p-4 flex w-full items-center justify-center gap-2 h-full">
                 <span className="text-xl">{cards[5].icon}</span>
-                <span className="text-xl font-semibold">{cards[5].title}</span>
+                <span className="text-lg font-semibold font-agu">
+                  {cards[5].title}
+                </span>
               </div>
             </div>
           </motion.div>
@@ -520,7 +524,7 @@ function HeroSection() {
               />
               <div className="absolute inset-0 bg-black/60" />
               <div className="p-4 max-[840px]:p-6 h-full flex flex-col justify-end relative z-10 ">
-                <p className="text-base text-default-400 font-semibold mb-2">
+                <p className="text-sm text-default-300 font-semibold mb-2 font-elite">
                   {cards[1].title}
                 </p>
                 <p className="text-white font-light text-base">
@@ -595,7 +599,7 @@ function HeroSection() {
               />
               <div className="absolute inset-0 bg-black/60" />
               <div className="p-4 max-[840px]:p-6 h-full flex flex-col justify-end relative z-10">
-                <h3 className="text-base text-default-400 font-semibold mb-2">
+                <h3 className="text-sm font-elite text-default-300 font-semibold mb-2">
                   {cards[3].title}
                 </h3>
                 <p className="text-white text-base">{cards[3].description}</p>
@@ -660,7 +664,7 @@ function HeroSection() {
                   {/* {cards[5].icon} */}
                   <HeartEmoji className="w-14" />
                 </span>
-                <span className="text-xl font-semibold text-warning-500">
+                <span className="text-lg font-agu font-semibold text-warning-500">
                   Every Helping Hand Makes a Difference
                 </span>
               </div>

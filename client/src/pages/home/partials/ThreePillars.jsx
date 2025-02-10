@@ -160,7 +160,7 @@ const ThreePillars = () => {
               } lg:text-left space-y-6`}
             >
               <div className="inline-block">
-                <span className="text-success-500 font-medium text-sm tracking-wider uppercase">
+                <span className="text-success-500 font-agu font-medium text-sm tracking-wider uppercase">
                   {section.subtitle}
                 </span>
               </div>
@@ -172,7 +172,7 @@ const ThreePillars = () => {
               </div>
               {section.highlight && (
                 <div className="inline-block bg-success-50 border border-success-200 rounded-lg px-6 py-4">
-                  <p className="text-success-700 font-medium">
+                  <p className="text-success-700 font-medium font-agu">
                     {section.highlight}
                   </p>
                 </div>
@@ -346,9 +346,9 @@ const ThreePillars = () => {
             >
               Transforming Lives Through
               <span className="relative">
-                <span className="relative z-10">
+                <span className="relative z-10 text-success font-agu">
                   {" "}
-                  Recovery, Reentry, & Mental Health
+                  Recovery, Reentry, & Mental Wellness
                 </span>
                 {/* <UnderlinePath /> */}
               </span>

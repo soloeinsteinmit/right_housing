@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 const rateLimit = require("express-rate-limit");
+// const ServerlessHttp = require("serverless-http");
 
 const app = express();
 
@@ -72,3 +73,10 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// const handler = ServerlessHttp(app);
+
+// module.exports.handler = async (event, context) => {
+//   const result = await handler(event, context);
+//   return result;
+// };

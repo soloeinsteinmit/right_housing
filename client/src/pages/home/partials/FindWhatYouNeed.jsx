@@ -129,7 +129,7 @@ const SectionHeader = memo(() => (
     viewport={{ once: true }}
     className="text-center mb-16"
   >
-    <h2 className="text-success-600 text-lg max-[480px]:text-base font-medium mb-2">
+    <h2 className="text-success-600 text-lg max-[480px]:text-base font-medium mb-2 font-agu">
       CHECK OUT OUR RESOURCES
     </h2>
     <h3 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-6 max-[480px]:mb-4">
@@ -228,13 +228,13 @@ const FindWhatYouNeed = () => {
               <div className="text-left relative">
                 <div className="inline-flex items-center mb-4 bg-success-100 text-success-600 px-4 py-2 rounded-full">
                   <Handshake className="w-5 h-5 mr-2" />
-                  <span className="text-sm font-semibold">
+                  <span className="text-sm font-semibold font-elite">
                     Partners & Supporters
                   </span>
                 </div>
                 <h3 className="text-4xl max-[480px]:text-3xl font-bold text-gray-900 mb-4 max-[480px]:mb-0">
                   Trusted by Leading <br />
-                  <span className="text-success-600 relative">
+                  <span className="text-success-600 relative font-agu">
                     Organizations
                     {/* <CurvedArrow /> */}
                   </span>
