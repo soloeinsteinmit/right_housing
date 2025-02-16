@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../components/navigation/Navbar";
 import Footer from "../components/navigation/Footer";
 import ScrollControls from "../components/common/ScrollControls";
+import LenisProvider from "../components/providers/LenisProvider";
 
 /**
  * ParentLayout component that provides the main application structure.
@@ -18,20 +19,22 @@ import ScrollControls from "../components/common/ScrollControls";
  */
 const ParentLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Main Navigation */}
-      <Navbar />
+    <LenisProvider>
+      <div className="flex flex-col min-h-screen">
+        {/* Main Navigation */}
+        <Navbar />
 
-      {/* Main Content Area */}
-      <main className="flex-grow">
-        <Outlet />
-      </main>
+        {/* Main Content Area */}
+        <main className="flex-grow">
+          <Outlet />
+        </main>
 
-      {/* Footer */}
-      <Footer />
+        {/* Footer */}
+        <Footer />
 
-      <ScrollControls />
-    </div>
+        <ScrollControls />
+      </div>
+    </LenisProvider>
   );
 };
 
