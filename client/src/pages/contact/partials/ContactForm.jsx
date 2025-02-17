@@ -14,6 +14,7 @@ import { Tooltip } from "@heroui/tooltip";
 import { Select, SelectItem } from "@heroui/select";
 import axios from "axios";
 import { toast } from "sonner";
+import endpoint from "../../../config.js";
 
 // Animation variants
 const fadeInVariants = {
@@ -340,7 +341,9 @@ const NavigationButtons = React.memo(
           <motion.button
             type="submit"
             className={`px-8 py-3 bg-success-600 text-white rounded-xl transition-all flex items-center gap-2 ml-auto ${
-              isSubmitting || isTransitioning ? "opacity-75 cursor-not-allowed" : "hover:bg-success-700"
+              isSubmitting || isTransitioning
+                ? "opacity-75 cursor-not-allowed"
+                : "hover:bg-success-700"
             }`}
             whileTap={isSubmitting || isTransitioning ? {} : { scale: 0.98 }}
             disabled={isSubmitting || isTransitioning}
@@ -518,8 +521,15 @@ const ContactForm = () => {
       setIsSubmitting(true);
 
       try {
+        // const apiUrl = import.meta.env.VITE_API_URL.replace(/\/$/, ""); // Remove trailing slash if present
+        const apiUrl = endpoint.replace(/\/$/, ""); // Remove trailing slash if present
         await toast.promise(
-          axios.post("http://localhost:2468/api/contact/submit", formData),
+          axios.post(`${apiUrl}/api/contact/submit`, formData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }),
           {
             loading: "Sending your message...",
             success: () => {

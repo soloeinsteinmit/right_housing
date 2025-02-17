@@ -16,6 +16,7 @@ import {
 } from "@heroui/autocomplete";
 import { Avatar } from "@heroui/avatar";
 import { states } from "./states";
+import endpoint from "../../../config.js";
 
 const fadeInUpVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -359,8 +360,15 @@ const VolunteerForm = () => {
       setIsSubmitting(true);
 
       try {
+        // const apiUrl = import.meta.env.VITE_API_URL.replace(/\/$/, ""); // Remove trailing slash if present
+        const apiUrl = endpoint.replace(/\/$/, ""); // Remove trailing slash if present
         await toast.promise(
-          axios.post("http://localhost:2468/api/volunteer/submit", formData),
+          axios.post(`${apiUrl}/api/volunteer/submit`, formData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }),
           {
             loading: "Submitting your application...",
             success: () => {

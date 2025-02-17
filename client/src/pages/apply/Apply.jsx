@@ -20,6 +20,7 @@ import ApplicationProgress from "./partials/ApplicationProgress";
 import PersonalInfoForm from "./partials/PersonalInfoForm";
 import BackgroundInfo from "./partials/BackgroundInfo";
 import ReviewSubmit from "./partials/ReviewSubmit";
+import endpoint from "../../config.js";
 
 // Form step components mapping
 const FORM_STEPS = {
@@ -213,25 +214,21 @@ const ApplicationForm = () => {
         }
 
         // Submit to backend
-        const response = await axios.post(
-          "http://localhost:2468/api/housing/apply",
-          submissionData,
-          {
+        // const apiUrl = import.meta.env.VITE_API_URL.replace(/\/$/, ""); // Remove trailing slash if present
+        const apiUrl = endpoint.replace(/\/$/, ""); // Remove trailing slash if present
+        await toast.promise(
+          axios.post(`${apiUrl}/api/housing/apply`, submissionData, {
             headers: {
               "Content-Type": "application/json",
             },
+            withCredentials: true,
+          }),
+          {
+            loading: "Submitting your application...",
+            success: "Your interest form has been submitted successfully!",
+            error: "There was an error submitting your form. Please try again.",
           }
         );
-
-        // Dismiss loading toast and show success
-        toast.dismiss(loadingToastId);
-        toast.success("Your interest form has been submitted successfully!", {
-          duration: 4000,
-          style: {
-            background: "#10B981", // success green
-            color: "white",
-          },
-        });
 
         window.scrollTo({ top: 100, behavior: "smooth" });
 

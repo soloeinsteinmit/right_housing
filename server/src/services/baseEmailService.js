@@ -1,5 +1,9 @@
 const nodemailer = require("nodemailer");
 const winston = require("winston");
+const path = require("path");
+
+// Create logs directory in /tmp for Vercel
+const LOG_DIR = process.env.NODE_ENV === "production" ? "/tmp/logs" : path.join(__dirname, "../..", "logs");
 
 // Configure logger
 const logger = winston.createLogger({
@@ -11,10 +15,14 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({
-      filename: "logs/email-error.log",
+      filename: path.join(LOG_DIR, "email-error.log"),
       level: "error",
+      mkdir: true, // This will create the directory if it doesn't exist
     }),
-    new winston.transports.File({ filename: "logs/email.log" }),
+    new winston.transports.File({
+      filename: path.join(LOG_DIR, "email.log"),
+      mkdir: true, // This will create the directory if it doesn't exist
+    }),
   ],
 });
 

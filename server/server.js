@@ -9,34 +9,72 @@ const app = express();
 // Trust proxy - required for rate limiting behind reverse proxies (like Vercel)
 app.set("trust proxy", 1);
 
-// CORS configuration
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    const allowedOrigins = process.env.NODE_ENV === "production"
-      ? ['https://righthousing.org', 'https://www.righthousing.org']
-      : ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:2468'];
-    
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log('Origin not allowed by CORS:', origin);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  exposedHeaders: ['Access-Control-Allow-Origin'],
-  optionsSuccessStatus: 200,
-  preflightContinue: false
-};
+// Define allowed origins
+const allowedOrigins = [
+  // Production origins
+  "https://righthousing.org",
+  "https://www.righthousing.org",
+  // Development origins
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://localhost:2468",
+];
+
+// // CORS configuration
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     // Allow requests with no origin (like mobile apps, curl, or Postman)
+//     if (!origin) {
+//       return callback(null, true);
+//     }
+
+//     if (allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       console.error("CORS Error - Origin not allowed:", origin);
+//       callback(new Error("Origin not allowed by CORS"));
+//     }
+//   },
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//   allowedHeaders: [
+//     "Content-Type",
+//     "Authorization",
+//     "X-Requested-With",
+//     "Accept",
+//     "Origin",
+//   ],
+//   optionsSuccessStatus: 204,
+// };
 
 // Apply CORS middleware
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: allowedOrigins,
+  })
+);
+
+// Handle OPTIONS preflight requests
+// app.options("*", cors(corsOptions));
+
+// Body parsing middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Add response headers middleware
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type,Authorization,X-Requested-With,Accept,Origin"
+  );
+  next();
+});
 
 // Rate limiting to prevent abuse
 const limiter = rateLimit({
@@ -80,7 +118,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
     error: "Something broke!",
-    message: process.env.NODE_ENV === "development" ? err.message : undefined,
+    message: process.env.NODE_ENV === "production" ? err.message : undefined,
   });
 });
 

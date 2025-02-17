@@ -8,19 +8,22 @@ import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Select, SelectItem } from "@heroui/select";
 import { Send } from "lucide-react";
+import endpoint from "../../../config.js";
 
 const STORAGE_KEY = "about_contact_form_data";
 
 const loadFormData = () => {
   try {
     const savedData = localStorage.getItem(STORAGE_KEY);
-    return savedData ? JSON.parse(savedData) : {
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-      type: "volunteer",
-    };
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          type: "volunteer",
+        };
   } catch (error) {
     console.error("Error loading form data:", error);
     return {
@@ -121,29 +124,21 @@ const AboutContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate form data
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
+      const apiUrl = endpoint.replace(/\/$/, ""); // Remove trailing slash if present
+      // const apiUrl = import.meta.env.VITE_API_URL.replace(/\/$/, ""); // Remove trailing slash if present
       await toast.promise(
-        axios.post("http://localhost:2468/api/about/get-involved", formData),
+        axios.post(`${apiUrl}/api/about/get-involved`, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }),
         {
           loading: "Sending your message...",
-          success: () => {
-            // Clear form data from localStorage and reset state
+          success: (response) => {
             clearFormData();
             setFormData({
               name: "",
@@ -152,20 +147,22 @@ const AboutContactForm = () => {
               message: "",
               type: "volunteer",
             });
-            return "Message sent successfully! We'll get back to you soon.";
-          },
-          error: (error) => {
-            console.error("Form submission error:", error);
             return (
-              error.response?.data?.message ||
-              "Failed to send message. Please try again later."
+              response.data?.message ||
+              "Thank you for your message. We'll be in touch soon!"
             );
           },
-        },
-        {
-          duration: 5000,
+          error: (err) => {
+            console.error("Form submission error:", err);
+            throw new Error(
+              err.response?.data?.message ||
+                "Failed to send message. Please try again."
+            );
+          },
         }
       );
+    } catch (error) {
+      console.error("Form submission error:", error);
     } finally {
       setIsSubmitting(false);
     }
