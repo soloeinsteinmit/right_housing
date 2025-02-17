@@ -88,7 +88,7 @@ const HomeIcon = React.memo(() => (
 const StepDetail = React.memo(({ detail }) => (
   <div className="flex items-start space-x-2">
     <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2" />
-    <p className="text-gray-600">{detail}</p>
+    <p className="text-gray-600 ">{detail}</p>
   </div>
 ));
 
@@ -288,7 +288,7 @@ const HowToApply = () => {
         <div className="text-center mb-16">
           <motion.h2
             {...animations.fadeIn}
-            className="text-success-600 text-lg font-medium mb-2"
+            className="text-success-600 text-lg font-medium mb-2 font-agu"
           >
             FIND A RIGHT HOUSE TODAY
           </motion.h2>

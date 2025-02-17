@@ -181,22 +181,22 @@ const Navbar = () => {
     if (isMenuOpen) {
       document.addEventListener("click", handleClickOutside);
       document.body.classList.add("blur-background");
-      document.body.style.overflow = 'hidden';
-      document.body.style.height = '100vh';
-      document.body.style.touchAction = 'none';
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100vh";
+      document.body.style.touchAction = "none";
     } else {
       document.body.classList.remove("blur-background");
-      document.body.style.overflow = '';
-      document.body.style.height = '';
-      document.body.style.touchAction = '';
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
     }
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
       document.body.classList.remove("blur-background");
-      document.body.style.overflow = '';
-      document.body.style.height = '';
-      document.body.style.touchAction = '';
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
     };
   }, [isMenuOpen, handleClickOutside]);
 
@@ -265,7 +265,7 @@ const Navbar = () => {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden mobile-menu-container fixed top-20 left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg z-[9999] overflow-y-auto"
               style={{
-                maxHeight: 'calc(100vh - 5rem)'
+                maxHeight: "calc(100vh - 5rem)",
               }}
             >
               <div className="py-4 space-y-4">

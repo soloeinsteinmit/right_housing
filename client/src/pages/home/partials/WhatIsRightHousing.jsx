@@ -252,7 +252,7 @@ const WhatIsRightHousing = () => {
               variants={animations.item}
               className="text-center md:text-left"
             >
-              <h3 className="text-success-600 text-lg font-medium mb-2">
+              <h3 className="text-success-600 text-lg font-medium mb-2 font-agu">
                 RIGHT Housing, Inc.
               </h3>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">

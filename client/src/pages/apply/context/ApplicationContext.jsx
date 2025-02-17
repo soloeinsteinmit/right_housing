@@ -1,7 +1,21 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from "react";
 
 // Initial state
-const initialState = {
+const STORAGE_KEY = "housing_application_data";
+
+// Load data from localStorage
+const loadStoredData = () => {
+  try {
+    const storedData = localStorage.getItem(STORAGE_KEY);
+    return storedData ? JSON.parse(storedData) : null;
+  } catch (error) {
+    console.error("Error loading stored application data:", error);
+    return null;
+  }
+};
+
+// Initial state
+const initialState = loadStoredData() || {
   currentStep: 1,
   formData: {
     firstName: "",
@@ -11,10 +25,11 @@ const initialState = {
     address: "",
     dateOfBirth: "",
     background: "",
-    currentSituation: "",
+    livingStatus: "",
     employmentStatus: "",
+    currentSituation: "",
     interest: "",
-    documents: [],
+    // documents: [],
   },
   isSubmitting: false,
   error: null,
@@ -22,11 +37,11 @@ const initialState = {
 
 // Action types
 export const ACTIONS = {
-  SET_STEP: 'SET_STEP',
-  UPDATE_FORM_DATA: 'UPDATE_FORM_DATA',
-  SET_SUBMITTING: 'SET_SUBMITTING',
-  SET_ERROR: 'SET_ERROR',
-  RESET_FORM: 'RESET_FORM',
+  SET_STEP: "SET_STEP",
+  UPDATE_FORM_DATA: "UPDATE_FORM_DATA",
+  SET_SUBMITTING: "SET_SUBMITTING",
+  SET_ERROR: "SET_ERROR",
+  RESET_FORM: "RESET_FORM",
 };
 
 // Reducer function
@@ -56,6 +71,7 @@ function applicationReducer(state, action) {
         error: action.payload,
       };
     case ACTIONS.RESET_FORM:
+      localStorage.removeItem(STORAGE_KEY);
       return initialState;
     default:
       return state;
@@ -68,6 +84,15 @@ const ApplicationContext = createContext();
 // Provider component
 export function ApplicationProvider({ children }) {
   const [state, dispatch] = useReducer(applicationReducer, initialState);
+
+  // Save to localStorage whenever state changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (error) {
+      console.error("Error saving application data:", error);
+    }
+  }, [state]);
 
   const value = {
     state,
@@ -108,7 +133,9 @@ export function ApplicationProvider({ children }) {
 export function useApplication() {
   const context = useContext(ApplicationContext);
   if (context === undefined) {
-    throw new Error('useApplication must be used within an ApplicationProvider');
+    throw new Error(
+      "useApplication must be used within an ApplicationProvider"
+    );
   }
   return context;
 }

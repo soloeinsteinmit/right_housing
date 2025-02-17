@@ -66,10 +66,13 @@ const CallToActionSection = () => {
         <div className="relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl max-[480px]:text-3xl font-bold mb-6 text-white">
-              Ready to Make a Difference in Someone's Recovery Journey?
+              Ready to{" "}
+              <span className="font-agu text-warning">Make a Difference</span>{" "}
+              in Someone's{" "}
+              <span className="font-agu text-warning">Recovery Journey</span>?
             </h2>
             <p className="text-xl max-[480px]:text-lg text-success-100 mb-12">
-              Your support helps us provide essential housing and recovery
+              Then support helps us provide essential housing and recovery
               services to those in need. Join us in transforming lives.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">

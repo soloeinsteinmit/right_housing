@@ -21,55 +21,66 @@ const About = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    "name": "About RIGHT Housing Inc. - Our Mission and Impact",
-    "description": "Learn about RIGHT Housing's mission to empower individuals through transitional housing, recovery support, and comprehensive services. Meet our dedicated team and discover our impact.",
-    "mainEntity": {
+    name: "About RIGHT Housing Inc. - Our Mission and Impact",
+    description:
+      "Learn about RIGHT Housing's mission to empower individuals through transitional housing, recovery support, and comprehensive services. Meet our dedicated team and discover our impact.",
+    mainEntity: {
       "@type": "NGO",
-      "name": "RIGHT Housing Inc.",
-      "foundingDate": "2023",
-      "description": "A nonprofit organization dedicated to providing transitional housing and comprehensive support services for individuals in recovery and reentry.",
-      "founder": {
+      name: "RIGHT Housing Inc.",
+      foundingDate: "2023",
+      description:
+        "A nonprofit organization dedicated to providing transitional housing and comprehensive support services for individuals in recovery and reentry.",
+      founder: {
         "@type": "Person",
-        "name": "Anita",
-        "jobTitle": "Founder & Executive Director",
-        "description": "Former Population Health Manager turned social impact leader"
+        name: "Anita",
+        jobTitle: "Founder & Executive Director",
+        description:
+          "Former Population Health Manager turned social impact leader",
       },
-      "knowsAbout": [
+      knowsAbout: [
         "Transitional Housing",
         "Recovery Support",
         "Reentry Services",
         "Community Development",
-        "Mental Health Support"
-      ]
-    }
+        "Mental Health Support",
+      ],
+    },
   };
 
   return (
     <>
       <Helmet>
         {/* Primary Meta Tags */}
-        <title>About RIGHT Housing Inc. | Our Mission and Impact in Recovery Support</title>
-        <meta 
-          name="description" 
+        <title>
+          About RIGHT Housing Inc. | Our Mission and Impact in Recovery Support
+        </title>
+        <meta
+          name="description"
           content="Discover RIGHT Housing's mission to empower individuals through transitional housing and comprehensive support services. Learn about our team, values, and impact in recovery support."
         />
-        <meta 
-          name="keywords" 
+        <meta
+          name="keywords"
           content="RIGHT Housing mission, nonprofit organization, recovery support services, transitional housing program, community impact, housing solutions, NGO leadership, social services organization, recovery community, rehabilitation services, reentry support, mental health services, addiction recovery support, housing nonprofit, community development, social impact organization, supportive housing services, behavioral health support, recovery housing mission, housing assistance programs, community outreach"
         />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="About RIGHT Housing Inc. | Our Mission and Impact in Recovery Support" />
-        <meta 
-          property="og:description" 
+        <meta
+          property="og:title"
+          content="About RIGHT Housing Inc. | Our Mission and Impact in Recovery Support"
+        />
+        <meta
+          property="og:description"
           content="Discover RIGHT Housing's mission to empower individuals through transitional housing and comprehensive support services. Learn about our team, values, and impact in recovery support."
         />
 
         {/* Twitter */}
-        <meta name="twitter:title" content="About RIGHT Housing Inc. | Our Mission and Impact in Recovery Support" />
-        <meta 
-          name="twitter:description" 
+        <meta
+          name="twitter:title"
+          content="About RIGHT Housing Inc. | Our Mission and Impact in Recovery Support"
+        />
+        <meta
+          name="twitter:description"
           content="Discover RIGHT Housing's mission to empower individuals through transitional housing and comprehensive support services. Learn about our team, values, and impact in recovery support."
         />
 

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Agu+Display&family=Special+Elite&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,7 @@
 
 :root {
   font-family: "Vollkorn", serif;
-
+  /* font-family: "Playfair Display", serif; */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

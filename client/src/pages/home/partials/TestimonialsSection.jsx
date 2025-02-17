@@ -74,7 +74,9 @@ const TestimonialContent = memo(({ testimonial, itemVariants }) => (
         <div className="font-semibold text-success-200">
           {testimonial.author}
         </div>
-        <div className="text-success-400 text-sm">{testimonial.journey}</div>
+        <div className="text-success-400 text-sm font-elite">
+          {testimonial.journey}
+        </div>
       </div>
     </div>
   </motion.div>
@@ -227,7 +229,7 @@ const TestimonialsSection = () => {
           </motion.div>
 
           <h2 className="text-5xl max-[480px]:text-4xl font-bold mb-6 bg-gradient-to-r from-success-400 to-success-200 bg-clip-text text-transparent">
-            Voices of Transformation
+            Voices of <span className="font-agu">Transformation</span>
           </h2>
           <p className="text-xl max-[480px]:text-lg text-success-200 max-w-3xl mx-auto leading-relaxed">
             Real stories from individuals who have found hope, healing, and a
@@ -275,7 +277,7 @@ const TestimonialsSection = () => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.5 }}
-                className="absolute -bottom-4 -right-4 bg-success-500 text-success-950 px-4 py-2 rounded-full text-sm font-semibold"
+                className="absolute -bottom-4 -right-4 bg-success-500 text-white px-4 py-2 rounded-full text-sm font-semibold font-elite"
               >
                 {testimonials[activeIndex].journey}
               </motion.div>
